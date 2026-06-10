@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universitas Ciputra - LPJ Approval Complete System</title>
+    <style>
+        /* ================= BASE RESET & UTILITIES ================= */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #F4F5F7;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* ================= TOP NAVBAR HEADER ================= */
+        .navbar {
+            background-color: #ffffff;
+            border-bottom: 1px solid #E0E0E0;
+            padding: 10px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            z-index: 1000;
+        }
+        .nav-left .logo-text {
+            font-weight: bold;
+            font-size: 14pt;
+            color: #003366;
+            letter-spacing: -0.5px;
+        }
+        .nav-left .logo-sub {
+            font-size: 7.5pt;
+            color: #666666;
+            margin-top: -2px;
+        }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #E0E0E0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: #555;
+        }
+
+        /* ================= SIDEBAR NAVIGATION (ORANGE) ================= */
+        .sidebar {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 50px;
+            height: calc(100vh - 60px);
+            background-color: #D35400;
+            padding-top: 15px;
+            text-align: center;
+            z-index: 999;
+        }
+        .sidebar-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 14pt;
+            margin-bottom: 20px;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            opacity: 0.9;
+        }
+
+        /* ================= MAIN WORKSPACE WRAPPER ================= */
+        .wrapper {
+            margin-top: 60px;
+            margin-left: 50px;
+            padding: 24px 32px;
+        }
+
+        /* ================= INTERACTIVE BREADCRUMB DROPDOWN ================= */
+        .breadcrumb-bar {
+            background-color: #E9EEF4;
+            padding: 10px 16px;
+            border-radius: 4px;
+            font-size: 9.5pt;
+            color: #555555;
+            margin-bottom: 20px;
+        }
+        .breadcrumb-dropdown {
+            display: inline-block;
+            position: relative;
+            vertical-align: middle;
+        }
+        .dropdown-trigger {
+            background: none;
+            border: none;
+            color: #E67E22;
+            font-size: 9.5pt;
+            font-weight: bold;
+            font-family: inherit;
+            cursor: pointer;
+            padding: 0 4px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .dropdown-trigger:focus {
+            outline: none;
+        }
+        .arrow-icon {
+            font-size: 7.5pt;
+            color: #E67E22;
+            transition: transform 0.2s ease;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #ffffff;
+            min-width: 160px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+            border: 1px solid #E0E0E0;
+            border-radius: 4px;
+            z-index: 1010;
+            margin-top: 5px;
+        }
+        .dropdown-content a {
+            color: #333333;
+            padding: 10px 14px;
+            text-decoration: none;
+            display: block;
+            font-size: 9.5pt;
+            font-weight: normal;
+            text-align: left;
+        }
+        .dropdown-content a:hover {
+            background-color: #F4F5F7;
+            color: #E67E22;
+            font-weight: bold;
+        }
+        .dropdown-dropdown-open .arrow-icon {
+            transform: rotate(180deg);
+        }
+
+        /* ================= BIG HEADER BANNER ================= */
+        .header-banner {
+            background-color: #E67E22;
+            color: white;
+            padding: 18px 24px;
+            border-radius: 6px;
+            font-size: 18pt;
+            font-weight: bold;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* ================= TOOLBAR FILTER & SEARCH CONTROLS ================= */
+        .control-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .status-tabs {
+            display: flex;
+            background: #E0E0E0;
+            padding: 4px;
+            border-radius: 8px;
+            gap: 4px;
+        }
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 14px;
+            font-size: 9.5pt;
+            font-weight: bold;
+            color: #555;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+        .tab-btn.active {
+            background-color: #ffffff;
+            color: #E67E22;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        }
+        .search-box {
+            position: relative;
+            flex-grow: 1;
+            max-width: 350px;
+        }
+        .search-input {
+            width: 100%;
+            padding: 10px 16px;
+            font-size: 10pt;
+            border: 1px solid #CCCCCC;
+            border-radius: 6px;
+            outline: none;
+        }
+        .search-input:focus {
+            border-color: #E67E22;
+        }
+
+        /* ================= DATA MAIN LIST TABLE ================= */
+        .table-container {
+            background: #ffffff;
+            border: 1px solid #E0E0E0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+        .data-table th {
+            background-color: #E67E22;
+            color: white;
+            font-weight: bold;
+            padding: 14px 16px;
+            font-size: 10pt;
+            border: 1px solid #D35400;
+        }
+        .data-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #EFEFEF;
+            font-size: 10pt;
+            vertical-align: middle;
+        }
+        .data-table tr:hover {
+            background-color: #FAFAFA;
+        }
+
+        /* Status Pills Badges */
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 8.5pt;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .badge-need { background-color: #F39C12; color: white; }
+        .badge-approved { background-color: #2ECC71; color: white; }
+        .badge-rejected { background-color: #E74C3C; color: white; }
+        .badge-revision { background-color: #2980B9; color: white; }
+
+        /* Action Buttons Grid */
+        .action-cell {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+        }
+        .btn-view {
+            background-color: #7F8C8D;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 4px;
+            font-size: 9pt;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .btn-view:hover { background-color: #616A6B; }
+
+        .btn-history {
+            background-color: #AED6F1;
+            color: #1B4F72;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 9pt;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .btn-history:hover { background-color: #85C1E9; }
+
+        /* ================= POPUP MODAL (HISTORY APPROVAL) ================= */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        .modal-box {
+            background: #ffffff;
+            width: 90%;
+            max-width: 1100px;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            overflow: hidden;
+            animation: fadeIn 0.2s ease-out;
+        }
+        .modal-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid #E0E0E0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-header h3 {
+            margin: 0;
+            font-size: 14pt;
+            color: #333333;
+            font-weight: bold;
+        }
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #888;
+            cursor: pointer;
+        }
+        .modal-close:hover { color: #333; }
+        .modal-body {
+            padding: 20px;
+            background-color: #ffffff;
+        }
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+        .history-table th {
+            background-color: #FAFAFA;
+            color: #111111;
+            font-weight: bold;
+            padding: 12px;
+            font-size: 10pt;
+            border: 1px solid #D0D7DE;
+        }
+        .history-table td {
+            padding: 12px;
+            border: 1px solid #E1E4E8;
+            font-size: 9.5pt;
+            color: #333333;
+            vertical-align: top;
+        }
+        .history-table tr:nth-child(even) { background-color: #F8F9FA; }
+
+        @keyframes fadeIn {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 40px;
+            color: #888;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="nav-left">
+            <div class="logo-text">UNIVERSITAS CIPUTRA</div>
+            <div class="logo-sub">CREATING WORLD CLASS ENTREPRENEURS</div>
+        </div>
+        <div class="nav-right">
+            <span style="font-size: 9.5pt; color: #555;">Hi, Muh. Nur Alif Akbar</span>
+            <div class="user-avatar">👤</div>
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <button class="sidebar-btn">☰</button>
+        <button class="sidebar-btn">★</button>
+    </div>
+
+    <div class="wrapper">
+        
+        <div class="breadcrumb-bar">
+            My Activity / My Event / 
+            <div class="breadcrumb-dropdown">
+                <button class="dropdown-trigger" onclick="toggleDropdown(event)">
+                    <span id="currentActive">Approve LPJ</span> <span class="arrow-icon">▼</span>
+                </button>
+                <div class="dropdown-content" id="breadcrumbMenu">
+                    <a href="../Approve-LPJ/dashboard.html">Approve LPJ</a>
+                    <a href="../Approve-Event/dashboard.html">Approve Event</a>
+                    <a href="../Approve-Oprec/dashboard.html">Approve Oprec</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="header-banner">
+            Approve LPJ
+        </div>
+
+        <div class="control-toolbar">
+            <div class="status-tabs">
+                <button class="tab-btn active" onclick="filterStatus('all', this)">All</button>
+                <button class="tab-btn" onclick="filterStatus('need_approval', this)">Need Approval</button>
+                <button class="tab-btn" onclick="filterStatus('need_revision', this)">Need Revision</button>
+                <button class="tab-btn" onclick="filterStatus('approved', this)">Approved</button>
+                <button class="tab-btn" onclick="filterStatus('rejected', this)">Rejected</button>
+            </div>
+
+            <div class="search-box">
+                <input type="text" id="searchInput" class="search-input" placeholder="Ketik untuk mencari kegiatan..." onkeyup="liveSearch()">
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table class="data-table" id="eventTable">
+                <thead>
+                    <tr>
+                        <th>Judul Kegiatan</th>
+                        <th>Atas Nama (Organizer)</th>
+                        <th>PIC Utama & NIM</th>
+                        <th>Contact Person</th>
+                        <th style="text-align: center;">Status</th>
+                        <th style="text-align: center;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-status="need_revision">
+                        <td style="font-weight: bold; color: #003366;">Mental Health Month 2026</td>
+                        <td>Mentoring Department</td>
+                        <td>Muh. Nur Alif Akbar<br><span style="font-size: 8.5pt; color: #666;">07060123</span></td>
+                        <td>+62 812-3456-789</td>
+                        <td style="text-align: center;"><span class="badge badge-revision">Need Revision</span></td>
+                        <td class="action-cell">
+                            <button class="btn-history" onclick="openHistoryModal('Mental Health Month 2026')">❕ History</button>
+                            <button class="btn-view" onclick="window.location.href='./detail-lpj.html'">Lihat</button>
+                        </td>
+                    </tr>
+                    <tr data-status="need_approval">
+                        <td style="font-weight: bold; color: #003366;">Informatics Hackathon 2026</td>
+                        <td>Student Union IMT</td>
+                        <td>Gerry Thompson<br><span style="font-size: 8.5pt; color: #666;">07060122</span></td>
+                        <td>+62 819-8765-432</td>
+                        <td style="text-align: center;"><span class="badge badge-need">Need Approval</span></td>
+                        <td class="action-cell">
+                            <button class="btn-history" onclick="openHistoryModal('Informatics Hackathon 2026')">❕ History</button>
+                            <button class="btn-view" onclick="window.location.href='./detail-lpj.html'">Lihat</button>
+                        </td>
+                    </tr>
+                    <tr data-status="approved">
+                        <td style="font-weight: bold; color: #003366;">UC Choir Concert: Symphonic Night</td>
+                        <td>UKM Choir</td>
+                        <td>Alif Akbar<br><span style="font-size: 8.5pt; color: #666;">07060255</span></td>
+                        <td>+62 822-4455-667</td>
+                        <td style="text-align: center;"><span class="badge badge-approved">Approved</span></td>
+                        <td class="action-cell">
+                            <button class="btn-history" onclick="openHistoryModal('UC Choir Concert: Symphonic Night')">❕ History</button>
+                            <button class="btn-view" onclick="window.location.href='./detail-lpj.html'">Lihat</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div id="noDataMessage" class="no-data" style="display: none;">Data kegiatan tidak ditemukan...</div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="historyModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 id="modalEventTitle">History Approval</h3>
+                <button class="modal-close" onclick="closeHistoryModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 18%;">Created Date</th>
+                            <th style="width: 18%;">Approve Date</th>
+                            <th style="width: 15%;">Approval</th>
+                            <th style="width: 20%;">Creator / Approver</th>
+                            <th>Reason</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2023-10-31 14:46:45</td>
+                            <td>2023-10-31 14:46:45</td>
+                            <td>Submit</td>
+                            <td>Muh. Nur Alif Akbar</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>2023-10-31 14:46:45</td>
+                            <td>2023-11-03 15:26:13</td>
+                            <td style="font-weight: bold; color: #2980B9;">Need Revision</td>
+                            <td>Birgita Dermawani S, Timothy Joshua Malawau</td>
+                            <td style="font-weight: 500; color: #111;">Mohon ke BMA untuk diskusi dengan kak ganang dan kak birgita</td>
+                        </tr>
+                        <tr>
+                            <td>2023-11-03 15:26:13</td>
+                            <td>-</td>
+                            <td style="color: #F39C12; font-weight: bold;">Waiting Approval</td>
+                            <td>Muh. Nur Alif Akbar</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStatusFilter = 'all';
+
+        // 1. Fungsi Dropdown Breadcrumb Menu
+        function toggleDropdown(event) {
+            event.stopPropagation();
+            let dropdownMenu = document.getElementById("breadcrumbMenu");
+            let container = document.querySelector(".breadcrumb-dropdown");
+            
+            if (dropdownMenu.style.display === "block") {
+                dropdownMenu.style.display = "none";
+                container.classList.remove("dropdown-dropdown-open");
+            } else {
+                dropdownMenu.style.display = "block";
+                container.classList.add("dropdown-dropdown-open");
+            }
+        }
+
+        // Auto Close Dropdown jika klik area luar menu
+        window.addEventListener("click", function() {
+            let dropdownMenu = document.getElementById("breadcrumbMenu");
+            let container = document.querySelector(".breadcrumb-dropdown");
+            if (dropdownMenu) {
+                dropdownMenu.style.display = "none";
+                container.classList.remove("dropdown-dropdown-open");
+            }
+        });
+
+        // 2. Live Search (Pencarian Otomatis Saat Mengetik)
+        function liveSearch() {
+            let input = document.getElementById("searchInput").value.toLowerCase();
+            let table = document.getElementById("eventTable");
+            let tr = table.getElementsByTagName("tr");
+            let visibleCount = 0;
+
+            for (let i = 1; i < tr.length; i++) {
+                let statusMatch = (currentStatusFilter === 'all' || tr[i].getAttribute("data-status") === currentStatusFilter);
+                let textContent = tr[i].textContent.toLowerCase();
+
+                if (textContent.includes(input) && statusMatch) {
+                    tr[i].style.display = "";
+                    visibleCount++;
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+            document.getElementById("noDataMessage").style.display = visibleCount === 0 ? "block" : "none";
+        }
+
+        // 3. Tab Status Filtering
+        function filterStatus(status, element) {
+            currentStatusFilter = status;
+            let buttons = document.getElementsByClassName("tab-btn");
+            for (let btn of buttons) {
+                btn.classList.remove("active");
+            }
+            element.classList.add("active");
+            liveSearch();
+        }
+
+        // 4. Modal Dialog Pop-up Controls
+        function openHistoryModal(eventName) {
+            document.getElementById("modalEventTitle").innerText = "History Approval - " + eventName;
+            document.getElementById("historyModal").style.display = "flex";
+        }
+
+        function closeHistoryModal() {
+            document.getElementById("historyModal").style.display = "none";
+        }
+
+        // Tutup modal jika user klik area luar kotak putih modal
+        window.onclick = function(event) {
+            let modal = document.getElementById("historyModal");
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // 5. Action "Lihat" Routing Page
+        function goToNextPage(eventName) {
+            alert("Membuka berkas dokumen kelayakan dari kegiatan: " + eventName);
+        }
+    </script>
+</body>
+</html>
