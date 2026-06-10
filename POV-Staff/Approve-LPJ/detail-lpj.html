@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Universitas Ciputra - Student Organization Annual Plan</title>
+    <title>Universitas Ciputra - Approval LPJ (Laporan Pertanggungjawaban)</title>
     <style>
         /* ================= BASE RESET & UTILITIES ================= */
         *, *::before, *::after {
@@ -52,7 +52,6 @@
             justify-content: flex-end;
         }
         
-        /* Search Container */
         .search-container {
             position: relative;
             width: 100%;
@@ -70,10 +69,8 @@
             top: 50%;
             transform: translateY(-50%);
             color: #888888;
-            cursor: pointer;
         }
 
-        /* User Profile & Avatar */
         .user-profile {
             text-align: right;
             line-height: 1.2;
@@ -127,15 +124,13 @@
             padding: 10px 0;
             text-align: center;
         }
-        .sidebar-btn:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
+        .sidebar-btn:hover { background-color: rgba(255, 255, 255, 0.1); }
 
         /* ================= MAIN WRAPPER ================= */
         .wrapper {
             margin-top: 60px;
             margin-left: 50px;
-            padding: 24px 10% 80px 10%;
+            padding: 24px 12% 100px 12%;
         }
 
         .breadcrumb-bar {
@@ -147,6 +142,37 @@
             color: #F37021;
             font-weight: bold;
         }
+
+        /* ================= TOP ACTION BAR ================= */
+        .top-action-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        .btn-back {
+            background-color: #7F8C8D;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 4px;
+            font-size: 9.5pt;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .btn-back:hover { background-color: #616A6B; }
+
+        .approval-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .btn-approve { background-color: #2ECC71; color: white; border: none; padding: 10px 22px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 9.5pt; }
+        .btn-revision { background-color: #F39C12; color: white; border: none; padding: 10px 22px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 9.5pt; }
+        .btn-reject { background-color: #E74C3C; color: white; border: none; padding: 10px 22px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 9.5pt; }
+        .btn-approve:hover { background-color: #27AE60; }
+        .btn-revision:hover { background-color: #D35400; }
+        .btn-reject:hover { background-color: #C0392B; }
 
         /* ================= PANELS & CARDS ================= */
         .panel {
@@ -167,164 +193,84 @@
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .panel label {
-            display: block;
-            font-size: 9.5pt;
-            font-weight: bold;
-            color: #003366;
-            margin: 15px 20px 8px 20px;
-        }
-
-        /* Tables & Forms Layout */
-        .form-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 0;
-        }
-        .form-table td {
-            padding: 10px 20px;
-            vertical-align: middle;
-        }
-        .label-cell {
-            width: 25%;
-            font-size: 9.5pt;
-            color: #555555;
-            font-weight: bold;
-        }
-
-        /* Form Controls */
-        .form-control {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid #CCCCCC;
-            border-radius: 4px;
-            font-size: 9.5pt;
-            background-color: #FFFFFF;
-            font-family: inherit;
-        }
-        textarea.form-control {
-            height: 100px;
-            resize: vertical;
-            width: calc(100% - 40px);
-            margin: 0 20px;
-        }
-        .form-table textarea.form-control {
-            width: 100%;
-            margin: 0;
-        }
-        .hint {
-            font-size: 8.5pt;
-            color: #666666;
-            margin-top: 4px;
-        }
-
-        /* Conditional Box */
-        .conditional-box {
-            background-color: #FFF3EB;
-            border: 1px dashed #F37021;
-            padding: 15px;
-            border-radius: 4px;
-            margin-top: 10px;
-        }
-        .conditional-box label {
-            margin: 0 0 10px 0 !important;
-        }
-
-        /* Grid & Flex Utilities */
-        .checkbox-grid {
+        /* Vertical Stack Layout (Memanjang ke bawah) */
+        .vertical-stack {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 16px;
+            padding: 20px;
+        }
+
+        .data-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            width: 100%;
+        }
+
+        .data-label {
+            font-size: 9.5pt;
+            color: #003366;
+            font-weight: bold;
+        }
+
+        .data-value {
+            font-size: 10pt;
+            color: #333333;
             background: #FAFAFA;
-            padding: 15px;
+            padding: 10px 12px;
+            border-radius: 4px;
+            border: 1px solid #E0E0E0;
+            min-height: 38px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Inline Row Grouping */
+        .inline-row {
+            display: flex;
+            gap: 15px;
+        }
+        .inline-row .data-group {
+            flex: 1;
+        }
+
+        /* Matrix Box / Checklist Styles */
+        .matrix-box {
+            background: #FAFAFA;
             border: 1px solid #E0E0E0;
             border-radius: 4px;
-            margin: 0 20px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
-        .grid-row {
+        .matrix-row {
             display: flex;
             flex-wrap: wrap;
             gap: 15px;
         }
-        .grid-item {
+        .matrix-item {
             flex: 1;
-            min-width: 200px;
+            min-width: 220px;
             display: flex;
             align-items: center;
             gap: 8px;
             font-size: 9.5pt;
         }
-        .grid-item input[type="checkbox"], .grid-item input[type="radio"] {
+        .matrix-item input[type="checkbox"], .matrix-item input[type="radio"] {
             accent-color: #F37021;
-            margin: 0;
-        }
-        .grid-title {
-            font-size: 9.5pt;
-            font-weight: bold;
-            color: #003366;
-            margin: 20px 20px 8px 20px;
-        }
-
-        /* Split Layout */
-        .split-layout {
-            display: flex;
-            gap: 20px;
-            padding: 0 20px;
-        }
-        .split-col {
-            flex: 1;
-            background: #FAFAFA;
-            border: 1px solid #E0E0E0;
-            border-radius: 4px;
-            padding: 15px;
-        }
-        .split-col label {
-            margin: 0 0 10px 0 !important;
-        }
-
-        /* Scroll List Box */
-        .scroll-list-box {
-            border: 1px solid #CCCCCC;
-            border-radius: 4px;
-            height: 160px;
-            overflow-y: auto;
-            background: #FFFFFF;
-            padding: 5px;
-        }
-        .scroll-list-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 8px;
-            font-size: 9pt;
-            border-bottom: 1px solid #F4F5F7;
-        }
-        .scroll-list-item input {
-            accent-color: #F37021;
+            width: 16px;
+            height: 16px;
             margin: 0;
         }
 
-        /* Radio & Checkbox Styling */
-        .radio-group {
-            display: flex;
-            gap: 15px;
-        }
-        .radio-inline {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 9.5pt;
-            cursor: pointer;
-        }
-        .radio-inline input {
-            accent-color: #F37021;
-            margin: 0;
-        }
-
-        /* Data Tables for RAB Sheet */
+        /* Data Tables */
         .data-table {
             width: calc(100% - 40px);
             margin: 10px 20px;
@@ -340,7 +286,7 @@
             text-align: left;
         }
         .data-table td {
-            padding: 8px 10px;
+            padding: 10px;
             border: 1px solid #E0E0E0;
             background-color: #FFFFFF;
         }
@@ -351,51 +297,25 @@
         .text-center { text-align: center; }
         .text-right { text-align: right; }
 
-        /* Buttons */
-        .btn {
-            padding: 10px 20px;
-            border-radius: 4px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 9.5pt;
-            border: none;
-            font-family: inherit;
-        }
-        .btn-primary {
-            background-color: #F37021;
-            color: #FFFFFF;
-        }
-        .btn-primary:hover { background-color: #D35400; }
-        
-        .btn-secondary {
-            background-color: #7F8C8D;
-            color: #FFFFFF;
-        }
-        .btn-secondary:hover { background-color: #616A6B; }
-
-        .btn-action-sm {
-            padding: 6px 12px;
-            font-size: 8.5pt;
-            margin-top: 5px;
-        }
-
         /* Badges */
+        .badge-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background: #FFFFFF;
+            border: 1px solid #E0E0E0;
+            padding: 12px;
+            border-radius: 4px;
+        }
         .member-badge {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            padding: 6px 12px;
             background-color: #FFF3EB;
             border: 1px solid #F37021;
-            color: #333333;
-            padding: 6px 12px;
-            border-radius: 20px;
+            border-radius: 4px;
             font-size: 9pt;
-            margin-left: 20px;
-        }
-        .remove-btn {
-            color: #E74C3C;
-            cursor: pointer;
-            font-weight: bold;
+            font-weight: 500;
         }
 
         /* Footer Bars */
@@ -413,39 +333,10 @@
             padding: 0 20px;
             font-size: 8.5pt;
             z-index: 1000;
-            border-bottom: 1px solid #001122;
         }
         .footer-bar {
             bottom: 0;
             background-color: #F37021;
-            border-bottom: none;
-        }
-        .footer-col { display: flex; align-items: center; }
-
-        /* AI Widget */
-        .ai-widget {
-            position: fixed;
-            bottom: 75px;
-            right: 20px;
-            background-color: #003366;
-            color: #FFFFFF;
-            padding: 10px 18px;
-            border-radius: 30px;
-            font-size: 9pt;
-            font-weight: bold;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            z-index: 1001;
-        }
-        .ai-avatar-dot {
-            width: 8px;
-            height: 8px;
-            background-color: #2ECC71;
-            border-radius: 50%;
-            display: inline-block;
         }
     </style>
 </head>
@@ -459,20 +350,17 @@
         </div>
         <div class="nav-col nav-center">
             <div class="search-container">
-                <input type="text" class="search-input" placeholder="Search menu...">
+                <input type="text" class="search-input" placeholder="Search menu / Laporan Pertanggungjawaban...">
                 <span class="search-icon">&#128269;</span>
             </div>
         </div>
         <div class="nav-col nav-right">
-            <span style="font-size: 14pt; margin-right: 15px; cursor: pointer; position: relative; color: #555555;">
-                &#128276;<span style="position: absolute; top: -2px; right: -4px; background: red; color: white; font-size: 7pt; padding: 1px 4px; border-radius: 50%;">3</span>
-            </span>
-            <span style="font-size: 14pt; margin-right: 15px; cursor: pointer; color: #555555;">&#127912;</span>
+            <span style="font-size: 14pt; margin-right: 15px; cursor: pointer; color: #555555;">&#128276;</span>
             <div class="user-profile">
-                <p class="user-name">Hi, Muh. Nur Alif Akbar</p>
-                <p class="user-status">Have a good rest</p>
+                <p class="user-name">Hi, Staff Evaluator Affairs</p>
+                <p class="user-status">Reviewing mode</p>
             </div>
-            <div class="avatar">A</div>
+            <div class="avatar">SA</div>
         </div>
     </div>
 
@@ -486,395 +374,304 @@
     <div class="wrapper">
         
         <div class="breadcrumb-bar">
-            My Activity / Student Organization / <span class="active">Student Organization Annual Plan (CEdX Engine)</span>
+            Approval System / Student Affairs / <span class="active">Detail Evaluasi LPJ (CEdX Engine)</span>
         </div>
 
-        <!-- PANEL 1: IDENTITAS KEGIATAN -->
-        <div class="panel">
-            <div class="panel-title">Identitas Kegiatan &amp; Organizer</div>
-            <table class="form-table">
-                <tr>
-                    <td class="label-cell">Judul Kegiatan</td>
-                    <td><input type="text" class="form-control" placeholder="Masukkan judul kegiatan secara lengkap..."></td>
-                </tr>
-                <tr>
-                    <td class="label-cell">Nama Program (RKT)</td>
-                    <td>
-                        <select class="form-control">
-                            <option value="">-- Pilih Nama Program Sesuai RKT di CIS Ormawa --</option>
-                            <option>RKT 01 - Pelatihan Karakter Kepemimpinan Mahasiswa Tingkat Dasar</option>
-                            <option>RKT 02 - Pengembangan Skala Minat &amp; Bakat Kompetisi Nasional</option>
-                            <option>RKT 03 - Pengabdian Masyarakat Berkelanjutan Berbasis 17 SDGs</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="label-cell">Atas Nama (Organizer)</td>
-                    <td>
-                        <select class="form-control" id="organizerType" onchange="toggleOrmawaChecklist()">
-                            <option value="">-- Pilih Kategori Penyelenggara --</option>
-                            <option value="ORMAWA">Organisasi Kemahasiswaan (ORMAWA)</option>
-                            <option value="PRODI">Program Studi (Prodi)</option>
-                            <option value="DEPT">Department</option>
-                            <option value="MATKUL">Mata Kuliah</option>
-                        </select>
-                        <div id="ormawaChecklistBlock" class="conditional-box" style="display: none;">
-                            <label style="color: #003366;">Pilih Sub-Unit / Afiliasi Resmi (List CIS Ormawa &amp; CIS UKM):</label>
-                            <div class="checkbox-grid" style="margin: 0; padding: 10px; background: transparent; border: none;">
-                                <div class="grid-row">
-                                    <div class="grid-item"><input type="checkbox" id="sc"> <label for="sc">SC (Student Council)</label></div>
-                                    <div class="grid-item"><input type="checkbox" id="srb"> <label for="srb">SRB (Student Representative Board)</label></div>
-                                    <div class="grid-item"><input type="checkbox" id="su"> <label for="su">SU (Student Union)</label></div>
-                                    <div class="grid-item"><input type="checkbox" id="md"> <label for="md">MD (Majelis Dewan)</label></div>
-                                </div>
-                                <div class="grid-row" style="margin-top: 10px;">
-                                    <div class="grid-item"><input type="checkbox" id="ukm"> <label for="ukm">UKM (List CIS UKM / Inject)</label></div>
-                                    <div class="grid-item"><button type="button" class="btn btn-secondary btn-action-sm">+ Tambah Organizer Kolaborasi</button></div>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="label-cell">PIC Kegiatan</td>
-                    <td>
-                        <input type="text" class="form-control" id="picInput" placeholder="Ketik nama lengkap Staff / Dosen / Pembina / Mahasiswa..." onkeyup="triggerAutocomplete()">
-                        <div class="hint">Sistem akan otomatis mencocokkan nama non-UCPeople/UCPeople dari Database core.</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="label-cell">NIM / NIK</td>
-                    <td><input type="text" class="form-control" id="nimInput" placeholder="Autocomplete..." readonly style="background-color: #F5F5F5;"></td>
-                </tr>
-                <tr>
-                    <td class="label-cell">Contact Person</td>
-                    <td>
-                        <div class="radio-group">
-                            <label class="radio-inline"><input type="radio" name="cp_type" checked> Email Resmi Ormawa</label>
-                            <label class="radio-inline"><input type="radio" name="cp_type"> Email Pribadi</label>
-                        </div>
-                        <input type="email" class="form-control" style="margin-top: 8px;" placeholder="contoh: studentunion@student.ciputra.ac.id">
-                    </td>
-                </tr>
-                <tr>
-                    <td class="label-cell">No. Rekening</td>
-                    <td><input type="text" class="form-control" placeholder="Masukkan nomor rekening penampung anggaran..."></td>
-                </tr>
-                <tr>
-                    <td class="label-cell">Deskripsi Latar Belakang</td>
-                    <td><textarea class="form-control" placeholder="Tuliskan latar belakang &amp; manfaat dari pengadaan kegiatan ini..."></textarea></td>
-                </tr>
-            </table>
-        </div>
-
-        <!-- PANEL 2: MATRIKS CPL & SDGS -->
-        <div class="panel">
-            <div class="panel-title">Tujuan &amp; Keselarasan Makro (CPL 2025)</div>
-            <label>1. Deskripsi Tujuan Kegiatan</label>
-            <textarea class="form-control" placeholder="Tuliskan tujuan spesifik penyelenggaraan..."></textarea>
-            
-            <div class="grid-title"><span style="color: #F37021;">[Matrix Option]</span> Keselarasan 17 SDGs (Sustainable Development Goals)</div>
-            <div class="checkbox-grid">
-                <div class="grid-row">
-                    <div class="grid-item"><input type="checkbox" id="sdg1"> <label for="sdg1">1. No Poverty</label></div>
-                    <div class="grid-item"><input type="checkbox" id="sdg6"> <label for="sdg6">6. Clean Water &amp; Sanitation</label></div>
-                    <div class="grid-item"><input type="checkbox" id="sdg11"> <label for="sdg11">11. Sustainable Cities</label></div>
-                    <div class="grid-item"><input type="checkbox" id="sdg16"> <label for="sdg16">16. Peace &amp; Justice</label></div>
-                </div>
-                <div class="grid-row">
-                    <div class="grid-item"><input type="checkbox" id="sdg2"> <label for="sdg2">2. Zero Hunger</label></div>
-                    <div class="grid-item"><input type="checkbox" id="sdg7"> <label for="sdg7">7. Affordable &amp; Clean Energy</label></div>
-                    <div class="grid-item"><input type="checkbox" id="sdg12"> <label for="sdg12">12. Responsible Consumption</label></div>
-                    <div class="grid-item"><input type="checkbox" id="sdg17"> <label report="sdg17">17. Partnership for Goals</label></div>
-                </div>
-                <div class="grid-row">
-                    <div class="grid-item"><input type="checkbox" id="sdg3"> <label for="sdg3">3. Good Health &amp; Wellbeing</label></div>
-                    <div class="grid-item"><input type="checkbox" id="sdg8"> <label for="sdg8">8. Decent Work &amp; Economy</label></div>
-                    <div class="grid-item"><input type="checkbox" id="sdg13"> <label for="sdg13">13. Climate Action</label></div>
-                </div>
-                <div class="grid-row">
-                    <div class="grid-item"><input type="checkbox" id="sdg4"> <label for="sdg4">4. Quality Education</label></div>
-                    <div class="grid-item"><input type="checkbox" id="sdg9"> <label for="sdg9">9. Industry &amp; Innovation</label></div>
-                    <div class="grid-item"><input type="checkbox" id="sdg14"> <label for="sdg14">14. Life Below Water</label></div>
-                </div>
-                <div class="grid-row">
-                    <div class="grid-item"><input type="checkbox" id="sdg5"> <label for="sdg5">5. Gender Equality</label></div>
-                    <div class="grid-item"><input type="checkbox" id="sdg10"> <label for="sdg10">10. Reduced Inequalities</label></div>
-                    <div class="grid-item"><input type="checkbox" id="sdg15"> <label for="sdg15">15. Life On Land</label></div>
-                </div>
-            </div>
-
-            <div class="grid-title"><span style="color: #F37021;">[Matrix Option]</span> Kategori Rekognisi SIMKATMAWA</div>
-            <div class="checkbox-grid">
-                <div class="grid-row">
-                    <div class="grid-item"><input type="checkbox" id="sim1"> <label for="sim1">Pelatihan Militer/Wawasan Nusantara</label></div>
-                    <div class="grid-item"><input type="checkbox" id="sim2"> <label for="sim2">Pendidikan Karakter &amp; Soft Skills</label></div>
-                    <div class="grid-item"><input type="checkbox" id="sim3"> <label for="sim3">Gerakan Anti Korupsi</label></div>
-                </div>
-                <div class="grid-row">
-                    <div class="grid-item"><input type="checkbox" id="sim4"> <label for="sim4">Pelatihan Kepemimpinan Mahasiswa</label></div>
-                    <div class="grid-item"><input type="checkbox" id="sim5"> <label for="sim5">Gerakan Anti Penyalahgunaan NAPZA</label></div>
-                    <div class="grid-item"><input type="checkbox" id="sim6"> <label for="sim6">Gerakan Anti Radikalisme</label></div>
-                </div>
-                <div class="grid-row">
-                    <div class="grid-item"><input type="checkbox" id="sim7"> <label for="sim7">Pencegahan Kekerasan Seksual &amp; Bullying</label></div>
-                    <div class="grid-item"><input type="checkbox" id="sim8"> <label for="sim8">Kampanye Kampus Sehat / Green Campus</label></div>
-                    <div class="grid-item"><input type="checkbox" id="sim9"> <label for="sim9">Tuan Rumah Kompetisi</label></div>
-                </div>
+        <!-- TOP BAR ACTIONS BUTTONS -->
+        <div class="top-action-bar">
+            <a href="javascript:history.back()" class="btn-back">← Kembali ke Dashboard</a>
+            <div class="approval-actions">
+                <button class="btn-revision" onclick="actionLPJ('Revision')">⚠ Need Revision</button>
+                <button class="btn-reject" onclick="actionLPJ('Reject')">❌ Reject LPJ</button>
+                <button class="btn-approve" onclick="actionLPJ('Approve')">✓ Approve LPJ</button>
             </div>
         </div>
 
-        <!-- PANEL 3: RUANG LINGKUP -->
+        <!-- PANEL 1: IDENTITAS KEGIATAN & ORGANIZER -->
         <div class="panel">
-            <div class="panel-title">Ruang Lingkup &amp; Sub Kegiatan Sheet Mapping</div>
-            <table class="form-table" style="margin-bottom: 15px;">
-                <tr>
-                    <td class="label-cell">Link Informasi</td>
-                    <td>
-                        <input type="url" class="form-control" style="width: 48%; display: inline-block;" placeholder="Website resmi...">
-                        <input type="text" class="form-control" style="width: 48%; display: inline-block; float: right;" placeholder="Instagram handle...">
-                    </td>
-                </tr>
-                <tr>
-                    <td class="label-cell">Target Peserta</td>
-                    <td>
-                        <input type="number" class="form-control" style="display:inline-block; width:150px;" placeholder="Kuantitas target...">
-                        <select class="form-control" style="display:inline-block; width:120px;">
-                            <option>Orang</option>
-                            <option>Tim</option>
-                        </select>
-                        <button type="button" class="btn btn-secondary btn-action-sm" style="margin-top:0;">+ Tambah Target</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="label-cell">Kriteria Peserta</td>
-                    <td><input type="text" class="form-control" placeholder="Contoh: Mahasiswa Aktif IBM tingkat akhir..."></td>
-                </tr>
-            </table>
-
-            <div class="split-layout">
-                <div class="split-col">
-                    <label>Jenis / Matriks Sub Kegiatan (Select One):</label>
-                    <div class="scroll-list-box">
-                        <div class="scroll-list-item"><input type="radio" name="sub_k" id="s1"> <label for="s1">Kegiatan Marketing / Seminar / Talkshow</label></div>
-                        <div class="scroll-list-item"><input type="radio" name="sub_k" id="s2"> <label for="s2">Serah Terima Jabatan UKM</label></div>
-                        <div class="scroll-list-item"><input type="radio" name="sub_k" id="s3"> <label for="s3">Pra-Lead Camp / Lead Camp</label></div>
-                        <div class="scroll-list-item"><input type="radio" name="sub_k" id="s4"> <label for="s4">Workshop / Pelatihan Karakter</label></div>
-                        <div class="scroll-list-item"><input type="radio" name="sub_k" id="s5"> <label for="s5">Internship Organisasi Kemahasiswaan</label></div>
-                        <div class="scroll-list-item"><input type="radio" name="sub_k" id="s6"> <label for="s6">Kepedulian Sosial / Pengabdian Masyarakat</label></div>
-                        <div class="scroll-list-item"><input type="radio" name="sub_k" id="s7"> <label for="s7">Studi Banding / Studi Ekskursi / Rapat Periode</label></div>
-                        <div class="scroll-list-item"><input type="radio" name="sub_k" id="s8"> <label for="s8">Ormawa Fest / Campjur / Expo / Bonding / Bazaar</label></div>
-                        <div class="scroll-list-item"><input type="radio" name="sub_k" id="s9"> <label for="s9">Monitoring Bulanan SA (Juli s/d Maret)</label></div>
-                        <div class="scroll-list-item"><input type="radio" name="sub_k" id="s10"> <label for="s10">Sosialisasi TAP KUOK / TAP SANKSI / TAP OC</label></div>
-                        <div class="scroll-list-item"><input type="radio" name="sub_k" id="s11"> <label for="s11">Employability / Entrepreneurship / Conference</label></div>
+            <div class="panel-title">
+                <span>Section 1: Identitas Kegiatan &amp; Organizer</span>
+                <span style="font-size: 8.5pt; background: white; color: #F37021; padding: 2px 8px; border-radius: 4px;">Waiting Review</span>
+            </div>
+            <div class="vertical-stack">
+                <div class="data-group">
+                    <div class="data-label">Judul Kegiatan</div>
+                    <div class="data-value" style="font-weight: bold;">Mental Health Month 2026</div>
+                </div>
+                <div class="data-group">
+                    <div class="data-label">Nama Program Sesuai RKT (CIS Ormawa)</div>
+                    <div class="data-value">RKT 02 - Pengembangan Skala Minat &amp; Bakat Kompetisi Nasional</div>
+                </div>
+                <div class="inline-row">
+                    <div class="data-group">
+                        <div class="data-label">Atas Nama (Organizer)</div>
+                        <div class="data-value">Organisasi Kemahasiswaan (ORMAWA)</div>
+                    </div>
+                    <div class="data-group">
+                        <div class="data-label">Sub-Unit / Afiliasi Resmi</div>
+                        <div class="data-value">SU (Student Union) &amp; SC (Student Council) - [Kolaborasi]</div>
                     </div>
                 </div>
-                <div class="split-col">
-                    <label>Skala Cakupan Kegiatan (Pilih Salah Satu):</label>
-                    <div style="padding-top: 5px;">
-                        <div style="margin-bottom:10px;" class="grid-item"><input type="radio" name="skala" id="sc1"> <label for="sc1"><strong>Internal Jurusan/Prodi</strong></label></div>
-                        <div style="margin-bottom:10px;" class="grid-item"><input type="radio" name="skala" id="sc2"> <label for="sc2"><strong>Internal Sekolah/Universitas</strong></label></div>
-                        <div style="margin-bottom:10px;" class="grid-item"><input type="radio" name="skala" id="sc3"> <label for="sc3"><strong>Provinsi/Regional</strong> (Min. 2 Kabupaten/Kota)</label></div>
-                        <div style="margin-bottom:10px;" class="grid-item"><input type="radio" name="skala" id="sc4"> <label for="sc4"><strong>Nasional</strong> (Min. 3 Provinsi)</label></div>
-                        <div style="margin-bottom:10px;" class="grid-item"><input type="radio" name="skala" id="sc5"> <label for="sc5"><strong>Internasional</strong> (Min. 2 Negara)</label></div>
+                <div class="inline-row">
+                    <div class="data-group">
+                        <div class="data-label">PIC Kegiatan (Staff / Dosen / Mahasiswa)</div>
+                        <div class="data-value">Muh. Nur Alif Akbar</div>
+                    </div>
+                    <div class="data-group">
+                        <div class="data-label">NIM / NIK / NUPTK</div>
+                        <div class="data-value">070601231XXXX (Core Database Autocomplete)</div>
+                    </div>
+                </div>
+                <div class="inline-row">
+                    <div class="data-group">
+                        <div class="data-label">Contact Person (Email Resmi)</div>
+                        <div class="data-value">studentunion@student.ciputra.ac.id</div>
+                    </div>
+                    <div class="data-group">
+                        <div class="data-label">Nomor Rekening Penampung Anggaran</div>
+                        <div class="data-value">BCA - 8290XXXXXX</div>
+                    </div>
+                </div>
+                <div class="data-group">
+                    <div class="data-label">Deskripsi Latar Belakang &amp; Manfaat Pengadaan</div>
+                    <div class="data-value" style="display: block; line-height: 1.5; padding: 12px;">
+                        Kegiatan ini diselenggarakan untuk meningkatkan kesadaran mahasiswa Universitas Ciputra mengenai kesehatan mental pasca ujian semester, sekaligus memenuhi standarisasi poin SIMKATMAWA universitas melalui seminar interaktif nasional.
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- PANEL 4: OPERASIONAL -->
+        <!-- PANEL 2: TUJUAN & KESELARASAN MAKRO -->
         <div class="panel">
-            <div class="panel-title">Rencana Operasional &amp; Logistik</div>
-            <table class="form-table">
-                <tr>
-                    <td class="label-cell">Waktu Pelaksanaan</td>
-                    <td>
-                        <input type="date" class="form-control" style="width:48%; display:inline-block;">
-                        <input type="time" class="form-control" style="width:48%; display:inline-block; float:right;">
-                    </td>
-                </tr>
-                <tr>
-                    <td class="label-cell">Opsi Absensi Digital</td>
-                    <td>
-                        <div class="radio-group">
-                            <label class="radio-inline"><input type="radio" name="abs" onchange="toggleAbsBlock(true)"> Perlu Absensi Mandiri</label>
-                            <label class="radio-inline"><input type="radio" name="abs" checked onchange="toggleAbsBlock(false)"> Tidak Perlu</label>
+            <div class="panel-title">Section 2: Tujuan &amp; Keselarasan Makro (CPL 2025)</div>
+            <div class="vertical-stack">
+                <div class="data-group">
+                    <div class="data-label">Deskripsi Capaian &amp; Tujuan Realisasi Kegiatan</div>
+                    <div class="data-value">Mencapai pemahaman regulasi emosi diri dan memenuhi standar pilar Kampus Sehat.</div>
+                </div>
+
+                <div class="data-group">
+                    <div class="data-label">Matriks Keselarasan 17 SDGs (Sustainable Development Goals)</div>
+                    <div class="matrix-box">
+                        <div class="matrix-row">
+                            <div class="matrix-item"><input type="checkbox" checked disabled> <label>3. Good Health &amp; Wellbeing (Terpilih)</label></div>
+                            <div class="matrix-item"><input type="checkbox" checked disabled> <label>4. Quality Education (Terpilih)</label></div>
+                            <div class="matrix-item"><input type="checkbox" disabled> <label>17. Partnership for Goals</label></div>
                         </div>
-                        <div id="absBlock" class="conditional-box" style="display:none;">
-                            <label style="font-size:9pt;">NIM / Nama PIC Absensi Penanggung Jawab:</label>
-                            <input type="text" class="form-control" placeholder="Masukkan PIC gatekeeper...">
+                    </div>
+                </div>
+
+                <div class="data-group">
+                    <div class="data-label">Kategori Rekognisi SIMKATMAWA / Non-SIMKATMAWA / KP Wajib</div>
+                    <div class="matrix-box">
+                        <div class="matrix-row">
+                            <div class="matrix-item"><input type="checkbox" checked disabled> <label>Pendidikan Karakter &amp; Soft Skills</label></div>
+                            <div class="matrix-item"><input type="checkbox" checked disabled> <label>Kampanye Kampus Sehat / Green Campus</label></div>
+                            <div class="matrix-item"><input type="checkbox" disabled> <label>Pelatihan Kepemimpinan Mahasiswa</label></div>
                         </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="label-cell">Tempat Spesifik</td>
-                    <td><input type="text" class="form-control" placeholder="Sebutkan lokasi detail (Contoh: Oval Area, Ruang 402)..."></td>
-                </tr>
-                <tr>
-                    <td class="label-cell">Metode Kegiatan</td>
-                    <td>
-                        <select class="form-control">
-                            <option>Online</option>
-                            <option>Offline</option>
-                            <option>Hybrid</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="label-cell">Staff / Dosen Pendamping</td>
-                    <td><input type="text" class="form-control" placeholder="Gunakan koma (,) jika penasihat lebih dari satu..."></td>
-                </tr>
-                <tr>
-                    <td class="label-cell">Attachment Lampiran</td>
-                    <td>
-                        <input type="file" class="form-control" accept=".pdf">
-                        <div class="hint" style="color:#D35400; font-weight:bold;">Wajib mengunggah susunan timeline &amp; detail kegiatan (.pdf) berdasarkan template proposal event SA.</div>
-                    </td>
-                </tr>
-            </table>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!-- PANEL 5: ANGGARAN (RAB) -->
+        <!-- PANEL 3: RUANG LINGKUP & SUB KEGIATAN -->
         <div class="panel">
-            <div class="panel-title">Konsolidasi Rencana Anggaran (RAB Sheet Grid)</div>
+            <div class="panel-title">Section 3: Ruang Lingkup &amp; Sub Kegiatan Sheet Mapping</div>
+            <div class="vertical-stack">
+                <div class="inline-row">
+                    <div class="data-group">
+                        <div class="data-label">Link Informasi Website</div>
+                        <div class="data-value"><a href="#" style="color:#F37021;">https://mhmonth2026.ciputra.ac.id</a></div>
+                    </div>
+                    <div class="data-group">
+                        <div class="data-label">Link Informasi Instagram Handle</div>
+                        <div class="data-value">@mhmonth.uc</div>
+                    </div>
+                </div>
+                <div class="inline-row">
+                    <div class="data-group">
+                        <div class="data-label">Target Kuantitas &amp; Jenis Kriteria Peserta</div>
+                        <div class="data-value">350 Orang (Mahasiswa Aktif UC &amp; Umum tingkat akhir)</div>
+                    </div>
+                    <div class="data-group">
+                        <div class="data-label">Jumlah Target Mahasiswa UC Realisasi</div>
+                        <div class="data-value">280 Mahasiswa Terdaftar Absensi</div>
+                    </div>
+                </div>
+                
+                <div class="inline-row">
+                    <div class="data-group">
+                        <div class="data-label">Jenis / Matriks Sub Kegiatan (Sheet Checked)</div>
+                        <div class="data-value" style="font-weight: bold; color: #003366;">Seminar / Talkshow &amp; Workshop</div>
+                    </div>
+                    <div class="data-group">
+                        <div class="data-label">Skala Cakupan Kegiatan</div>
+                        <div class="data-value" style="font-weight: bold; color: #D35400;">Nasional (Minimal 4 Provinsi)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PANEL 4: RENCANA REALISASI KEGIATAN -->
+        <div class="panel">
+            <div class="panel-title">Section 4: Realisasi Operasional Kegiatan &amp; Lampiran</div>
+            <div class="vertical-stack">
+                <div class="inline-row">
+                    <div class="data-group">
+                        <div class="data-label">Hari &amp; Tanggal Pelaksanaan</div>
+                        <div class="data-value">Kamis, 18 Juni 2026</div>
+                    </div>
+                    <div class="data-group">
+                        <div class="data-label">Waktu Operasional</div>
+                        <div class="data-value">09:00 - 13:00 WIB</div>
+                    </div>
+                </div>
+                <div class="inline-row">
+                    <div class="data-group">
+                        <div class="data-label">Tempat Spesifik / Lokasi</div>
+                        <div class="data-value">Auditorium Lt. 7, Universitas Ciputra Surabaya</div>
+                    </div>
+                    <div class="data-group">
+                        <div class="data-label">Metode Kegiatan</div>
+                        <div class="data-value">Hybrid (Offline di Lokasi &amp; Online via Zoom)</div>
+                    </div>
+                </div>
+                <div class="data-group">
+                    <div class="data-label">Staff / Dosen Pendamping / Penasihat</div>
+                    <div class="data-value">Dr. Ir. Bobby Santoso, M.M., Rinawati S.Psi.</div>
+                </div>
+                <div class="data-group">
+                    <div class="data-label">Attachment Berkas Dokumen Pendukung (.pdf)</div>
+                    <div class="data-value" style="background-color: #FFF3EB; border: 1px dashed #F37021;">
+                        <span style="color: #333;">📄 <strong>Realisasi_Timeline_&amp;_Berita_Acara_LPJ.pdf</strong></span>
+                        <a href="#" style="margin-left: auto; color: #F37021; font-weight: bold; text-decoration: none;">👁 Unduh / Pratinjau File</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PANEL 5: KONSOLIDASI ANGGARAN (RAB GRID) -->
+        <div class="panel">
+            <div class="panel-title">Section 5: Konsolidasi Anggaran Akhir (RAB Realisasi Sheet)</div>
             
-            <label>1. Proyeksi Sumber Pendapatan (Revenue Stream)</label>
+            <label style="display: block; font-size: 9.5pt; font-weight: bold; color: #003366; margin: 15px 20px 8px 20px;">1. Proyeksi Pendapatan (Revenue Stream)</label>
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th style="width:5%; text-align: center;">No</th>
+                        <th style="width: 5%; text-align: center;">No</th>
                         <th>Kategori Dropdown Sumber Dana</th>
-                        <th style="width:15%; text-align: center;">Volume</th>
-                        <th style="width:20%; text-align: center;">Harga Satuan</th>
-                        <th style="width:20%; text-align: center;">Total Nilai</th>
+                        <th style="width: 15%; text-align: center;">Volume</th>
+                        <th style="width: 20%; text-align: center;">Harga Satuan</th>
+                        <th style="width: 20%; text-align: center;">Total Nilai</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td class="text-center">1</td><td>Dana Alokasi Program Studi (Prodi)</td><td><input type="number" class="form-control text-center" value="1"></td><td><input type="number" class="form-control text-right" value="0"></td><td class="text-right">Rp 0</td></tr>
-                    <tr><td class="text-center">2</td><td>Dana Taktis Student Affairs (SA) <span style="color:#D35400;">*Dropdown Budget Alokasi</span></td><td><input type="number" class="form-control text-center" value="1"></td><td><input type="number" class="form-control text-right" value="0"></td><td class="text-right">Rp 0</td></tr>
-                    <tr><td class="text-center">3</td><td>Fundraising Organisasi</td><td><input type="number" class="form-control text-center" value="0"></td><td><input type="number" class="form-control text-right" value="0"></td><td class="text-right">Rp 0</td></tr>
-                    <tr><td class="text-center">4</td><td>Ticketing Peserta</td><td><input type="number" class="form-control text-center" value="0"></td><td><input type="number" class="form-control text-right" value="0"></td><td class="text-right">Rp 0</td></tr>
-                    <tr><td class="text-center">5</td><td>Dana Internal ORMAWA</td><td><input type="number" class="form-control text-center" value="0"></td><td><input type="number" class="form-control text-right" value="0"></td><td class="text-right">Rp 0</td></tr>
-                    <tr><td class="text-center">6</td><td>Sponsorship Eksternal</td><td><input type="number" class="form-control text-center" value="0"></td><td><input type="number" class="form-control text-right" value="0"></td><td class="text-right">Rp 0</td></tr>
-                    <tr><td class="text-center">7</td><td>Dana Lain-lain</td><td><input type="number" class="form-control text-center" value="0"></td><td><input type="number" class="form-control text-right" value="0"></td><td class="text-right">Rp 0</td></tr>
-                    <tr class="bg-total"><td colspan="4" class="text-right">Grand Total Pendapatan:</td><td class="text-right" style="color:green;">Rp 0</td></tr>
+                    <tr><td class="text-center">1</td><td>Dana Sponsor SA / Alokasi Pusat Student Affairs</td><td class="text-center">1</td><td class="text-right">Rp 4.500.000</td><td class="text-right">Rp 4.500.000</td></tr>
+                    <tr><td class="text-center">2</td><td>Dana Alokasi Program Studi (Prodi)</td><td class="text-center">1</td><td class="text-right">Rp 1.500.000</td><td class="text-right">Rp 1.500.000</td></tr>
+                    <tr><td class="text-center">3</td><td>Fundraising Mandiri Organisasi</td><td class="text-center">1</td><td class="text-right">Rp 850.000</td><td class="text-right">Rp 850.000</td></tr>
+                    <tr><td class="text-center">4</td><td>Ticketing Peserta Eksternal</td><td class="text-center">50</td><td class="text-right">Rp 20.000</td><td class="text-right">Rp 1.000.000</td></tr>
+                    <tr class="bg-total"><td colspan="4" class="text-right">Grand Total Realisasi Pendapatan:</td><td class="text-right" style="color:green;">Rp 7.850.000</td></tr>
                 </tbody>
             </table>
 
-            <label style="margin-top:20px;">2. Alokasi Pengeluaran (Cost Center - Manual Input)</label>
+            <label style="display: block; font-size: 9.5pt; font-weight: bold; color: #003366; margin: 20px 20px 8px 20px;">2. Realisasi Pengeluaran (Cost Center Sheet)</label>
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th style="width:5%; text-align: center;">No</th>
-                        <th>Pos Pengeluaran Acara</th>
-                        <th style="width:15%; text-align: center;">Volume</th>
-                        <th style="width:20%; text-align: center;">Harga Satuan</th>
-                        <th style="width:20%; text-align: center;">Total</th>
+                        <th style="width: 5%; text-align: center;">No</th>
+                        <th>Pos Pengeluaran Riil Lapangan</th>
+                        <th style="width: 15%; text-align: center;">Volume</th>
+                        <th style="width: 20%; text-align: center;">Harga Satuan</th>
+                        <th style="width: 20%; text-align: center;">Total</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td class="text-center">1</td><td>Sewa Tempat / Sarana Prasarana</td><td><input type="number" class="form-control text-center"></td><td><input type="number" class="form-control text-right"></td><td class="text-right">Rp 0</td></tr>
-                    <tr><td class="text-center">2</td><td>Transportasi &amp; Akomodasi Logistik</td><td><input type="number" class="form-control text-center"></td><td><input type="number" class="form-control text-right"></td><td class="text-right">Rp 0</td></tr>
-                    <tr><td class="text-center">3</td><td>Konsumsi Delegasi &amp; Komite</td><td><input type="number" class="form-control text-center"></td><td><input type="number" class="form-control text-right"></td><td class="text-right">Rp 0</td></tr>
-                    <tr><td class="text-center">4</td><td>Perlengkapan Produksi / Atribut</td><td><input type="number" class="form-control text-center"></td><td><input type="number" class="form-control text-right"></td><td class="text-right">Rp 0</td></tr>
-                    <tr><td class="text-center">5</td><td>Biaya Acara / Kejuaraan / Sertifikasi</td><td><input type="number" class="form-control text-center"></td><td><input type="number" class="form-control text-right"></td><td class="text-right">Rp 0</td></tr>
-                    <tr class="bg-total"><td colspan="4" class="text-right">Grand Total Pengeluaran:</td><td class="text-right" style="color:#D35400;">Rp 0</td></tr>
+                    <tr><td class="text-center">1</td><td>Sewa Zoom Cloud Meetings &amp; Multimedia Sarana</td><td class="text-center">1</td><td class="text-right">Rp 500.000</td><td class="text-right">Rp 500.000</td></tr>
+                    <tr><td class="text-center">2</td><td>Transportasi Pemateri Nasional &amp; Logistik Penjemputan</td><td class="text-center">1</td><td class="text-right">Rp 1.200.000</td><td class="text-right">Rp 1.200.000</td></tr>
+                    <tr><td class="text-center">3</td><td>Konsumsi Delegasi, Pembina, &amp; Komite Panitia</td><td class="text-center">80</td><td class="text-right">Rp 30.000</td><td class="text-right">Rp 2.400.000</td></tr>
+                    <tr><td class="text-center">4</td><td>Perlengkapan Produksi, Atribut Banner, &amp; Cetak Sertifikat</td><td class="text-center">1</td><td class="text-right">Rp 1.500.000</td><td class="text-right">Rp 1.500.000</td></tr>
+                    <tr><td class="text-center">5</td><td>Honorarium Pembicara Utama / Jasa Kejuaraan</td><td class="text-center">1</td><td class="text-right">Rp 2.000.000</td><td class="text-right">Rp 2.000.000</td></tr>
+                    <tr class="bg-total"><td colspan="4" class="text-right">Grand Total Pengeluaran Riil:</td><td class="text-right" style="color:#D35400;">Rp 7.600.000</td></tr>
                 </tbody>
             </table>
         </div>
 
-        <!-- PANEL 6: INVITATION ENGINE -->
+        <!-- PANEL 6: INVITATION STRUCTURE (PANITIA TERLIBAT) -->
         <div class="panel">
-            <div class="panel-title">Invitation Engine (Add Committee Structure)</div>
-            <div class="split-layout" style="background: transparent; border: none; padding: 0 20px;">
-                <div style="flex: 2;">
-                    <label style="margin: 0 0 5px 0;">Nama / NIM Panitia / Vacancy - HOD:</label>
-                    <input type="text" class="form-control" placeholder="Cari nama komite...">
+            <div class="panel-title">Section 6: Struktur Komite &amp; Kepanitiaan (Invitation System Core)</div>
+            <div class="vertical-stack">
+                <div class="data-label">Daftar BPH (Ketua, Wakil, Bendahara, Sekretaris) &amp; Anggota Terdaftar:</div>
+                <div class="badge-list">
+                    <div><span class="member-badge">👤 Muh. Nur Alif Akbar (ISB) - <strong>Project Manager / Ketua</strong> (Contact: +62 812-XXXX)</span></div>
+                    <div><span class="member-badge">👤 Clara Setyawan (IBM) - <strong>Secretary / Sekretaris</strong></span></div>
+                    <div><span class="member-badge">👤 Raymond Tan (IMT) - <strong>HOD / Koor Divisi Acara</strong></span></div>
+                    <div><span class="member-badge">👤 Jessica Wong (VCD) - <strong>HOD / Koor Divisi Perlengkapan</strong></span></div>
                 </div>
-                <div style="flex: 1;">
-                    <label style="margin: 0 0 5px 0;">Position:</label>
-                    <select class="form-control"><option>Project Manager</option><option>Secretary</option><option>HOD</option></select>
-                </div>
-                <div style="flex: 1;">
-                    <label style="margin: 0 0 5px 0;">Division:</label>
-                    <select class="form-control"><option>Acara</option><option>Perlengkapan</option><option>Konsumsi</option></select>
-                </div>
-                <div style="display: flex; align-items: flex-end;">
-                    <button class="btn btn-primary" style="height: 40px;">+ Invite</button>
-                </div>
-            </div>
-            <div style="margin-top:15px;">
-                <span class="member-badge">Muh. Nur Alif Akbar (ISB) - Project Manager <span class="remove-btn">&times;</span></span>
             </div>
         </div>
 
-        <!-- PANEL 7: ENFORCEMENT ENGINE RULE -->
+        <!-- PANEL 7: ENFORCEMENT ENGINE VALIDATION -->
         <div class="panel" style="border: 1px solid #F37021; background-color: #FFF3EB;">
-            <div class="panel-title" style="background-color: #003366;">Enforcement Engine: Aturan Rigid Kredit Poin (KP)</div>
-            <div class="hint" style="color:#333; font-size:9.5pt; margin: 0 20px 15px 20px;">
-                Sistem akan membaca basis data KRS mahasiswa dan Surat Keputusan (SK) Kepengurusan secara *real-time*.
-            </div>
-            <div class="split-layout">
-                <div class="split-col" style="background: transparent; border: none; border-right:1px solid #E0E0E0; padding-right:15px; border-radius: 0;">
-                    <label style="margin: 0 0 10px 0;">Apakah acara ini mengalokasikan KP untuk Peserta?</label>
-                    <div class="radio-group">
-                        <label class="radio-inline"><input type="radio" name="kp_pes" checked> Yes (Ada KP)</label>
-                        <label class="radio-inline"><input type="radio" name="kp_pes"> No</label>
+            <div class="panel-title" style="background-color: #003366;">Section 7: Validasi Aturan Rigid Kredit Poin (KP Engine)</div>
+            <div class="vertical-stack">
+                <div class="matrix-box" style="background: transparent; border: none; padding: 0;">
+                    <div class="matrix-row">
+                        <div class="matrix-item">
+                            <input type="radio" checked disabled> 
+                            <label><strong>Acara ada KP Peserta: YES</strong> (Realisasi sinkronisasi otomatis ke core poin kemahasiswaan)</label>
+                        </div>
                     </div>
-                    <div class="hint" style="color:#D35400; margin-top:12px; font-weight: bold;">
-                        &#9888; Note: Acara mata kuliah tidak menyediakan KP untuk semua mahasiswa yang mengambil mata kuliah tersebut (Validasi KRS Otomatis).
-                    </div>
-                </div>
-                <div class="split-col" style="background: transparent; border: none; padding-left:15px; border-radius: 0;">
-                    <label style="margin: 0 0 10px 0;">Apakah acara ini mengalokasikan KP untuk Panitia?</label>
-                    <div class="radio-group">
-                        <label class="radio-inline"><input type="radio" name="kp_pan" checked> Yes (Ada KP)</label>
-                        <label class="radio-inline"><input type="radio" name="kp_pan"> No</label>
-                    </div>
-                    <div class="hint" style="color:#D35400; margin-top:12px; font-weight: bold;">
-                        &#9888; Note: Anggota organisasi yang berpartisipasi dalam acara yang dijalankan oleh organisasi mereka sendiri tidak dapat menerima KP Panitia.
+                    <div style="margin-top: 5px; border-top: 1px dashed #CCCCCC; padding-top: 10px;"></div>
+                    <div class="matrix-row">
+                        <div class="matrix-item">
+                            <input type="radio" checked disabled> 
+                            <label><strong>Acara ada KP Panitia: YES</strong> (Hanya untuk anggota komite yang valid sesuai data SK Ormawa)</label>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- LOWER ACTIONS -->
-        <div style="text-align: right; margin-top: 25px;">
-            <button class="btn btn-secondary" style="margin-right:10px;">Save Draft</button>
-            <button class="btn btn-primary" style="padding:10px 25px;">Kirim Pengajuan Ke Student Affairs</button>
+        <!-- LOWER BOTTOM ACTIONS -->
+        <div style="text-align: right; margin-top: 25px; margin-bottom: 5px;">
+            <button class="btn-revision" style="padding: 12px 25px; margin-right: 10px;" onclick="actionLPJ('Revision')">⚠ Minta Revisi Berkas</button>
+            <button class="btn-approve" style="padding: 12px 35px; background-color: #F37021;" onclick="actionLPJ('Approve')">✓ Sahkan &amp; Approve LPJ</button>
         </div>
     </div>
 
-    <!-- FOOTER SYSTEMS -->
+    <!-- FOOTER SYSTEMS SYSTEMS -->
     <div class="tech-support-bar">
-        <div class="footer-col footer-left">
-            <strong>Tech Support:</strong>&nbsp;<span style="color:#25D366; cursor:pointer;">&#128172; WhatsApp Business Link (+62 811-xxxx-xxxx)</span>&nbsp;| Integrasi Database CIS Utama Aktif
+        <div class="footer-col">
+            <strong>Tech Support Integration:</strong>&nbsp;<span style="color:#25D366;">&#128172; WhatsApp Business CIS System</span>&nbsp;| Database Sinkronisasi Nilai Kredit Poin Aktif
         </div>
-        <div class="footer-col footer-right">Build System v1.4</div>
+        <div>Build System v1.4</div>
     </div>
     <div class="footer-bar">
-        <div class="footer-col footer-left">&#128205; CitraLand CBD Boulevard, Made, Kec. Sambikerep, Kota SBY, Jawa Timur 60219</div>
-        <div class="footer-col footer-right">&copy; 2026 | Universitas Ciputra Surabaya</div>
+        <div>&#128205; CitraLand CBD Boulevard, Made, Kec. Sambikerep, Surabaya, Jawa Timur 60219</div>
+        <div>&copy; 2026 | Universitas Ciputra Surabaya</div>
     </div>
 
-    <!-- AI WIDGET SUPPORT -->
-    <div class="ai-widget"><span class="ai-avatar-dot"></span> Need AI support?</div>
-
-    <!-- SYSTEM SCRIPT -->
+    <!-- ================= JAVASCRIPT SYSTEM ENGINE ================= -->
     <script>
-        function toggleOrmawaChecklist() {
-            var v = document.getElementById("organizerType").value;
-            document.getElementById("ormawaChecklistBlock").style.display = (v === "ORMAWA") ? "block" : "none";
-        }
-        function toggleAbsBlock(show) {
-            document.getElementById("absBlock").style.display = show ? "block" : "none";
-        }
-        function triggerAutocomplete() {
-            var input = document.getElementById("picInput").value;
-            if(input.length > 3) {
-                document.getElementById("nimInput").value = "070601231XXXX (Core Database Synced)";
-            } else {
-                document.getElementById("nimInput").value = "";
+        function actionLPJ(type) {
+            if(type === 'Approve') {
+                let konfirmasi = confirm("Apakah Anda yakin menyetujui seluruh laporan pertanggungjawaban (LPJ) kegiatan 'Mental Health Month 2026'? Tindakan ini akan mengunci anggaran riil dan mendistribusikan Kredit Poin (KP) otomatis.");
+                if(konfirmasi) {
+                    alert("Sukses! Laporan Pertanggungjawaban (LPJ) disetujui mutlak dan status berubah menjadi Selesai.");
+                    window.location.href = "dashboard_staff.html";
+                }
+            } else if(type === 'Revision') {
+                let alasan = prompt("Masukkan instruksi catatan bagian mana yang harus diperbaiki oleh pihak panitia mahasiswa:");
+                if(alasan != null && alasan != "") {
+                    alert("Catatan evaluasi dikirimkan! Status berkas dikembalikan ke 'Need Revision'.");
+                    window.location.href = "dashboard_staff.html";
+                }
+            } else if(type === 'Reject') {
+                let alasanTolak = prompt("Masukkan alasan penolakan berkas laporan pertanggungjawaban ini:");
+                if(alasanTolak != null && alasanTolak != "") {
+                    alert("LPJ berhasil ditolak.");
+                    window.location.href = "dashboard_staff.html";
+                }
             }
         }
     </script>
