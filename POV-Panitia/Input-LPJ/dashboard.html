@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universitas Ciputra - Input LPJ Event Mahasiswa</title>
+    <style>
+        /* ================= BASE RESET & UTILITIES ================= */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #F4F5F7;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* ================= TOP NAVBAR HEADER ================= */
+        .navbar {
+            background-color: #ffffff;
+            border-bottom: 1px solid #E0E0E0;
+            padding: 10px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            z-index: 1000;
+        }
+        .nav-col { display: flex; align-items: center; }
+        .nav-left { flex-direction: column; align-items: flex-start; }
+        .nav-right { gap: 12px; justify-content: flex-end; }
+        
+        .user-profile { text-align: right; line-height: 1.2; }
+        .user-name { font-size: 9.5pt; font-weight: bold; margin: 0; color: #333333; }
+        .user-status { font-size: 8pt; color: #777777; margin: 0; }
+        .avatar { width: 36px; height: 36px; border-radius: 50%; background-color: #003366; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; }
+
+        /* ================= SIDEBAR ================= */
+        .sidebar { position: fixed; top: 60px; left: 0; width: 50px; height: calc(100vh - 60px); background-color: #003366; display: flex; flex-direction: column; align-items: center; padding-top: 15px; gap: 15px; z-index: 999; }
+        .sidebar-btn { background: none; border: none; color: #ffffff; font-size: 14pt; cursor: pointer; width: 100%; padding: 10px 0; text-align: center; }
+
+        /* ================= MAIN WRAPPER ================= */
+        .wrapper { margin-top: 60px; margin-left: 50px; padding: 24px 6% 120px 6%; }
+        .breadcrumb-bar { font-size: 9.5pt; color: #666666; margin-bottom: 20px; }
+        .breadcrumb-bar .active { color: #F37021; font-weight: bold; }
+
+        /* ================= SYSTEM AUTOMATED NOTIFICATION ================= */
+        .alert-reminder { background-color: #FFF3CD; border-left: 5px solid #FFC107; color: #856404; padding: 15px 20px; border-radius: 4px; font-size: 9.5pt; margin-bottom: 25px; line-height: 1.5; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .alert-reminder strong { color: #664d03; }
+
+        /* ================= PANELS & CARDS ================= */
+        .panel { background-color: #ffffff; border: 1px solid #E0E0E0; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 25px; overflow: hidden; }
+        .panel-title { background-color: #003366; color: #ffffff; padding: 12px 20px; font-size: 11pt; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; }
+        .panel-title.orange-theme { background-color: #F37021; }
+        
+        .vertical-stack { display: flex; flex-direction: column; gap: 16px; padding: 20px; }
+        .inline-row { display: flex; gap: 15px; flex-wrap: wrap; }
+        .inline-row .data-group { flex: 1; min-width: 220px; }
+        
+        .data-group { display: flex; flex-direction: column; gap: 6px; width: 100%; }
+        .data-label { font-size: 9.5pt; color: #003366; font-weight: bold; }
+        .instruction-blue { font-size: 8.5pt; color: #2980B9; font-style: italic; margin-top: -2px; }
+
+        /* Form Controls */
+        .form-control { width: 100%; padding: 10px 12px; border: 1px solid #CCCCCC; border-radius: 4px; font-size: 9.5pt; background-color: #FFFFFF; color: #333333; outline: none; }
+        .form-control:focus { border-color: #F37021; box-shadow: 0 0 4px rgba(243, 112, 33, 0.2); }
+        textarea.form-control { resize: vertical; min-height: 100px; font-family: inherit; }
+
+        /* ================= SDGS GRID MATRIX CHECKLIST ================= */
+        .sdgs-title { font-size: 10pt; color: #E67E22; font-weight: bold; border-bottom: 1px solid #E0E0E0; padding-bottom: 4px; margin-bottom: 10px; text-transform: uppercase; }
+        .sdgs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; background: #FAFAFA; padding: 15px; border: 1px solid #E0E0E0; border-radius: 4px; }
+        .sdgs-item { display: flex; align-items: flex-start; gap: 8px; font-size: 9pt; color: #444; cursor: pointer; }
+        .sdgs-item input[type="checkbox"] { margin-top: 3px; transform: scale(1.1); }
+
+        /* ================= GRID RUANG LINGKUP & SUB-KEGIATAN ================= */
+        .scope-container { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+        @media (max-width: 900px) { .scope-container { grid-template-columns: 1fr; } }
+        
+        .activity-sheet { background: #FFFFFF; border: 1px solid #DDDDDD; border-radius: 4px; height: 320px; overflow-y: scroll; padding: 10px; }
+        .activity-grid-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .activity-option { display: flex; align-items: center; gap: 6px; font-size: 8.5pt; padding: 4px; border-bottom: 1px solid #F0F0F0; }
+        .activity-option input { transform: scale(1); }
+
+        .scale-box { background: #FFF3EB; border: 1px solid #F37021; padding: 15px; border-radius: 4px; }
+        .scale-option { display: flex; align-items: center; gap: 8px; font-size: 9.5pt; margin-bottom: 10px; font-weight: 500; }
+
+        /* ================= TABLES BUDGET & FINANCIAL REALIZATION ================= */
+        .data-table { width: 100%; border-collapse: collapse; font-size: 9pt; text-align: left; }
+        .data-table th { background-color: #F8F9FA; color: #003366; font-weight: bold; padding: 10px; border-bottom: 2px solid #E0E0E0; border-top: 1px solid #E0E0E0; }
+        .data-table td { padding: 8px 10px; border-bottom: 1px solid #E0E0E0; background-color: #FFFFFF; vertical-align: middle; }
+        .table-input { width: 100%; padding: 6px; border: 1px solid #CCCCCC; border-radius: 3px; font-size: 9pt; }
+        .table-select { width: 100%; padding: 6px; border: 1px solid #CCCCCC; border-radius: 3px; font-size: 9pt; background-color: #FFF; }
+        .row-grand-total { background-color: #EAEDED !important; font-weight: bold; color: #003366; }
+
+        /* ================= ATTACHMENT DRAG & DROP/BOX LINK ================= */
+        .attachment-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; padding: 20px; }
+        .attachment-box { border: 2px dashed #BDC3C7; background: #FAFAFA; border-radius: 4px; padding: 15px; display: flex; flex-direction: column; gap: 8px; }
+        .attachment-box:hover { border-color: #F37021; background: #FFFDFB; }
+        .attachment-label { font-size: 9pt; font-weight: bold; color: #333; }
+
+        /* ================= APPROVAL STATUS REGION ================= */
+        .approval-panel { background-color: #FBFCFC; border-top: 3px solid #BDC3C7; padding: 20px; }
+        .status-radio-group { display: flex; gap: 20px; margin-bottom: 15px; }
+        .radio-label { display: flex; align-items: center; gap: 6px; font-weight: bold; font-size: 10pt; cursor: pointer; }
+        .radio-approved { color: #2ECC71; }
+        .radio-revision { color: #F39C12; }
+        .radio-rejected { color: #E74C3C; }
+
+        .signature-flow { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; margin-top: 25px; text-align: center; font-size: 9.5pt; }
+        .sig-space { height: 60px; margin: 10px 0; border-bottom: 1px dashed #CCC; }
+
+        /* Buttons Core */
+        .btn { padding: 12px 24px; font-size: 9.5pt; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; transition: background 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-orange { background-color: #F37021; color: white; }
+        .btn-orange:hover { background-color: #D35400; }
+        .btn-grey { background-color: #7F8C8D; color: white; }
+        .btn-grey:hover { background-color: #626567; }
+
+        /* Footer Bars */
+        .tech-support-bar, .footer-bar { position: fixed; bottom: 30px; left: 50px; width: calc(100% - 50px); height: 30px; background-color: #002244; color: #FFFFFF; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; font-size: 8.5pt; z-index: 1000; }
+        .footer-bar { bottom: 0; background-color: #F37021; }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR HEADER -->
+    <div class="navbar">
+        <div class="nav-col nav-left">
+            <div style="font-weight: bold; font-size: 14pt; color: #003366; letter-spacing: -0.5px;">UNIVERSITAS CIPUTRA</div>
+            <div style="font-size: 7.5pt; color: #666666; margin-top: -2px; letter-spacing: 0.5px;">CREATING WORLD CLASS ENTREPRENEURS</div>
+        </div>
+        <div class="nav-col nav-right">
+            <div class="user-profile">
+                <p class="user-name">Hi, Muh. Nur Alif Akbar</p>
+                <p class="user-status">Ormawa / PIC Event Mode</p>
+            </div>
+            <div class="avatar">MNA</div>
+        </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <button class="sidebar-btn" style="color: white; background: none; border: none;">☰</button>
+    </div>
+
+    <!-- MAIN WORKSPACE WRAPPER -->
+    <div class="wrapper">
+        <div class="breadcrumb-bar">
+            Student Portal / Activity Control / <span class="active">Input LPJ Event</span>
+        </div>
+
+        <!-- NOTIFIKASI REMINDER OTOMATIS (MUNCUL DI CIS H+7 SETELAH TANGGAL KEGIATAN) -->
+        <div class="alert-reminder">
+            ⚠️ <strong>SISTEM INFORMASI KEMAHASISWAAN (CIS REMINDER):</strong><br>
+            Sistem mendeteksi pelaksanaan kegiatan Anda telah melewati batas waktu pelaksanaan. Harap segera melengkapi formulir <strong>Laporan Pertanggungjawaban (LPJ) Akhir</strong> ini maksimal 7 hari setelah tanggal kegiatan berakhir untuk mencegah penangguhan (sanksi) pencairan dana ormawa berikutnya serta sinkronisasi Poin Kemahasiswaan (SIMKATMAWA).
+        </div>
+
+        <form id="lpjForm" onsubmit="submitLPJ(event)">
+            
+            <!-- PANEL 1: IDENTITAS UTAMA EVENT -->
+            <div class="panel">
+                <div class="panel-title">LAPORAN PERTANGGUNGJAWABAN EVENT MAHASISWA</div>
+                <div class="vertical-stack">
+                    <div class="inline-row">
+                        <div class="data-group">
+                            <div class="data-label">Judul Kegiatan</div>
+                            <span class="instruction-blue">* Ubah sesuai dengan kebutuhan nama event resmi</span>
+                            <input type="text" class="form-control" value="Mental Health Month 2026" required>
+                        </div>
+                        <div class="data-group">
+                            <div class="data-label">Atas Nama (Organizer)</div>
+                            <span class="instruction-blue">* Pilih Badan Ormawa / OK / Prodi / UC</span>
+                            <select class="form-control">
+                                <option value="OK">Organisasi Kemahasiswaan (OK)</option>
+                                <option value="Prodi">Program Studi (Prodi)</option>
+                                <option value="SU-SC" selected>SU &amp; SC Collaboration</option>
+                                <option value="Universitas">Universitas Ciputra</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="inline-row">
+                        <div class="data-group">
+                            <div class="data-label">PIC Utama</div>
+                            <input type="text" class="form-control" value="Muh. Nur Alif Akbar" required>
+                        </div>
+                        <div class="data-group">
+                            <div class="data-label">NIM PIC</div>
+                            <input type="text" class="form-control" value="0706012310022" required>
+                        </div>
+                        <div class="data-group">
+                            <div class="data-label">Contact Person (WhatsApp)</div>
+                            <input type="text" class="form-control" value="081234567890" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PANEL 2: DESKRIPSI & TUJUAN KORELASI CPL/SDGS -->
+            <div class="panel">
+                <div class="panel-title orange-theme">DESKRIPSI &amp; TUJUAN STRATEGIS KEGIATAN</div>
+                <div class="vertical-stack">
+                    <div class="data-group">
+                        <div class="data-label">Latar Belakang &amp; Manfaat</div>
+                        <span class="instruction-blue">* Tuliskan latar belakang, esensi, serta manfaat riil dari pengadaan kegiatan ini bagi mahasiswa/masyarakat</span>
+                        <textarea class="form-control" required>Kegiatan ini dilatarbelakangi oleh meningkatnya beban akademis dan tekanan psikologis pasca-pandemi di kalangan mahasiswa. Manfaat dari kegiatan ini adalah memberikan pemahaman mendalam mengenai teknik stress-management serta regulasi emosi mandiri.</textarea>
+                    </div>
+
+                    <div class="data-group">
+                        <div class="data-label">Tujuan Kegiatan</div>
+                        <span class="instruction-blue">* Tuliskan target capaian tujuan dari kegiatan yang telah diselenggarakan (Capaian Pembelajaran Lulusan / CPL 2025)</span>
+                        <textarea class="form-control" required>1. Meningkatkan kesadaran kesehatan mental sebesar 80% di lingkungan internal kampus.
+2. Memfasilitasi konseling kelompok terpandu bersama praktisi psikolog profesional.</textarea>
+                    </div>
+
+                    <!-- MATRIX SYSTEM INTEGRATION SIMKATMAWA & 17 SDGS -->
+                    <div>
+                        <div class="sdgs-title">Checklist Target SDGs (Sustainable Development Goals) &amp; SIMKATMAWA</div>
+                        <span class="instruction-blue" style="display:block; margin-bottom: 8px;">* Centang satu atau beberapa goals SDGs yang berhasil direalisasikan lewat event ini:</span>
+                        <div class="sdgs-grid">
+                            <label class="sdgs-item"><input type="checkbox"> 1. No Poverty</label>
+                            <label class="sdgs-item"><input type="checkbox"> 6. Clean Water &amp; Sanitation</label>
+                            <label class="sdgs-item"><input type="checkbox"> 11. Sustainable Cities &amp; Comm.</label>
+                            <label class="sdgs-item"><input type="checkbox"> 16. Peace, Justice &amp; Strong Inst.</label>
+                            
+                            <label class="sdgs-item"><input type="checkbox"> 2. Zero Hunger</label>
+                            <label class="sdgs-item"><input type="checkbox"> 7. Affordable &amp; Clean Energy</label>
+                            <label class="sdgs-item"><input type="checkbox"> 12. Responsible Cons. &amp; Prod.</label>
+                            <label class="sdgs-item"><input type="checkbox" checked> 17. Partnerships For the Goals</label>
+                            
+                            <label class="sdgs-item"><input type="checkbox" checked> 3. Good Health and Wellbeing</label>
+                            <label class="sdgs-item"><input type="checkbox"> 8. Decent Work &amp; Econ. Growth</label>
+                            <label class="sdgs-item"><input type="checkbox"> 13. Climate Action</label>
+                            
+                            <label class="sdgs-item"><input type="checkbox" checked> 4. Quality Education</label>
+                            <label class="sdgs-item"><input type="checkbox"> 9. Industry, Innov. &amp; Infrastr.</label>
+                            <label class="sdgs-item"><input type="checkbox"> 14. Life Below Water</label>
+                            
+                            <label class="sdgs-item"><input type="checkbox"> 5. Gender Equality</label>
+                            <label class="sdgs-item"><input type="checkbox"> 10. Reduced Inequalities</label>
+                            <label class="sdgs-item"><input type="checkbox"> 15. Life On Land</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PANEL 3: RUANG LINGKUP (REALISASI DAN SHEET SUB-KEGIATAN) -->
+            <div class="panel">
+                <div class="panel-title">RUANG LINGKUP &amp; SHEET SUB-KEGIATAN (REALISASI)</div>
+                <div class="vertical-stack">
+                    <div class="inline-row">
+                        <div class="data-group">
+                            <div class="data-label">Link Informasi Eksternal</div>
+                            <span class="instruction-blue">* Masukkan URL Website Event atau akun Instagram Resmi</span>
+                            <input type="url" class="form-control" value="https://instagram.com/mentalhealth.uc">
+                        </div>
+                        <div class="data-group">
+                            <div class="data-label">Target Peserta Riil</div>
+                            <span class="instruction-blue">* Tuliskan jumlah kuantitas Orang / Tim pelaksana eksternal</span>
+                            <input type="text" class="form-control" value="250 Orang Mahasiswa">
+                        </div>
+                        <div class="data-group">
+                            <div class="data-label">Jumlah Mahasiswa UC Terlibat</div>
+                            <span class="instruction-blue">* Input angka riil pencapaian target internal</span>
+                            <input type="number" class="form-control" value="180">
+                        </div>
+                    </div>
+
+                    <div class="scope-container">
+                        <!-- SHEET SUB KEGIATAN DROPDOWN MATRIX -->
+                        <div>
+                            <div class="data-label" style="margin-bottom: 5px;">Sheet Klasifikasi Sub-Kegiatan Realisasi</div>
+                            <span class="instruction-blue" style="display:block; margin-bottom: 5px;">* Pilih jenis sub-kegiatan yang berjalan dalam koridor kemahasiswaan:</span>
+                            <div class="activity-sheet">
+                                <div class="activity-grid-layout">
+                                    <label class="activity-option"><input type="checkbox"> Kegiatan Marketing</label>
+                                    <label class="activity-option"><input type="checkbox" checked> Seminar/Talkshow</label>
+                                    <label class="activity-option"><input type="checkbox"> Serah Terima Jabatan UKM</label>
+                                    <label class="activity-option"><input type="checkbox"> Pelatihan militer/kewiraan</label>
+                                    <label class="activity-option"><input type="checkbox"> Pelatihan Kepemimpinan</label>
+                                    <label class="activity-option"><input type="checkbox"> Pembinaan Karakter/Softskill</label>
+                                    <label class="activity-option"><input type="checkbox"> Pra-Lead Camp</label>
+                                    <label class="activity-option"><input type="checkbox"> Workshop</label>
+                                    <label class="activity-option"><input type="checkbox"> Internship Organisasi</label>
+                                    <label class="activity-option"><input type="checkbox"> Gerakan Anti Korupsi</label>
+                                    <label class="activity-option"><input type="checkbox"> Lead Camp</label>
+                                    <label class="activity-option"><input type="checkbox"> Kepedulian Sosial</label>
+                                    <label class="activity-option"><input type="checkbox"> Studi Banding</label>
+                                    <label class="activity-option"><input type="checkbox"> Gerakan Anti NAPZA</label>
+                                    <label class="activity-option"><input type="checkbox"> Ormawa Fest</label>
+                                    <label class="activity-option"><input type="checkbox"> Studi Ekskursi</label>
+                                    <label class="activity-option"><input type="checkbox"> Rapat Periode Organisasi</label>
+                                    <label class="activity-option"><input type="checkbox"> Gerakan Anti Radikalisme</label>
+                                    <label class="activity-option"><input type="checkbox"> Monitoring Bulanan SA Juli</label>
+                                    <label class="activity-option"><input type="checkbox"> Campjur</label>
+                                    <label class="activity-option"><input type="checkbox"> Expo</label>
+                                    <label class="activity-option"><input type="checkbox"> Kampanye Anti Bullying</label>
+                                    <label class="activity-option"><input type="checkbox"> Monitoring Bulanan SA Agst</label>
+                                    <label class="activity-option"><input type="checkbox"> Pengabdian Masyarakat</label>
+                                    <label class="activity-option"><input type="checkbox"> Bonding</label>
+                                    <label class="activity-option"><input type="checkbox"> Kampanye Green Campus</label>
+                                    <label class="activity-option"><input type="checkbox"> Monitoring Bulanan SA Sept</label>
+                                    <label class="activity-option"><input type="checkbox"> Welcome Party</label>
+                                    <label class="activity-option"><input type="checkbox"> Bazaar</label>
+                                    <label class="activity-option"><input type="checkbox"> Others</label>
+                                    <label class="activity-option"><input type="checkbox"> Monitoring Bulanan SA Okt</label>
+                                    <label class="activity-option"><input type="checkbox"> Performance</label>
+                                    <label class="activity-option"><input type="checkbox"> Election</label>
+                                    <label class="activity-option"><input type="checkbox"> Sosialisasi TAP KUOK</label>
+                                    <label class="activity-option"><input type="checkbox"> Monitoring Bulanan SA Nov</label>
+                                    <label class="activity-option"><input type="checkbox"> Pameran Karya Seni</label>
+                                    <label class="activity-option"><input type="checkbox"> Employability</label>
+                                    <label class="activity-option"><input type="checkbox"> Sosialisasi TAP SANKSI</label>
+                                    <label class="activity-option"><input type="checkbox"> Monitoring Bulanan SA Jan</label>
+                                    <label class="activity-option"><input type="checkbox"> Tuan Rumah Kompetisi</label>
+                                    <label class="activity-option"><input type="checkbox"> Entrepreneurship</label>
+                                    <label class="activity-option"><input type="checkbox"> Sosialisasi TAP OC RUMAH</label>
+                                    <label class="activity-option"><input type="checkbox"> Monitoring Bulanan SA Feb</label>
+                                    <label class="activity-option"><input type="checkbox"> Conference</label>
+                                    <label class="activity-option"><input type="checkbox"> FGD / Focus Group</label>
+                                    <label class="activity-option"><input type="checkbox"> Monitoring Bulanan SA Mar</label>
+                                    <label class="activity-option"><input type="checkbox"> Monitoring Bulanan SA Apr</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SKALA KEGIATAN BOX -->
+                        <div>
+                            <div class="data-label" style="margin-bottom: 5px;">Skala Tingkat Kegiatan</div>
+                            <span class="instruction-blue" style="display:block; margin-bottom: 5px;">* Konfirmasi dengan SA untuk info valid:</span>
+                            <div class="scale-box">
+                                <label class="scale-option"><input type="radio" name="skala" checked> Internal (Prodi/UC)</label>
+                                <label class="scale-option"><input type="radio" name="skala"> Provinsi/Regional (1-3 Prov)</label>
+                                <label class="scale-option"><input type="radio" name="skala"> Nasional (Min 4 Prov)</label>
+                                <label class="scale-option"><input type="radio" name="skala"> Internasional (Min 2 Negara)</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PANEL 4: DESKRIPSI DETAIL REALISASI WAKTU & TIMELINE -->
+            <div class="panel">
+                <div class="panel-title orange-theme">DESKRIPSI KEGIATAN (REALISASI PELAKSANAAN)</div>
+                <div class="vertical-stack">
+                    <div class="inline-row">
+                        <div class="data-group">
+                            <div class="data-label">Hari, Tanggal (Mulai)</div>
+                            <input type="text" class="form-control" value="Kamis, 18 Juni 2026" required>
+                        </div>
+                        <div class="data-group">
+                            <div class="data-label">Waktu Operasional</div>
+                            <input type="text" class="form-control" value="09:00 - 15:00 WIB" required>
+                        </div>
+                        <div class="data-group">
+                            <div class="data-label">Tempat Spesifik</div>
+                            <input type="text" class="form-control" value="Auditorium Lt. 7, Universitas Ciputra Surabaya" required>
+                        </div>
+                    </div>
+                    <div class="inline-row">
+                        <div class="data-group" style="flex: 1;">
+                            <div class="data-label">Staff / Dosen Pendamping</div>
+                            <input type="text" class="form-control" value="Dr. Dra. Christiani, M.Psi." required>
+                        </div>
+                    </div>
+                    <div class="data-group">
+                        <div class="data-label">Evaluasi Kegiatan &amp; Hambatan</div>
+                        <span class="instruction-blue">* Sebutkan poin-poin evaluasi kendala di lapangan beserta solusi yang diambil</span>
+                        <textarea class="form-control" required>Kendala: Distribusi konsumsi mengalami keterlambatan 10 menit dari jadwal rundown akibat kemacetan lalu lintas vendor. Solusi: Acara ice breaking diperpanjang oleh MC untuk mengisi kekosongan waktu secara interaktif.</textarea>
+                    </div>
+                    <div style="background-color: #EBF5FB; padding: 10px; border-radius: 4px; font-size: 8.5pt; color: #2980B9; font-weight: bold;">
+                        📎 Wajib menyertakan attachment timeline detail, rundown realisasi, dan data absensi kehadiran pada kolom berkas lampiran bawah.
+                    </div>
+                </div>
+            </div>
+
+            <!-- PANEL 5: MATRIX ANGGARAN - PENGAJUAN VS REALISASI -->
+            <div class="panel">
+                <div class="panel-title">PERBANDINGAN ANGGARAN (PENGAJUAN VS REALISASI KEUANGAN)</div>
+                <div class="vertical-stack">
+                    
+                    <!-- TABEL 5A: ANGGARAN PENGAJUAN AWAL -->
+                    <div style="margin-bottom: 15px;">
+                        <div class="data-label" style="color: #E67E22; margin-bottom: 6px;">A. Anggaran Pengajuan (Draf Proposal Awal)</div>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 5%;">No</th>
+                                    <th style="width: 40%;">Item Pengajuan</th>
+                                    <th style="width: 15%;">Harga Satuan</th>
+                                    <th style="width: 10%;">Jumlah</th>
+                                    <th style="width: 15%;">Total</th>
+                                    <th style="width: 15%;">Sumber Dana</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Dana Alokasi Pokok Prodi / SA</td>
+                                    <td><input type="number" class="table-input" value="1500000"></td>
+                                    <td><input type="number" class="table-input" value="1"></td>
+                                    <td><input type="number" class="table-input" value="1500000" readonly></td>
+                                    <td>
+                                        <select class="table-select"><option>Dana Prodi</option><option selected>Dana SA</option><option>Dana Sponsorship</option></select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Konsumsi Pemateri External</td>
+                                    <td><input type="number" class="table-input" value="50000"></td>
+                                    <td><input type="number" class="table-input" value="4"></td>
+                                    <td><input type="number" class="table-input" value="200000" readonly></td>
+                                    <td>
+                                        <select class="table-select"><option>Dana Prodi</option><option selected>Dana SA</option><option>Dana Organisasi</option></select>
+                                    </td>
+                                </tr>
+                                <tr class="row-grand-total">
+                                    <td colspan="4" style="text-align: right;">Grand Total Pendapatan &amp; Pengeluaran Pengajuan:</td>
+                                    <td colspan="2">Rp 1.700.000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- TABEL 5B: REALISASI ANGGARAN AKTUAL -->
+                    <div>
+                        <div class="data-label" style="color: #2ECC71; margin-bottom: 6px;">B. Realisasi Anggaran Aktual (Laporan Penggunaan Fisik + Nota)</div>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 5%;">No</th>
+                                    <th style="width: 40%;">Item Realisasi Lapangan</th>
+                                    <th style="width: 15%;">Harga Satuan Real</th>
+                                    <th style="width: 10%;">Jumlah</th>
+                                    <th style="width: 15%;">Total Aktual</th>
+                                    <th style="width: 15%;">Alokasi Dropdown</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Realisasi Sewa Perlengkapan Sound System</td>
+                                    <td><input type="number" class="table-input" value="1450000"></td>
+                                    <td><input type="number" class="table-input" value="1"></td>
+                                    <td><input type="number" class="table-input" value="1450000" readonly></td>
+                                    <td>
+                                        <select class="table-select"><option selected>Dana SA</option><option>Dana Organisasi</option></select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Realisasi Box Konsumsi Snack Peserta</td>
+                                    <td><input type="number" class="table-input" value="48000"></td>
+                                    <td><input type="number" class="table-input" value="4"></td>
+                                    <td><input type="number" class="table-input" value="192000" readonly></td>
+                                    <td>
+                                        <select class="table-select"><option>Dana Prodi</option><option selected>Dana SA</option></select>
+                                    </td>
+                                </tr>
+                                <tr class="row-grand-total" style="background-color: #D5F5E3 !important;">
+                                    <td colspan="4" style="text-align: right; color: #196F3D;">Grand Total Realisasi Riil Finansial:</td>
+                                    <td colspan="2" style="color: #196F3D;">Rp 1.642.000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- PANEL 6: DIGITAL ATTACHMENT VAULT (DRIVE LINKS & FILES) -->
+            <div class="panel">
+                <div class="panel-title orange-theme">ATTACHMENT INTEGRATION COMPONENT</div>
+                <div class="attachment-grid">
+                    <div class="attachment-box">
+                        <span class="attachment-label">1. Sertifikat Kepanitiaan Mahasiswa</span>
+                        <span class="instruction-blue">* Masukkan file PDF atau tautan link Google Drive folder:</span>
+                        <input type="text" class="form-control" placeholder="https://drive.google.com/... (Sertifikat)">
+                    </div>
+                    <div class="attachment-box">
+                        <span class="attachment-label">2. Surat Tugas Panitia Resmi (E-Letter)</span>
+                        <span class="instruction-blue">* Masukkan tautan bukti Surat Tugas yang telah terbit:</span>
+                        <input type="text" class="form-control" placeholder="https://drive.google.com/... (Surat Tugas)">
+                    </div>
+                    <div class="attachment-box">
+                        <span class="attachment-label">3. Dokumentasi Media Kegiatan</span>
+                        <span class="instruction-blue">* Wajib menyertakan minimal 3 foto dokumentasi aktif:</span>
+                        <input type="file" class="form-control" multiple>
+                    </div>
+                    <div class="attachment-box">
+                        <span class="attachment-label">4. PDF Realisasi Keuangan + Nota Bukti Fisik</span>
+                        <span class="instruction-blue">* Unggah berkas pembukuan kas yang sinkron dengan tabel keuangan:</span>
+                        <input type="file" class="form-control">
+                    </div>
+                    <div class="attachment-box" style="grid-column: span 1;">
+                        <span class="attachment-label">5. Bukti Validasi Peserta / Delegasi Lomba</span>
+                        <span class="instruction-blue">* Bukti negara/provinsi/universitas jika berskala kompetisi:</span>
+                        <input type="file" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+            <!-- PANEL 7: MANAGEMENT BIRO APPROVAL VALIDATION SYSTEM -->
+            <div class="panel approval-panel">
+                <div class="data-label" style="font-size: 11pt; margin-bottom: 10px;">Seksi Otoritas Pemeriksaan Berkas (Untuk SA / Dosen / HOD)</div>
+                <div class="status-radio-group">
+                    <label class="radio-label radio-approved"><input type="radio" name="panelStatus" checked> APPROVED (Disetujui)</label>
+                    <label class="radio-label radio-revision"><input type="radio" name="panelStatus"> NEED REVISION (Butuh Revisi)</label>
+                    <label class="radio-label radio-rejected"><input type="radio" name="panelStatus"> REJECT (Ditolak Sistem)</label>
+                </div>
+                
+                <div class="data-group" style="margin-bottom: 15px;">
+                    <div class="data-label">Catatan Alasan Pemeriksa (Reason Log):</div>
+                    <input type="text" class="form-control" placeholder="Tuliskan catatan perbaikan jika berstatus Need Revision / Reject...">
+                </div>
+
+                <div class="signature-flow">
+                    <div>
+                        <p>Surabaya, 11 Juni 2026<br><strong>Diajukan oleh,</strong></p>
+                        <div class="sig-space"></div>
+                        <p><strong><u>Muh. Nur Alif Akbar</u></strong><br>Jabatan: PIC Ketua Event</p>
+                    </div>
+                    <div>
+                        <p><strong>Disetujui oleh,</strong></p>
+                        <div class="sig-space"></div>
+                        <p><strong><u>Tim SA 1 / Dosen Pendamping / Kaprodi</u></strong><br>Jabatan: HOD Student Affairs</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BOTTOM COMMAND INTERACTION ACTIONS -->
+            <div style="display: flex; justify-content: flex-end; gap: 12px; margin-bottom: 80px;">
+                <button type="button" class="btn btn-grey" onclick="alert('Draf LPJ berhasil disimpan secara lokal di sistem cloud CIS.')">💾 Save as Draft</button>
+                <button type="submit" class="btn btn-orange">🔒 Submit Final LPJ</button>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- FOOTER TECHNICAL STACK -->
+    <div class="tech-support-bar">
+        <div><strong>CIS LPJ Validator Module:</strong>&nbsp;<span style="color:#25D366;">⚡ Auto-Sync Validation Active</span>&nbsp;| Terintegrasi Poin SKK &amp; Transkrip Aktivitas Mahasiswa.</div>
+        <div>Build Engine v4.0.1</div>
+    </div>
+    <div class="footer-bar">
+        <div>📍 CitraLand CBD Boulevard, Made, Kec. Sambikerep, Surabaya, Jawa Timur 60219</div>
+        <div>&copy; 2026 | Universitas Ciputra Surabaya</div>
+    </div>
+
+    <!-- ================= JAVASCRIPT SYSTEM ENGINE ================= -->
+    <script>
+        function submitLPJ(event) {
+            event.preventDefault();
+            if(confirm("Apakah Anda yakin data Laporan Pertanggungjawaban (LPJ) ini sudah valid dan sesuai dengan bukti fisik nota keuangan?\nSetelah dikunci, berkas akan diteruskan ke Biro Student Affairs.")) {
+                alert("Sukses! LPJ Event berhasil dikirim ke antrean review Tim Student Affairs Universitas Ciputra.");
+            }
+        }
+    </script>
+</body>
+</html>
