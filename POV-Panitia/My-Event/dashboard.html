@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universitas Ciputra - My Event & Approval Tracking</title>
+    <style>
+        /* ================= BASE RESET & UTILITIES ================= */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #F4F5F7;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* ================= TOP NAVBAR HEADER ================= */
+        .navbar {
+            background-color: #ffffff;
+            border-bottom: 1px solid #E0E0E0;
+            padding: 10px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            z-index: 1000;
+        }
+        .nav-col {
+            display: flex;
+            align-items: center;
+        }
+        .nav-left {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .nav-center {
+            flex-grow: 1;
+            justify-content: center;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .nav-right {
+            gap: 12px;
+            justify-content: flex-end;
+        }
+        
+        .search-container {
+            position: relative;
+            width: 100%;
+        }
+        .search-input {
+            width: 100%;
+            padding: 8px 36px 8px 12px;
+            border: 1px solid #CCCCCC;
+            border-radius: 20px;
+            font-size: 9.5pt;
+        }
+        .search-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888888;
+        }
+
+        .user-profile {
+            text-align: right;
+            line-height: 1.2;
+        }
+        .user-name {
+            font-size: 9.5pt;
+            font-weight: bold;
+            margin: 0;
+            color: #333333;
+        }
+        .user-status {
+            font-size: 8pt;
+            color: #777777;
+            margin: 0;
+        }
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #003366;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* ================= SIDEBAR ================= */
+        .sidebar {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 50px;
+            height: calc(100vh - 60px);
+            background-color: #003366;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 15px;
+            gap: 15px;
+            z-index: 999;
+        }
+        .sidebar-btn {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 14pt;
+            cursor: pointer;
+            width: 100%;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .sidebar-btn:hover { background-color: rgba(255, 255, 255, 0.1); }
+
+        /* ================= MAIN WRAPPER ================= */
+        .wrapper {
+            margin-top: 60px;
+            margin-left: 50px;
+            padding: 24px 8% 100px 8%;
+        }
+
+        .breadcrumb-bar {
+            font-size: 9.5pt;
+            color: #666666;
+            margin-bottom: 20px;
+        }
+        .breadcrumb-bar .active {
+            color: #F37021;
+            font-weight: bold;
+        }
+
+        /* ================= EVENT QUICK STATS PANELS ================= */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        .stat-card {
+            background: #FFFFFF;
+            border: 1px solid #E0E0E0;
+            border-radius: 4px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            border-left: 4px solid #003366;
+        }
+        .stat-card.orange { border-left-color: #F37021; }
+        .stat-card.green { border-left-color: #2ECC71; }
+        .stat-card .stat-label { font-size: 8.5pt; color: #777777; font-weight: bold; text-transform: uppercase; }
+        .stat-card .stat-value { font-size: 18pt; font-weight: bold; color: #333333; margin: 5px 0; }
+
+        /* ================= TABS NAVIGATION (CIS MODE) ================= */
+        .tab-container {
+            display: flex;
+            border-bottom: 2px solid #E0E0E0;
+            margin-bottom: 20px;
+            gap: 5px;
+        }
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 12px 20px;
+            font-size: 10pt;
+            font-weight: bold;
+            color: #555555;
+            cursor: pointer;
+            border-radius: 4px 4px 0 0;
+            transition: all 0.2s;
+        }
+        .tab-btn:hover { background-color: #EAECEF; color: #003366; }
+        .tab-btn.active {
+            color: #F37021;
+            border-bottom: 3px solid #F37021;
+            background-color: #FFFFFF;
+            margin-bottom: -2px;
+        }
+
+        /* ================= PANELS & TABLES ================= */
+        .panel {
+            background-color: #ffffff;
+            border: 1px solid #E0E0E0;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+
+        .panel-title {
+            background-color: #003366;
+            color: #ffffff;
+            padding: 12px 20px;
+            font-size: 11pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Data Tables CSS */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 9.5pt;
+            text-align: left;
+        }
+        .data-table th {
+            background-color: #F8F9FA;
+            color: #003366;
+            font-weight: bold;
+            padding: 14px 12px;
+            border-bottom: 2px solid #E0E0E0;
+        }
+        .data-table td {
+            padding: 12px;
+            border-bottom: 1px solid #E0E0E0;
+            background-color: #FFFFFF;
+            vertical-align: middle;
+        }
+        .data-table tr:hover td {
+            background-color: #F9FBFC;
+        }
+
+        /* Status Badges Engine */
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 8pt;
+            font-weight: bold;
+            text-align: center;
+            text-transform: uppercase;
+        }
+        .status-pending { background-color: #FFF3CD; color: #856404; border: 1px solid #FFEBAA; }
+        .status-approved { background-color: #D4EDDA; color: #155724; border: 1px solid #C3E6CB; }
+        .status-rejected { background-color: #F8D7DA; color: #721C24; border: 1px solid #F5C6CB; }
+        .status-draft { background-color: #E2E3E5; color: #383D41; border: 1px solid #D6D8DB; }
+
+        /* Buttons Action inside Grid */
+        .btn-view {
+            background-color: #FFFFFF;
+            border: 1px solid #003366;
+            color: #003366;
+            padding: 6px 12px;
+            font-size: 8.5pt;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .btn-view:hover {
+            background-color: #003366;
+            color: #FFFFFF;
+        }
+        
+        .btn-action-draft {
+            background-color: #F37021;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            font-size: 8.5pt;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn-action-draft:hover { background-color: #D35400; }
+
+        /* Meta Text Utilities */
+        .meta-subtext {
+            font-size: 8pt;
+            color: #777777;
+            margin-top: 3px;
+            display: block;
+        }
+
+        /* Footer Bars */
+        .tech-support-bar, .footer-bar {
+            position: fixed;
+            bottom: 30px;
+            left: 50px;
+            width: calc(100% - 50px);
+            height: 30px;
+            background-color: #002244;
+            color: #FFFFFF;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            font-size: 8.5pt;
+            z-index: 1000;
+        }
+        .footer-bar {
+            bottom: 0;
+            background-color: #F37021;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR HEADER -->
+    <div class="navbar">
+        <div class="nav-col nav-left">
+            <div style="font-weight: bold; font-size: 14pt; color: #003366; letter-spacing: -0.5px;">UNIVERSITAS CIPUTRA</div>
+            <div style="font-size: 7.5pt; color: #666666; margin-top: -2px; letter-spacing: 0.5px;">CREATING WORLD CLASS ENTREPRENEURS</div>
+        </div>
+        <div class="nav-col nav-center">
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Cari Event / Riwayat Proposal / Status LPJ...">
+                <span class="search-icon">&#128269;</span>
+            </div>
+        </div>
+        <div class="nav-col nav-right">
+            <span style="font-size: 14pt; margin-right: 15px; cursor: pointer; color: #555555;">&#128276;</span>
+            <div class="user-profile">
+                <p class="user-name">Hi, Muh. Nur Alif Akbar</p>
+                <p class="user-status">Student Committee Member</p>
+            </div>
+            <div class="avatar">MNA</div>
+        </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <button class="sidebar-btn">&#9776;</button>
+        <button class="sidebar-btn" style="color: #FFEB3B;">&#9733;</button>
+    </div>
+
+    <!-- MAIN WORKSPACE WRAPPER -->
+    <div class="wrapper">
+        
+        <div class="breadcrumb-bar">
+            Student Portal / Activity Management / <span class="active">My-Event Dashboard</span>
+        </div>
+
+        <!-- QUICK COUNTER STATS BAR -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-label">Draft / Proposal Awal</span>
+                <span class="stat-value">2 Berkas</span>
+            </div>
+            <div class="stat-card orange">
+                <span class="stat-label">Pending CEdX Review</span>
+                <span class="stat-value">1 Event</span>
+            </div>
+            <div class="stat-card green">
+                <span class="stat-label">Approved &amp; Active</span>
+                <span class="stat-value">3 Event</span>
+            </div>
+            <div class="stat-card" style="border-left-color: #7F8C8D;">
+                <span class="stat-label">LPJ Pending Completed</span>
+                <span class="stat-value">1 Berkas</span>
+            </div>
+        </div>
+
+        <!-- TAB NAVIGATION (MENGIKUTI KONSEP CORE DISPLAY CIS KOMPETISI) -->
+        <div class="tab-container">
+            <button class="tab-btn active" onclick="switchTab('all')">Semua Pengajuan Event</button>
+            <button class="tab-btn" onclick="switchTab('proposal')">Draf &amp; Riwayat Proposal</button>
+            <button class="tab-btn" onclick="switchTab('lpj')">Status Evaluasi LPJ Akhir</button>
+        </div>
+
+        <!-- PANEL DATA UTAMA LIST EVENT (VERTICAL SCROLL DOWN GRID) -->
+        <div class="panel">
+            <div class="panel-title">Tracking System Pengajuan Event Berjalan</div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th style="width: 25%;">Nama Event / Organisasi</th>
+                        <th style="width: 15%; text-align: center;">Berkas Proposal</th>
+                        <th style="width: 25%;">Waktu &amp; Tempat Pelaksanaan</th>
+                        <th style="width: 15%; text-align: center;">Status Proposal (CEdX)</th>
+                        <th style="width: 15%; text-align: center;">Status LPJ Akhir</th>
+                        <th style="width: 5%; text-align: center;">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- ITEM row 1 -->
+                    <tr>
+                        <td>
+                            <strong>Mental Health Month 2026</strong>
+                            <span class="meta-subtext">Organizer: SU &amp; SC Collaboration</span>
+                        </td>
+                        <td class="text-center">
+                            <button class="btn-view" onclick="viewDocument('Proposal_Mental_Health.pdf')">👁 Lihat Proposal</button>
+                        </td>
+                        <td>
+                            <div>📅 Kamis, 18 Juni 2026</div>
+                            <div class="meta-subtext">📍 Auditorium Lt. 7, Universitas Ciputra</div>
+                        </td>
+                        <td class="text-center">
+                            <span class="status-badge status-approved">✓ Approved</span>
+                            <span class="meta-subtext" style="color: green;">Verified by SA</span>
+                        </td>
+                        <td class="text-center">
+                            <span class="status-badge status-pending">⏳ Pending Review</span>
+                            <span class="meta-subtext">Uploaded 2 days ago</span>
+                        </td>
+                        <td class="text-center">
+                            <button class="btn-view" onclick="alert('Membuka detail tracking log event...')">Detail</button>
+                        </td>
+                    </tr>
+
+                    <!-- ITEM row 2 -->
+                    <tr>
+                        <td>
+                            <strong>UI/UX National Design Competition</strong>
+                            <span class="meta-subtext">Organizer: FIK - IMT Department</span>
+                        </td>
+                        <td class="text-center">
+                            <button class="btn-view" onclick="viewDocument('Proposal_UIUX_FIK.pdf')">👁 Lihat Proposal</button>
+                        </td>
+                        <td>
+                            <div>📅 12 - 14 Agustus 2026</div>
+                            <div class="meta-subtext">📍 Hybrid / Theater Room Lt. 3</div>
+                        </td>
+                        <td class="text-center">
+                            <span class="status-badge status-pending">⏳ Pending Review</span>
+                            <span class="meta-subtext">Antrian HOD Approval</span>
+                        </td>
+                        <td class="text-center">
+                            <span style="color: #999; font-style: italic;">Belum Selesai Event</span>
+                        </td>
+                        <td class="text-center">
+                            <button class="btn-view" onclick="alert('Membuka detail tracking log event...')">Detail</button>
+                        </td>
+                    </tr>
+
+                    <!-- ITEM row 3 (DRAFT MODE INITIAL) -->
+                    <tr>
+                        <td>
+                            <strong style="color: #777;">Internal Workshop: Advanced SwiftUI Engine</strong>
+                            <span class="meta-subtext">Organizer: Information System for Business</span>
+                        </td>
+                        <td class="text-center">
+                            <span style="color: #E74C3C; font-weight: bold; font-size: 8.5pt;">⚠️ DRAF PROPOSAL</span>
+                        </td>
+                        <td>
+                            <div>📅 Belum Diatur (Rencana Juli)</div>
+                            <div class="meta-subtext">📍 Laboratorium Mac OS UC</div>
+                        </td>
+                        <td class="text-center">
+                            <span class="status-badge status-draft">✏️ Draft Awal</span>
+                        </td>
+                        <td class="text-center">
+                            <span style="color: #999;">—</span>
+                        </td>
+                        <td class="text-center">
+                            <button class="btn-action-draft" onclick="alert('Melanjutkan pengisian draf proposal...')">Edit Draf</button>
+                        </td>
+                    </tr>
+
+                    <!-- ITEM row 4 (REJECTED TRACK) -->
+                    <tr>
+                        <td>
+                            <strong>Entrepreneurship Festival &amp; Bazaar 2026</strong>
+                            <span class="meta-subtext">Organizer: Ormawa Business Division</span>
+                        </td>
+                        <td class="text-center">
+                            <button class="btn-view" onclick="viewDocument('Proposal_Bazaar_V1.pdf')">👁 Lihat Proposal</button>
+                        </td>
+                        <td>
+                            <div>📅 05 Mei 2026</div>
+                            <div class="meta-subtext">📍 Plaza Universitas Ciputra</div>
+                        </td>
+                        <td class="text-center">
+                            <span class="status-badge status-rejected">❌ Rejected</span>
+                            <span class="meta-subtext" style="color: #C0392B;">RAB Tidak Sinkron</span>
+                        </td>
+                        <td class="text-center">
+                            <span style="color: #999;">—</span>
+                        </td>
+                        <td class="text-center">
+                            <button class="btn-view" onclick="alert('Lihat catatan penolakan dari reviewer Biro Student Affairs.')">Log Catatan</button>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <!-- INFORMASI PANDUAN BAWAH -->
+        <div style="background-color: #FFF3EB; border: 1px solid #F37021; padding: 15px; border-radius: 4px; font-size: 9pt; color: #555;">
+            💡 <strong>Sistem Informasi Integrasi CEdX:</strong> Perubahan status pengajuan berkas proposal atau LPJ akhir akan memicu notifikasi otomatis ke LINE/WhatsApp PIC yang terdaftar. Jika berkas berada pada status <strong>Rejected</strong> atau <strong>Need Revision</strong>, silakan buka menu log catatan untuk memperbaiki berkas tanpa perlu membuat pengajuan baru.
+        </div>
+
+    </div>
+
+    <!-- FOOTER TECHNICAL STACK -->
+    <div class="tech-support-bar">
+        <div class="footer-col">
+            <strong>CIS Gateway Engine Support:</strong>&nbsp;<span style="color:#25D366;">&#128172; Live Sync Data Penilaian Ormawa</span>&nbsp;| Otomatis Poin SIMKATMAWA &amp; Kredit Poin
+        </div>
+        <div>Build View v1.9</div>
+    </div>
+    <div class="footer-bar">
+        <div>&#128205; CitraLand CBD Boulevard, Made, Kec. Sambikerep, Surabaya, Jawa Timur 60219</div>
+        <div>&copy; 2026 | Universitas Ciputra Surabaya</div>
+    </div>
+
+    <!-- ================= JAVASCRIPT SYSTEM ENGINE ================= -->
+    <script>
+        function viewDocument(fileName) {
+            alert("Sistem memanggil Core Storage CEdX Engine...\nMenampilkan berkas: " + fileName);
+        }
+
+        function switchTab(tabType) {
+            // Simulasi interaktif filter data CIS
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Set element aktif secara visual
+            event.target.classList.add('active');
+            
+            alert("Menyaring daftar riwayat event berdasarkan kategori tab: " + tabType.toUpperCase());
+        }
+    </script>
+</body>
+</html>
