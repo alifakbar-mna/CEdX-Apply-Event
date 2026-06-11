@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universitas Ciputra - Apply / Edit Oprec Dashboard</title>
+    <style>
+        /* ================= BASE RESET & UTILITIES ================= */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #F4F5F7;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* ================= TOP NAVBAR HEADER ================= */
+        .navbar {
+            background-color: #ffffff;
+            border-bottom: 1px solid #E0E0E0;
+            padding: 10px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            z-index: 1000;
+        }
+        .nav-col {
+            display: flex;
+            align-items: center;
+        }
+        .nav-left {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .nav-center {
+            flex-grow: 1;
+            justify-content: center;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .nav-right {
+            gap: 12px;
+            justify-content: flex-end;
+        }
+        
+        .search-container {
+            position: relative;
+            width: 100%;
+        }
+        .search-input {
+            width: 100%;
+            padding: 8px 36px 8px 12px;
+            border: 1px solid #CCCCCC;
+            border-radius: 20px;
+            font-size: 9.5pt;
+        }
+        .search-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888888;
+        }
+
+        .user-profile {
+            text-align: right;
+            line-height: 1.2;
+        }
+        .user-name {
+            font-size: 9.5pt;
+            font-weight: bold;
+            margin: 0;
+            color: #333333;
+        }
+        .user-status {
+            font-size: 8pt;
+            color: #777777;
+            margin: 0;
+        }
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #003366;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* ================= SIDEBAR ================= */
+        .sidebar {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 50px;
+            height: calc(100vh - 60px);
+            background-color: #003366;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 15px;
+            gap: 15px;
+            z-index: 999;
+        }
+        .sidebar-btn {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 14pt;
+            cursor: pointer;
+            width: 100%;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .sidebar-btn:hover { background-color: rgba(255, 255, 255, 0.1); }
+
+        /* ================= MAIN WRAPPER ================= */
+        .wrapper {
+            margin-top: 60px;
+            margin-left: 50px;
+            padding: 24px 12% 100px 12%;
+        }
+
+        .breadcrumb-bar {
+            font-size: 9.5pt;
+            color: #666666;
+            margin-bottom: 20px;
+        }
+        .breadcrumb-bar .active {
+            color: #F37021;
+            font-weight: bold;
+        }
+
+        /* ================= PANELS & CARDS ================= */
+        .panel {
+            background-color: #ffffff;
+            border: 1px solid #E0E0E0;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+            overflow: hidden;
+            padding-bottom: 20px;
+        }
+
+        .panel-title {
+            background-color: #003366;
+            color: #ffffff;
+            padding: 12px 20px;
+            font-size: 11pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .panel-title.orange-theme {
+            background-color: #F37021;
+        }
+
+        /* Vertical Stack Layout */
+        .vertical-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding: 20px;
+        }
+
+        .data-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            width: 100%;
+        }
+
+        .data-label {
+            font-size: 9.5pt;
+            color: #003366;
+            font-weight: bold;
+        }
+
+        /* Form Controls */
+        .form-control {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #CCCCCC;
+            border-radius: 4px;
+            font-size: 10pt;
+            background-color: #FFFFFF;
+            color: #333333;
+            outline: none;
+            min-height: 38px;
+        }
+        .form-control:focus {
+            border-color: #F37021;
+            box-shadow: 0 0 4px rgba(243, 112, 33, 0.2);
+        }
+        .form-control[readonly] {
+            background-color: #F5F5F5;
+            color: #777777;
+            cursor: not-allowed;
+        }
+
+        /* Inline Row Grouping */
+        .inline-row {
+            display: flex;
+            gap: 15px;
+        }
+        .inline-row .data-group {
+            flex: 1;
+        }
+
+        /* Dynamic Section Container for Vacancies */
+        .vacancy-block {
+            background-color: #FAFAFA;
+            border: 1px solid #E0E0E0;
+            border-radius: 4px;
+            padding: 20px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        .vacancy-block .remove-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: #E74C3C;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 8pt;
+            cursor: pointer;
+        }
+
+        /* Toggle Button Group */
+        .radio-box-group {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            background: #FFFFFF;
+            padding: 10px;
+            border: 1px solid #CCCCCC;
+            border-radius: 4px;
+        }
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 9.5pt;
+            cursor: pointer;
+        }
+        .radio-item input {
+            accent-color: #F37021;
+            width: 16px;
+            height: 16px;
+            margin: 0;
+        }
+
+        /* Buttons Template */
+        .btn-container {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 20px;
+            margin-bottom: 50px;
+        }
+        .btn {
+            padding: 12px 24px;
+            font-size: 10pt;
+            font-weight: bold;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-secondary { background-color: #7F8C8D; color: white; }
+        .btn-secondary:hover { background-color: #616A6B; }
+        .btn-orange { background-color: #F37021; color: white; }
+        .btn-orange:hover { background-color: #D35400; }
+        .btn-outline { background-color: transparent; border: 1px solid #003366; color: #003366; }
+        .btn-outline:hover { background-color: #FFF3EB; border-color: #F37021; color: #F37021; }
+
+        /* File Upload Zone */
+        .upload-zone {
+            border: 2px dashed #CCCCCC;
+            padding: 30px;
+            text-align: center;
+            background: #FAFAFA;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .upload-zone:hover {
+            border-color: #F37021;
+            background: #FFF3EB;
+        }
+
+        /* Footer Bars */
+        .tech-support-bar, .footer-bar {
+            position: fixed;
+            bottom: 30px;
+            left: 50px;
+            width: calc(100% - 50px);
+            height: 30px;
+            background-color: #002244;
+            color: #FFFFFF;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            font-size: 8.5pt;
+            z-index: 1000;
+        }
+        .footer-bar {
+            bottom: 0;
+            background-color: #F37021;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR HEADER -->
+    <div class="navbar">
+        <div class="nav-col nav-left">
+            <div style="font-weight: bold; font-size: 14pt; color: #003366; letter-spacing: -0.5px;">UNIVERSITAS CIPUTRA</div>
+            <div style="font-size: 7.5pt; color: #666666; margin-top: -2px; letter-spacing: 0.5px;">CREATING WORLD CLASS ENTREPRENEURS</div>
+        </div>
+        <div class="nav-col nav-center">
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search menu / Oprec Management...">
+                <span class="search-icon">&#128269;</span>
+            </div>
+        </div>
+        <div class="nav-col nav-right">
+            <span style="font-size: 14pt; margin-right: 15px; cursor: pointer; color: #555555;">&#128276;</span>
+            <div class="user-profile">
+                <p class="user-name">Hi, Muh. Nur Alif Akbar</p>
+                <p class="user-status">Project Manager Mode</p>
+            </div>
+            <div class="avatar">MNA</div>
+        </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <button class="sidebar-btn">&#9776;</button>
+        <button class="sidebar-btn" style="color: #FFEB3B;">&#9733;</button>
+    </div>
+
+    <!-- MAIN WORKSPACE WRAPPER -->
+    <div class="wrapper">
+        
+        <div class="breadcrumb-bar">
+            Dashboard Panitia / Kegiatan Aktif / <span class="active">Apply &amp; Edit Setup Open Recruitment</span>
+        </div>
+
+        <form id="oprecForm" onsubmit="submitForm(event)">
+            
+            <!-- PANEL 1: INFORMASI UTAMA (OTOMATIS / READONLY) -->
+            <div class="panel">
+                <div class="panel-title">Section 1: Data Utama Kegiatan (Sinkronisasi Otomatis)</div>
+                <div class="vertical-stack">
+                    <div class="data-group">
+                        <div class="data-label">Judul Kegiatan</div>
+                        <input type="text" class="form-control" value="Mental Health Month 2026" readonly>
+                    </div>
+                    <div class="inline-row">
+                        <div class="data-group">
+                            <div class="data-label">Atas Nama (Organizer)</div>
+                            <input type="text" class="form-control" value="SU (Student Union) &amp; SC (Student Council)" readonly>
+                        </div>
+                        <div class="data-group">
+                            <div class="data-label">Nama PIC / Project Manager</div>
+                            <input type="text" class="form-control" value="Muh. Nur Alif Akbar" readonly>
+                        </div>
+                    </div>
+                    <div class="inline-row">
+                        <div class="data-group">
+                            <div class="data-label">NIM PIC</div>
+                            <input type="text" class="form-control" value="070601231XXXX" readonly>
+                        </div>
+                        <div class="data-group">
+                            <div class="data-label">Contact Person (LINE / WA)</div>
+                            <input type="text" class="form-control" value="+62 812-3456-XXXX" readonly>
+                        </div>
+                    </div>
+                    <div class="inline-row">
+                        <div class="data-group">
+                            <div class="data-label">Periode Kepengurusan (Tahun Akademik)</div>
+                            <input type="text" class="form-control" value="2025/2026" readonly>
+                        </div>
+                        <div class="data-group">
+                            <div class="data-label">Tanggal Mulai Kerja Kepanitiaan</div>
+                            <input type="date" class="form-control" required value="2026-06-15">
+                        </div>
+                        <div class="data-group">
+                            <div class="data-label">Tanggal Selesai Kerja Kepanitiaan</div>
+                            <input type="date" class="form-control" required value="2026-07-20">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PANEL 2: STRUKTUR STRATEGIS LOWONGAN DIVISI (VACANCY ENGINE) -->
+            <div class="panel">
+                <div class="panel-title orange-theme">Section 2: Pengaturan Lowongan Divisi (Vacancy Grid)</div>
+                <div class="vertical-stack" id="vacancyContainer">
+                    
+                    <!-- DEFAULT VACANCY ITEM BLOCK 1 -->
+                    <div class="vacancy-block" id="block_1">
+                        <button type="button" class="remove-btn" onclick="removeVacancyBlock('block_1')">Hapus Divisi</button>
+                        
+                        <div class="inline-row" style="margin-bottom: 12px;">
+                            <div class="data-group" style="flex: 2;">
+                                <div class="data-label">Pilih Judul Nama Divisi (O-Week Standard / Kustom)</div>
+                                <select class="form-control" onchange="handleDivisionType(this)" required>
+                                    <option value="Event">Event / Acara (Standard)</option>
+                                    <option value="Inventory">Inventory / Perlengkapan (Standard)</option>
+                                    <option value="Documentation">Documentation / Pubdok (Standard)</option>
+                                    <option value="Consumption">Consumption / Konsumsi (Standard)</option>
+                                    <option value="Security">Security / Keamanan (Standard)</option>
+                                    <option value="CUSTOM_TYPE">*Tulis Tipe Divisi Sendiri (Kustom)</option>
+                                </select>
+                                <input type="text" class="form-control custom-div-input" placeholder="Ketik nama divisi kustom Anda..." style="display:none; margin-top: 8px;">
+                            </div>
+                            <div class="data-group" style="flex: 1;">
+                                <div class="data-label">Batas Khusus Program Studi (Major)</div>
+                                <select class="form-control">
+                                    <option value="">Semua Jurusan (Set All Major)</option>
+                                    <option value="ISB">Information System for Business (ISB)</option>
+                                    <option value="IMT">Informatics Mobile Tech (IMT)</option>
+                                    <option value="IBM">International Business Management (IBM)</option>
+                                    <option value="VCD">Visual Communication Design (VCD)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="inline-row" style="margin-bottom: 12px;">
+                            <div class="data-group">
+                                <div class="data-label">Posisi yang Dibuka (Multiple Selectable)</div>
+                                <div class="radio-box-group">
+                                    <label class="radio-item"><input type="checkbox" checked> Koor / HOD</label>
+                                    <label class="radio-item"><input type="checkbox" checked> Wakil Koor</label>
+                                    <label class="radio-item"><input type="checkbox" checked> Anggota</label>
+                                </div>
+                            </div>
+                            <div class="data-group" style="max-width: 200px;">
+                                <div class="data-label">Jumlah Personel Dibutuhkan</div>
+                                <input type="number" class="form-control" min="1" value="5" required>
+                            </div>
+                            <div class="data-group" style="max-width: 200px;">
+                                <div class="data-label">Butuh Portofolio Tambahan?</div>
+                                <div class="radio-box-group">
+                                    <label class="radio-item"><input type="radio" name="porto_1" value="Yes" checked> Yes</label>
+                                    <label class="radio-item"><input type="radio" name="porto_1" value="No"> No</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="inline-row">
+                            <div class="data-group">
+                                <div class="data-label">Deskripsi Pekerjaan Divisi (Job Description)</div>
+                                <textarea class="form-control" rows="2" placeholder="Sebutkan deskripsi kerja riil lapangan..."></textarea>
+                            </div>
+                            <div class="data-group">
+                                <div class="data-label">Kualifikasi Khusus Syarat Kompetensi</div>
+                                <textarea class="form-control" rows="2" placeholder="Contoh: Menguasai Figma, Mampu koordinasi vendor, dll..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                
+                <!-- ACTION TO ADD NEW DIVISION BLOCK -->
+                <div style="padding: 0 20px;">
+                    <button type="button" class="btn btn-outline" style="width: 100%; text-align: center;" onclick="addNewVacancyBlock()">
+                        ➕ Tambah Struktur Divisi Baru (Add Division +)
+                    </button>
+                </div>
+            </div>
+
+            <!-- PANEL 3: TIMELINE TIMING REGISTRASI & ASSET POSTER -->
+            <div class="panel">
+                <div class="panel-title">Section 3: Rentang Waktu Pendaftaran &amp; Publikasi</div>
+                <div class="vertical-stack">
+                    <div class="inline-row">
+                        <div class="data-group">
+                            <div class="data-label">Mulai Tanggal Pembukaan OPREC System</div>
+                            <input type="date" class="form-control" required value="2026-06-11">
+                        </div>
+                        <div class="data-group">
+                            <div class="data-label">Penutupan Tanggal Akhir Pendaftaran OPREC</div>
+                            <input type="date" class="form-control" required value="2026-06-14">
+                        </div>
+                    </div>
+                    <div class="data-group">
+                        <div class="data-label">Upload Desain Media Poster OPREC Resmi (Format Gambar/PDF)</div>
+                        <div class="upload-zone" onclick="document.getElementById('posterFile').click()">
+                            <span style="font-size: 24pt; color: #777777;">📁</span>
+                            <p style="margin: 8px 0 4px 0; font-size: 10pt; font-weight: bold; color: #003366;">Klik di sini untuk unggah file poster lowongan kepanitiaan</p>
+                            <p style="margin: 0; font-size: 8pt; color: #888888;">Mendukung berkas JPG, PNG atau PDF (Maksimal ukuran 5MB)</p>
+                            <input type="file" id="posterFile" style="display: none;" onchange="displayFileName(this)">
+                            <p id="fileNameDisplay" style="margin-top: 10px; font-weight: bold; color: #F37021; font-size: 9pt;"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BOTTOM COMMAND BAR -->
+            <div class="btn-container">
+                <button type="button" class="btn btn-secondary" onclick="saveDraft()">💾 Save as a Draft</button>
+                <button type="submit" class="btn btn-orange">🚀 Submit for Approval System</button>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- FOOTER TECHNICAL STACK -->
+    <div class="tech-support-bar">
+        <div class="footer-col">
+            <strong>System Engine Integration:</strong>&nbsp;<span style="color:#25D366;">&#128172; CIS Oprec Gate Module</span>&nbsp;| Otomatisasi Filter Validasi Syarat Anggota Ormawa
+        </div>
+        <div>Build Engine v1.4</div>
+    </div>
+    <div class="footer-bar">
+        <div>&#128205; CitraLand CBD Boulevard, Made, Kec. Sambikerep, Surabaya, Jawa Timur 60219</div>
+        <div>&copy; 2026 | Universitas Ciputra Surabaya</div>
+    </div>
+
+    <!-- ================= JAVASCRIPT LOGIC DYNAMIC ENGINE ================= -->
+    <script>
+        let blockCount = 1;
+
+        // Menangani input jika user memilih mengetik tipe divisi kustom sendiri
+        function handleDivisionType(selectElement) {
+            const customInput = selectElement.parentElement.querySelector('.custom-div-input');
+            if (selectElement.value === 'CUSTOM_TYPE') {
+                customInput.style.display = 'block';
+                customInput.setAttribute('required', 'required');
+            } else {
+                customInput.style.display = 'none';
+                customInput.removeAttribute('required');
+            }
+        }
+
+        // Menampilkan nama file poster yang berhasil diunggah
+        function displayFileName(inputElement) {
+            const display = document.getElementById('fileNameDisplay');
+            if(inputElement.files.length > 0) {
+                display.innerText = "Target File Berhasil Dimuat: " + inputElement.files[0].name;
+            }
+        }
+
+        // Menambahkan Blok Divisi Baru secara Dinamis
+        function addNewVacancyBlock() {
+            blockCount++;
+            const container = document.getElementById('vacancyContainer');
+            
+            const newBlock = document.createElement('div');
+            newBlock.className = 'vacancy-block';
+            newBlock.id = `block_${blockCount}`;
+            
+            newBlock.innerHTML = `
+                <button type="button" class="remove-btn" onclick="removeVacancyBlock('block_${blockCount}')">Hapus Divisi</button>
+                
+                <div class="inline-row" style="margin-bottom: 12px;">
+                    <div class="data-group" style="flex: 2;">
+                        <div class="data-label">Pilih Judul Nama Divisi (O-Week Standard / Kustom)</div>
+                        <select class="form-control" onchange="handleDivisionType(this)" required>
+                            <option value="Event">Event / Acara (Standard)</option>
+                            <option value="Inventory">Inventory / Perlengkapan (Standard)</option>
+                            <option value="Documentation">Documentation / Pubdok (Standard)</option>
+                            <option value="Consumption">Consumption / Konsumsi (Standard)</option>
+                            <option value="Security">Security / Keamanan (Standard)</option>
+                            <option value="CUSTOM_TYPE">*Tulis Tipe Divisi Sendiri (Kustom)</option>
+                        </select>
+                        <input type="text" class="form-control custom-div-input" placeholder="Ketik nama divisi kustom Anda..." style="display:none; margin-top: 8px;">
+                    </div>
+                    <div class="data-group" style="flex: 1;">
+                        <div class="data-label">Batas Khusus Program Studi (Major)</div>
+                        <select class="form-control">
+                            <option value="">Semua Jurusan (Set All Major)</option>
+                            <option value="ISB">Information System for Business (ISB)</option>
+                            <option value="IMT">Informatics Mobile Tech (IMT)</option>
+                            <option value="IBM">International Business Management (IBM)</option>
+                            <option value="VCD">Visual Communication Design (VCD)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="inline-row" style="margin-bottom: 12px;">
+                    <div class="data-group">
+                        <div class="data-label">Posisi yang Dibuka (Multiple Selectable)</div>
+                        <div class="radio-box-group">
+                            <label class="radio-item"><input type="checkbox" checked> Koor / HOD</label>
+                            <label class="radio-item"><input type="checkbox" checked> Wakil Koor</label>
+                            <label class="radio-item"><input type="checkbox" checked> Anggota</label>
+                        </div>
+                    </div>
+                    <div class="data-group" style="max-width: 200px;">
+                        <div class="data-label">Jumlah Personel Dibutuhkan</div>
+                        <input type="number" class="form-control" min="1" value="1" required>
+                    </div>
+                    <div class="data-group" style="max-width: 200px;">
+                        <div class="data-label">Butuh Portofolio Tambahan?</div>
+                        <div class="radio-box-group">
+                            <label class="radio-item"><input type="radio" name="porto_${blockCount}" value="Yes"> Yes</label>
+                            <label class="radio-item"><input type="radio" name="porto_${blockCount}" value="No" checked> No</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="inline-row">
+                    <div class="data-group">
+                        <div class="data-label">Deskripsi Pekerjaan Divisi (Job Description)</div>
+                        <textarea class="form-control" rows="2" placeholder="Sebutkan deskripsi kerja riil lapangan..."></textarea>
+                    </div>
+                    <div class="data-group">
+                        <div class="data-label">Kualifikasi Khusus Syarat Kompetensi</div>
+                        <textarea class="form-control" rows="2" placeholder="Contoh: Menguasai Figma, Mampu koordinasi vendor, dll..."></textarea>
+                    </div>
+                </div>
+            `;
+            
+            container.appendChild(newBlock);
+        }
+
+        // Menghapus Blok Divisi
+        function removeVacancyBlock(id) {
+            const block = document.getElementById(id);
+            if (confirm("Apakah Anda yakin ingin menghapus opsi penyiapan divisi lowongan ini?")) {
+                block.remove();
+            }
+        }
+
+        // Action Save Draft
+        function saveDraft() {
+            alert("Draft Berhasil Disimpan! Anda dapat mengubah konfigurasi struktur rekrutmen ini kapan saja sebelum disubmit.");
+        }
+
+        // Action Submit Form
+        function submitForm(event) {
+            event.preventDefault();
+            alert("Sukses! Form Open Recruitment (OPREC) berhasil diajukan ke Student Affairs untuk divalidasi dan dipublikasi.");
+            // Logika redirect atau integrasi lanjutan AJAX
+        }
+    </script>
+</body>
+</html>
