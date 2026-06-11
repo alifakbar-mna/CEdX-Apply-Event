@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universitas Ciputra - Recruitment &amp; Selection Dashboard</title>
+    <style>
+        /* ================= BASE RESET & UTILITIES ================= */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #F4F5F7;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* ================= TOP NAVBAR HEADER ================= */
+        .navbar {
+            background-color: #ffffff;
+            border-bottom: 1px solid #E0E0E0;
+            padding: 10px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            z-index: 1000;
+        }
+        .nav-col { display: flex; align-items: center; }
+        .nav-left { flex-direction: column; align-items: flex-start; }
+        .nav-center { flex-grow: 1; justify-content: center; max-width: 500px; margin: 0 auto; }
+        .nav-right { gap: 12px; justify-content: flex-end; }
+        
+        .search-container { position: relative; width: 100%; }
+        .search-input { width: 100%; padding: 8px 36px 8px 12px; border: 1px solid #CCCCCC; border-radius: 20px; font-size: 9.5pt; }
+        .search-icon { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #888888; }
+
+        .user-profile { text-align: right; line-height: 1.2; }
+        .user-name { font-size: 9.5pt; font-weight: bold; margin: 0; color: #333333; }
+        .user-status { font-size: 8pt; color: #777777; margin: 0; }
+        .avatar { width: 36px; height: 36px; border-radius: 50%; background-color: #003366; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; }
+
+        /* ================= SIDEBAR ================= */
+        .sidebar { position: fixed; top: 60px; left: 0; width: 50px; height: calc(100vh - 60px); background-color: #003366; display: flex; flex-direction: column; align-items: center; padding-top: 15px; gap: 15px; z-index: 999; }
+        .sidebar-btn { background: none; border: none; color: #ffffff; font-size: 14pt; cursor: pointer; width: 100%; padding: 10px 0; text-align: center; }
+        .sidebar-btn:hover { background-color: rgba(255, 255, 255, 0.1); }
+
+        /* ================= MAIN WRAPPER ================= */
+        .wrapper { margin-top: 60px; margin-left: 50px; padding: 24px 4% 100px 4%; }
+        .breadcrumb-bar { font-size: 9.5pt; color: #666666; margin-bottom: 20px; }
+        .breadcrumb-bar .active { color: #F37021; font-weight: bold; }
+
+        /* ================= PANELS & CARDS ================= */
+        .panel { background-color: #ffffff; border: 1px solid #E0E0E0; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 25px; overflow: hidden; }
+        .panel-title { background-color: #003366; color: #ffffff; padding: 12px 20px; font-size: 11pt; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; display: flex; justify-content: space-between; align-items: center; }
+        .panel-title.orange-theme { background-color: #F37021; }
+
+        .vertical-stack { display: flex; flex-direction: column; gap: 16px; padding: 20px; }
+        .inline-row { display: flex; gap: 15px; flex-wrap: wrap; }
+        .inline-row .data-group { flex: 1; min-width: 200px; }
+        
+        .data-group { display: flex; flex-direction: column; gap: 6px; width: 100%; }
+        .data-label { font-size: 9.5pt; color: #003366; font-weight: bold; }
+
+        /* Form Controls */
+        .form-control { width: 100%; padding: 10px 12px; border: 1px solid #CCCCCC; border-radius: 4px; font-size: 9.5pt; background-color: #FFFFFF; color: #333333; outline: none; }
+        .form-control:focus { border-color: #F37021; box-shadow: 0 0 4px rgba(243, 112, 33, 0.2); }
+        .form-control[readonly] { background-color: #F5F5F5; color: #777777; cursor: not-allowed; }
+
+        /* ================= TABLES DATA STYLING ================= */
+        .data-table { width: 100%; border-collapse: collapse; font-size: 9pt; text-align: left; }
+        .data-table th { background-color: #F8F9FA; color: #003366; font-weight: bold; padding: 12px 10px; border-bottom: 2px solid #E0E0E0; border-top: 1px solid #E0E0E0; }
+        .data-table td { padding: 10px; border-bottom: 1px solid #E0E0E0; background-color: #FFFFFF; vertical-align: middle; }
+        .data-table tr:hover td { background-color: #F9FBFC; }
+
+        /* Buttons Core */
+        .btn { padding: 8px 16px; font-size: 9pt; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; transition: background 0.2s; }
+        .btn-sm { padding: 4px 8px; font-size: 8pt; border-radius: 3px; }
+        .btn-orange { background-color: #F37021; color: white; }
+        .btn-orange:hover { background-color: #D35400; }
+        .btn-blue { background-color: #003366; color: white; }
+        .btn-blue:hover { background-color: #002244; }
+        .btn-outline { background-color: transparent; border: 1px solid #003366; color: #003366; }
+        .btn-outline:hover { background-color: #FFF3EB; border-color: #F37021; color: #F37021; }
+        .btn-danger { background-color: #E74C3C; color: white; }
+        .btn-danger:hover { background-color: #C0392B; }
+        .btn-success { background-color: #2ECC71; color: white; }
+        .btn-success:hover { background-color: #27AE60; }
+
+        /* Badges & Checks */
+        .badge-syarat { display: block; font-size: 7.5pt; padding: 2px 6px; border-radius: 3px; margin-bottom: 2px; font-weight: 500; text-align: center; }
+        .syarat-pass { background-color: #D4EDDA; color: #155724; border: 1px solid #C3E6CB; }
+        .syarat-fail { background-color: #F8D7DA; color: #721C24; border: 1px solid #F5C6CB; }
+        
+        .status-pill { display: inline-block; padding: 4px 8px; border-radius: 12px; font-size: 8pt; font-weight: bold; text-transform: uppercase; }
+        .pill-pending { background-color: #FFEBAA; color: #856404; }
+        .pill-approved { background-color: #2ECC71; color: #FFFFFF; }
+        .pill-rejected { background-color: #E74C3C; color: #FFFFFF; }
+
+        /* Action Link Assets */
+        .asset-link { display: inline-flex; align-items: center; gap: 3px; color: #003366; font-weight: bold; text-decoration: none; font-size: 8pt; background: #EAECEF; padding: 3px 6px; border-radius: 3px; margin-bottom: 2px; }
+        .asset-link:hover { background: #F37021; color: white; }
+
+        /* Input Table Overrides */
+        .table-input { width: 100%; padding: 4px 6px; border: 1px solid #CCCCCC; border-radius: 3px; font-size: 8.5pt; }
+
+        /* Footer Bars */
+        .tech-support-bar, .footer-bar { position: fixed; bottom: 30px; left: 50px; width: calc(100% - 50px); height: 30px; background-color: #002244; color: #FFFFFF; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; font-size: 8.5pt; z-index: 1000; }
+        .footer-bar { bottom: 0; background-color: #F37021; }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR HEADER -->
+    <div class="navbar">
+        <div class="nav-col nav-left">
+            <div style="font-weight: bold; font-size: 14pt; color: #003366; letter-spacing: -0.5px;">UNIVERSITAS CIPUTRA</div>
+            <div style="font-size: 7.5pt; color: #666666; margin-top: -2px; letter-spacing: 0.5px;">CREATING WORLD CLASS ENTREPRENEURS</div>
+        </div>
+        <div class="nav-col nav-center">
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Cari Nama Pelamar / NIM / Divisi...">
+                <span class="search-icon">&#128269;</span>
+            </div>
+        </div>
+        <div class="nav-col nav-right">
+            <span style="font-size: 14pt; margin-right: 15px; cursor: pointer; color: #555555;">&#128276;</span>
+            <div class="user-profile">
+                <p class="user-name">Hi, Muh. Nur Alif Akbar</p>
+                <p class="user-status">HOD Recruitment Mode</p>
+            </div>
+            <div class="avatar">MNA</div>
+        </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <button class="sidebar-btn">&#9776;</button>
+        <button class="sidebar-btn" style="color: #FFEB3B;">&#9733;</button>
+    </div>
+
+    <!-- MAIN WRAPPER -->
+    <div class="wrapper">
+        <div class="breadcrumb-bar">
+            Dashboard Panitia / Recruitment Center / <span class="active">Recruitment - Selection System</span>
+        </div>
+
+        <form id="selectionForm" onsubmit="handleFinalSubmit(event)">
+            
+            <!-- SECTION 1: TIMELINE & TARGET SELECTION SUMMARY -->
+            <div class="panel">
+                <div class="panel-title">Section 1: Konfigurasi Dasar Kegiatan</div>
+                <div class="vertical-stack">
+                    <div class="inline-row">
+                        <div class="data-group">
+                            <div class="data-label">Judul Kegiatan</div>
+                            <input type="text" class="form-control" value="Mental Health Month 2026" readonly>
+                        </div>
+                        <div class="data-group">
+                            <div class="data-label">Atas Nama (Organizer)</div>
+                            <input type="text" class="form-control" value="SU &amp; SC Collaboration" readonly>
+                        </div>
+                    </div>
+                    <div class="inline-row">
+                        <div class="data-group">
+                            <div class="data-label">Nama PIC Utama</div>
+                            <input type="text" class="form-control" value="Muh. Nur Alif Akbar" readonly>
+                        </div>
+                        <div class="data-group">
+                            <div class="data-label">NIM PIC</div>
+                            <input type="text" class="form-control" value="070601231XXXX" readonly>
+                        </div>
+                        <div class="data-group">
+                            <div class="data-label">Contact Person</div>
+                            <input type="text" class="form-control" value="+62 812-3456-XXXX" readonly>
+                        </div>
+                    </div>
+                    <div class="inline-row">
+                        <div class="data-group">
+                            <div class="data-label">Batas Program Studi (Vacancy Major Allocation)</div>
+                            <input type="text" class="form-control" value="Information System for Business, Informatics Mobile Tech" readonly>
+                        </div>
+                        <div class="data-group">
+                            <div class="data-label">Tanggal Mulai &amp; Selesai Kerja</div>
+                            <input type="text" class="form-control" value="15 Juni 2026 - 20 Juli 2026" readonly>
+                        </div>
+                        <div class="data-group">
+                            <div class="data-label">Rentang Registrasi OPREC</div>
+                            <input type="text" class="form-control" value="11 Juni 2026 - 14 Juni 2026" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 2: STRUKTUR STRATEGIS PANITIA INTI (PIC VACANCY MANAGER) -->
+            <div class="panel">
+                <div class="panel-title orange-theme">Section 2: Daftar Panitia Inti (Core Core Organizer)</div>
+                <div>
+                    <table class="data-table" id="tableCorePic">
+                        <thead>
+                            <tr>
+                                <th style="width: 25%;">Nama Mahasiswa (Student Name)</th>
+                                <th style="width: 20%;">NIM</th>
+                                <th style="width: 25%;">Struktur Jabatan / Division</th>
+                                <th style="width: 20%;">Nomor Handphone (WhatsApp)</th>
+                                <th style="width: 10%; text-align: center;">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Bimo</strong></td>
+                                <!-- NIM format disesuaikan dengan contoh input -->
+                                <td>1231041</td>
+                                <td><span style="font-weight: 600; color: #F37021;">Ketua Panitia</span></td>
+                                <td><input type="tel" class="table-input" value="08123456781" placeholder="Masukkan No HP..."></td>
+                                <td style="text-align: center;"><button type="button" class="btn btn-sm btn-danger" onclick="this.parentElement.parentElement.remove()">Hapus</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Wahyu</strong></td>
+                                <td>2401840</td>
+                                <td>Wakil Ketua</td>
+                                <td><input type="tel" class="table-input" value="08987654321" placeholder="Masukkan No HP..."></td>
+                                <td style="text-align: center;"><button type="button" class="btn btn-sm btn-danger" onclick="this.parentElement.parentElement.remove()">Hapus</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Thania</strong></td>
+                                <td>4249180</td>
+                                <td>Bendahara</td>
+                                <td><input type="tel" class="table-input" value="08561234567" placeholder="Masukkan No HP..."></td>
+                                <td style="text-align: center;"><button type="button" class="btn btn-sm btn-danger" onclick="this.parentElement.parentElement.remove()">Hapus</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Jojo</strong></td>
+                                <td>2498049</td>
+                                <td>Sekretaris</td>
+                                <td><input type="tel" class="table-input" value="08781234567" placeholder="Masukkan No HP..."></td>
+                                <td style="text-align: center;"><button type="button" class="btn btn-sm btn-danger" onclick="this.parentElement.parentElement.remove()">Hapus</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="padding: 12px; background: #FAFAFA; text-align: right;">
+                        <button type="button" class="btn btn-outline btn-sm" onclick="addNewCoreRow()">➕ Tambah Panitia Inti</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 3: PLACEMENT CAPACITY MATRIX -->
+            <div class="panel">
+                <div class="panel-title">Section 3: Ringkasan Kuota Kebutuhan Divisi (Placement Matrix)</div>
+                <div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Nama Divisi (Division Name)</th>
+                                <th style="text-align: center;">Jumlah Koor Dibutuhkan</th>
+                                <th style="text-align: center;">Jumlah HOD Dibutuhkan</th>
+                                <th style="text-align: center;">Total Required Staff</th>
+                                <th style="text-align: center; background-color: #EBF5FB;">Total Applied</th>
+                                <th style="text-align: center; background-color: #EAF2F8;">Total Accepted</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Event / Acara</strong></td>
+                                <td style="text-align: center;">1</td>
+                                <td style="text-align: center;">1</td>
+                                <td style="text-align: center; font-weight: bold;">5 Personnel</td>
+                                <td style="text-align: center; background-color: #EBF5FB; color: #003366; font-weight: bold;">12 Applicants</td>
+                                <td style="text-align: center; background-color: #EAF2F8; font-weight: bold; color: #2ECC71;" id="count-event">0</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Inventory / Perlengkapan</strong></td>
+                                <td style="text-align: center;">1</td>
+                                <td style="text-align: center;">0</td>
+                                <td style="text-align: center; font-weight: bold;">4 Personnel</td>
+                                <td style="text-align: center; background-color: #EBF5FB; color: #003366; font-weight: bold;">8 Applicants</td>
+                                <td style="text-align: center; background-color: #EAF2F8; font-weight: bold; color: #2ECC71;" id="count-inventory">0</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Documentation / Pubdok</strong></td>
+                                <td style="text-align: center;">1</td>
+                                <td style="text-align: center;">1</td>
+                                <td style="text-align: center; font-weight: bold;">3 Personnel</td>
+                                <td style="text-align: center; background-color: #EBF5FB; color: #003366; font-weight: bold;">6 Applicants</td>
+                                <td style="text-align: center; background-color: #EAF2F8; font-weight: bold; color: #2ECC71;" id="count-doc">0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- SECTION 4: APPLICANT ASSESSMENT FIELD (DIRECT APPROVAL LOOPS) -->
+            <div class="panel">
+                <div class="panel-title orange-theme">
+                    <span>Section 4: Validasi &amp; Seleksi Pelamar Baru (Applicant Assessment)</span>
+                    <span style="font-size: 8.5pt; font-weight: normal; background: rgba(0,0,0,0.2); padding: 4px 8px; border-radius: 4px;">* Cukup Approve yang diterima, sisa berkas otomatis Auto-Reject saat submit</span>
+                </div>
+                <div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 10%;">Major / NIM</th>
+                                <th style="width: 12%;">Nama Pelamar</th>
+                                <th style="width: 12%;">Divisi Pilihan</th>
+                                <th style="width: 25%;">Syarat Kelayakan Sistem (SIMKATMAWA &amp; Academic)</th>
+                                <th style="width: 15%;">Berkas Berkas Tambahan</th>
+                                <th style="width: 12%; text-align: center;">Status Sekarang</th>
+                                <th style="width: 14%; text-align: center;">Aksi Seleksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="applicantTableBody">
+                            <!-- LOOP DATA PELAMAR -->
+                            <script>
+                                const applicants = [
+                                    {name: "Ichon", nim: "07060123", major: "ISB", div: "Event", oweek: true, ldk: true, ipk: "3.75", rek: true},
+                                    {name: "Wahyi", nim: "07060122", major: "IMT", div: "Event", oweek: true, ldk: false, ipk: "3.20", rek: true},
+                                    {name: "Sola", nim: "07060123", major: "ISB", div: "Inventory", oweek: true, ldk: true, ipk: "3.65", rek: true},
+                                    {name: "Timothy", nim: "07060121", major: "IBM", div: "Documentation", oweek: true, ldk: true, ipk: "2.90", rek: false},
+                                    {name: "Vero", nim: "07060123", major: "VCD", div: "Event", oweek: false, ldk: true, ipk: "3.40", rek: true},
+                                    {name: "Hans", nim: "07060122", major: "IMT", div: "Inventory", oweek: true, ldk: true, ipk: "3.80", rek: true},
+                                    {name: "Shola", nim: "07060124", major: "ISB", div: "Event", oweek: true, ldk: true, ipk: "3.10", rek: true},
+                                    {name: "Mafud", nim: "07060122", major: "IBM", div: "Documentation", oweek: true, ldk: false, ipk: "2.75", rek: true},
+                                    {name: "Merta", nim: "07060123", major: "ISB", div: "Inventory", oweek: true, ldk: true, ipk: "3.55", rek: true},
+                                    {name: "Moli", nim: "07060123", major: "VCD", div: "Event", oweek: true, ldk: true, ipk: "3.90", rek: true},
+                                    {name: "Neski", nim: "07060121", major: "IMT", div: "Documentation", oweek: true, ldk: true, ipk: "3.33", rek: true},
+                                    {name: "Talilalala", nim: "07060124", major: "ISB", div: "Event", oweek: true, ldk: true, ipk: "3.62", rek: true}
+                                ];
+
+                                applicants.forEach((ap, index) => {
+                                    document.write(`
+                                    <tr id="row_${index}">
+                                        <td>
+                                            <strong>${ap.major}</strong>
+                                            <div style="font-size: 8pt; color:#666;">${ap.nim}</div>
+                                        </td>
+                                        <td><strong>${ap.name}</strong></td>
+                                        <td><span style="color: #003366; font-weight: 600;">${ap.div}</span></td>
+                                        <td>
+                                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px;">
+                                                <span class="badge-syarat ${ap.oweek ? 'syarat-pass' : 'syarat-fail'}">Oweek: ${ap.oweek ? 'Lulus' : 'Belum'}</span>
+                                                <span class="badge-syarat ${ap.ldk ? 'syarat-pass' : 'syarat-fail'}">Pra LDK &amp; LDKS</span>
+                                                <span class="badge-syarat ${parseFloat(ap.ipk) >= 3.0 ? 'syarat-pass' : 'syarat-fail'}">IPK: ${ap.ipk}</span>
+                                                <span class="badge-syarat ${ap.rek ? 'syarat-pass' : 'syarat-fail'}">Rekomendasi Dosen PA</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="asset-link" onclick="viewAsset('${ap.name}', 'Kredit Poin')">📄 View KP</a>
+                                            <a href="#" class="asset-link" onclick="viewAsset('${ap.name}', 'Curriculum Vitae')">💼 View CV</a>
+                                            <a href="#" class="asset-link" onclick="viewAsset('${ap.name}', 'Portfolio')">🎨 View Portofolio</a>
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <span class="status-pill pill-pending" id="status_${index}">Pending</span>
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <div style="display: flex; gap: 4px; justify-content: center;">
+                                                <button type="button" class="btn btn-sm btn-danger" onclick="rejectApplicant(${index})">Reject ✕</button>
+                                                <button type="button" class="btn btn-sm btn-success" onclick="approveApplicant(${index}, '${ap.div}')">Approve ✓</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    `);
+                                });
+                            </script>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- SECTION 5: EXPORT & NOMINAL KP SETTING (KHUSUS UNTUK PDD) -->
+            <div class="panel" style="background-color: #FFFDF9; border: 1px solid #F37021;">
+                <div class="panel-title" style="background-color: #F37021;">Section 5: Nominal Kredit Poin (Kepanitiaan Khusus PDD)</div>
+                <div class="vertical-stack">
+                    <div class="inline-row" style="align-items: center;">
+                        <div class="data-group" style="flex: 2;">
+                            <div class="data-label" style="color: #333;">Pengaturan Alokasi Nominal KP Panitia (Hanya Terbuka untuk Divisi PDD / Student Affairs Authorization)</div>
+                            <p style="margin: 0; font-size: 8.5pt; color: #777;">Besaran poin ini akan terakumulasi secara otomatis ke portofolio mahasiswa setelah berkas LPJ disetujui CEdX.</p>
+                        </div>
+                        <div class="data-group" style="flex: 1; max-width: 250px;">
+                            <div class="data-label">Nominal Poin Kinerja</div>
+                            <input type="number" class="form-control" value="15" min="1" placeholder="Contoh: 15">
+                        </div>
+                    </div>
+                    <hr style="border: 0; border-top: 1px solid #E0E0E0; margin: 10px 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                        <div>
+                            <span style="font-size: 9pt; color: #003366; font-weight: bold;">Unduh Berkas Rekapitulasi Pendaftaran Fisik:</span>
+                        </div>
+                        <button type="button" class="btn btn-blue" onclick="alert('Mengunduh seluruh berkas CV, Portofolio, dan spreadsheet pendaftar dalam format .ZIP')">📁 Download All Assets &amp; Form (.ZIP)</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BOTTOM COMMAND BAR -->
+            <div style="display: flex; justify-content: flex-end; margin-bottom: 60px;">
+                <button type="submit" class="btn btn-orange" style="padding: 14px 40px; font-size: 11pt; box-shadow: 0 4px 6px rgba(243, 112, 33, 0.2);">🔒 Submit Final Selection Result</button>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- FOOTER TECHNICAL STACK -->
+    <div class="tech-support-bar">
+        <div><strong>CIS Recruiter Core Engine:</strong>&nbsp;<span style="color:#25D366;">⚡ Direct Approval Loops Active</span>&nbsp;| Sisa draf pending otomatis auto-reject ketika ditekan submit final.</div>
+        <div>Engine Selection v2.1</div>
+    </div>
+    <div class="footer-bar">
+        <div>📍 CitraLand CBD Boulevard, Made, Kec. Sambikerep, Surabaya, Jawa Timur 60219</div>
+        <div>&copy; 2026 | Universitas Ciputra Surabaya</div>
+    </div>
+
+    <!-- ================= JAVASCRIPT SYSTEM ENGINE ================= -->
+    <script>
+        // Data penyimpanan kuota lokal
+        const counters = {
+            "Event": 0,
+            "Inventory": 0,
+            "Documentation": 0
+        };
+
+        // Fungsi melihat file asset pelamar
+        function viewAsset(name, assetType) {
+            alert(`Memanggil berkas digital terenkripsi dari Cloud Server CIS UC...\nPelamar: ${name}\nJenis Berkas: ${assetType}`);
+        }
+
+        // Fungsi manual reject
+        function rejectApplicant(index) {
+            const statusLabel = document.getElementById(`status_${index}`);
+            statusLabel.innerText = "Rejected";
+            statusLabel.className = "status-pill pill-rejected";
+        }
+
+        // Fungsi manual approve dengan counter live update
+        function approveApplicant(index, division) {
+            const statusLabel = document.getElementById(`status_${index}`);
+            
+            // Cek jika sebelumnya belum disetujui untuk mencegah manipulasi penambahan kuota ganda
+            if (statusLabel.innerText !== "APPROVED") {
+                statusLabel.innerText = "APPROVED";
+                statusLabel.className = "status-pill pill-approved";
+                
+                // Update live counters dashboard panitia
+                if (division in counters) {
+                    counters[division]++;
+                    updatePlacementDisplay();
+                }
+            }
+        }
+
+        // Memperbarui visual tabel placement kuota divisi
+        function updatePlacementDisplay() {
+            document.getElementById('count-event').innerText = counters["Event"];
+            document.getElementById('count-inventory').innerText = counters["Inventory"];
+            document.getElementById('count-doc').innerText = counters["Documentation"];
+        }
+
+        // Menambah baris panitia inti secara dinamis
+        function addNewCoreRow() {
+            const tableBody = document.querySelector('#tableCorePic smoky');
+            const table = document.getElementById('tableCorePic').getElementsByTagName('tbody')[0];
+            const newRow = table.insertRow();
+            
+            newRow.innerHTML = `
+                <td><input type="text" class="table-input" placeholder="Nama Panitia..." required></td>
+                <td><input type="text" class="table-input" placeholder="NIM..." required></td>
+                <td><input type="text" class="table-input" placeholder="Divisi Inti..." required></td>
+                <td><input type="tel" class="table-input" placeholder="Nomor HP..." required></td>
+                <td style="text-align: center;"><button type="button" class="btn btn-sm btn-danger" onclick="this.parentElement.parentElement.remove()">Hapus</button></td>
+            `;
+        }
+
+        // Handle Submit Final dengan fitur Auto Reject berkas yang masih menggantung/pending
+        function handleFinalSubmit(event) {
+            event.preventDefault();
+            
+            if (confirm("Apakah Anda yakin ingin memfinalisasi data seleksi kepanitiaan ini?\nSistem akan secara otomatis mengubah status seluruh pelamar yang masih 'Pending' menjadi 'Rejected'.")) {
+                
+                // Cari semua yang masih berstatus pending dan lakukan auto-reject
+                applicants.forEach((ap, index) => {
+                    const statusLabel = document.getElementById(`status_${index}`);
+                    if (statusLabel.innerText === "Pending") {
+                        statusLabel.innerText = "Rejected";
+                        statusLabel.className = "status-pill pill-rejected";
+                    }
+                });
+
+                alert("Sukses! Hasil seleksi panitia dikunci.\nData kelulusan telah disinkronisasi ke server Student Affairs UC, dan notifikasi kelulusan otomatis terkirim ke mahasiswa terkait.");
+            }
+        }
+    </script>
+</body>
+</html>
