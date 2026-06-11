@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universitas Ciputra - List Panitia &amp; ST Generator</title>
+    <style>
+        /* ================= BASE RESET & UTILITIES ================= */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #F4F5F7;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* ================= TOP NAVBAR HEADER ================= */
+        .navbar {
+            background-color: #ffffff;
+            border-bottom: 1px solid #E0E0E0;
+            padding: 10px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            z-index: 1000;
+        }
+        .nav-col { display: flex; align-items: center; }
+        .nav-left { flex-direction: column; align-items: flex-start; }
+        .nav-center { flex-grow: 1; justify-content: center; max-width: 500px; margin: 0 auto; }
+        .nav-right { gap: 12px; justify-content: flex-end; }
+        
+        .search-container { position: relative; width: 100%; }
+        .search-input { width: 100%; padding: 8px 36px 8px 12px; border: 1px solid #CCCCCC; border-radius: 20px; font-size: 9.5pt; }
+        .search-icon { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #888888; }
+
+        .user-profile { text-align: right; line-height: 1.2; }
+        .user-name { font-size: 9.5pt; font-weight: bold; margin: 0; color: #333333; }
+        .user-status { font-size: 8pt; color: #777777; margin: 0; }
+        .avatar { width: 36px; height: 36px; border-radius: 50%; background-color: #003366; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; }
+
+        /* ================= SIDEBAR ================= */
+        .sidebar { position: fixed; top: 60px; left: 0; width: 50px; height: calc(100vh - 60px); background-color: #003366; display: flex; flex-direction: column; align-items: center; padding-top: 15px; gap: 15px; z-index: 999; }
+        .sidebar-btn { background: none; border: none; color: #ffffff; font-size: 14pt; cursor: pointer; width: 100%; padding: 10px 0; text-align: center; }
+        .sidebar-btn:hover { background-color: rgba(255, 255, 255, 0.1); }
+
+        /* ================= MAIN WRAPPER ================= */
+        .wrapper { margin-top: 60px; margin-left: 50px; padding: 24px 6% 100px 6%; }
+        .breadcrumb-bar { font-size: 9.5pt; color: #666666; margin-bottom: 20px; }
+        .breadcrumb-bar .active { color: #F37021; font-weight: bold; }
+
+        /* ================= PANELS & CARDS ================= */
+        .panel { background-color: #ffffff; border: 1px solid #E0E0E0; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 25px; overflow: hidden; }
+        .panel-title { background-color: #003366; color: #ffffff; padding: 12px 20px; font-size: 11pt; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; display: flex; justify-content: space-between; align-items: center; }
+        .panel-title.orange-theme { background-color: #F37021; }
+
+        .vertical-stack { display: flex; flex-direction: column; gap: 16px; padding: 20px; }
+        .inline-row { display: flex; gap: 15px; flex-wrap: wrap; }
+        .inline-row .data-group { flex: 1; min-width: 200px; }
+        
+        .data-group { display: flex; flex-direction: column; gap: 6px; width: 100%; }
+        .data-label { font-size: 9.5pt; color: #003366; font-weight: bold; }
+
+        /* Form Controls */
+        .form-control { width: 100%; padding: 10px 12px; border: 1px solid #CCCCCC; border-radius: 4px; font-size: 9.5pt; background-color: #FFFFFF; color: #333333; outline: none; }
+        .form-control:focus { border-color: #F37021; box-shadow: 0 0 4px rgba(243, 112, 33, 0.2); }
+
+        /* ================= TABLES DATA STYLING ================= */
+        .data-table { width: 100%; border-collapse: collapse; font-size: 9.5pt; text-align: left; }
+        .data-table th { background-color: #F8F9FA; color: #003366; font-weight: bold; padding: 12px 10px; border-bottom: 2px solid #E0E0E0; }
+        .data-table td { padding: 10px; border-bottom: 1px solid #E0E0E0; background-color: #FFFFFF; vertical-align: middle; }
+        .data-table tr.category-row td { background-color: #FFF3EB; color: #F37021; font-weight: bold; font-size: 10pt; border-bottom: 2px solid #F37021; }
+        .data-table tr:hover td { background-color: #F9FBFC; }
+        tr.category-row:hover td { background-color: #FFF3EB; }
+
+        /* Badges */
+        .role-badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 8pt; font-weight: bold; text-transform: uppercase; }
+        .badge-inti { background-color: #003366; color: #ffffff; }
+        .badge-koor { background-color: #F37021; color: #ffffff; }
+        .badge-anggota { background-color: #95A5A6; color: #ffffff; }
+
+        /* Buttons */
+        .btn { padding: 10px 20px; font-size: 9.5pt; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-orange { background-color: #F37021; color: white; }
+        .btn-orange:hover { background-color: #D35400; }
+        .btn-blue { background-color: #003366; color: white; }
+        .btn-blue:hover { background-color: #002244; }
+        .btn-outline { background-color: transparent; border: 1px solid #003366; color: #003366; }
+        .btn-outline:hover { background-color: #FFF3EB; border-color: #F37021; color: #F37021; }
+
+        /* ================= E-LETTER LIVE PREVIEW BOX ================= */
+        .e-letter-preview { background-color: #FFFFFF; border: 2px dashed #003366; border-radius: 4px; padding: 40px; box-shadow: inset 0 0 10px rgba(0,0,0,0.02); display: none; margin-top: 15px; position: relative; }
+        .letter-header { text-align: center; border-bottom: 3px double #003366; padding-bottom: 15px; margin-bottom: 25px; }
+        .letter-title { font-family: 'Times New Roman', Times, serif; font-size: 14pt; font-weight: bold; text-decoration: underline; text-transform: uppercase; margin-bottom: 5px; color: #003366; }
+        .letter-number { font-family: 'Times New Roman', Times, serif; font-size: 11pt; margin: 0; color: #555555; }
+        .letter-body { font-family: 'Times New Roman', Times, serif; font-size: 11pt; line-height: 1.6; color: #222222; text-align: justify; }
+        
+        .e-signature-zone { display: flex; justify-content: flex-end; margin-top: 40px; font-family: 'Times New Roman', Times, serif; }
+        .sig-block { text-align: center; width: 250px; }
+        .crypto-hash-stamp { margin: 10px 0; border: 1px dashed #2ECC71; padding: 6px; border-radius: 4px; background: #EAFAF1; color: #27AE60; font-size: 7.5pt; font-family: monospace; text-align: left; word-break: break-all; }
+
+        /* Footer Bars */
+        .tech-support-bar, .footer-bar { position: fixed; bottom: 30px; left: 50px; width: calc(100% - 50px); height: 30px; background-color: #002244; color: #FFFFFF; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; font-size: 8.5pt; z-index: 1000; }
+        .footer-bar { bottom: 0; background-color: #F37021; }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR HEADER -->
+    <div class="navbar">
+        <div class="nav-col nav-left">
+            <div style="font-weight: bold; font-size: 14pt; color: #003366; letter-spacing: -0.5px;">UNIVERSITAS CIPUTRA</div>
+            <div style="font-size: 7.5pt; color: #666666; margin-top: -2px; letter-spacing: 0.5px;">CREATING WORLD CLASS ENTREPRENEURS</div>
+        </div>
+        <div class="nav-col nav-center">
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Cari nama panitia / NIM / divisi...">
+                <span class="search-icon">&#128269;</span>
+            </div>
+        </div>
+        <div class="nav-col nav-right">
+            <span style="font-size: 14pt; margin-right: 15px; cursor: pointer; color: #555555;">&#128276;</span>
+            <div class="user-profile">
+                <p class="user-name">Hi, Muh. Nur Alif Akbar</p>
+                <p class="user-status">Project Manager Mode</p>
+            </div>
+            <div class="avatar">MNA</div>
+        </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <button class="sidebar-btn">&#9776;</button>
+        <button class="sidebar-btn" style="color: #FFEB3B;">&#9733;</button>
+    </div>
+
+    <!-- MAIN WORKSPACE WRAPPER -->
+    <div class="wrapper">
+        <div class="breadcrumb-bar">
+            Dashboard Panitia / Finalization / <span class="active">List Panitia &amp; Surat Tugas Generator</span>
+        </div>
+
+        <!-- PANEL 1: LIST PANITIA TETAP (PASCA SELEKSI LULUS) -->
+        <div class="panel">
+            <div class="panel-title">Section 1: Daftar Resmi Anggota Panitia (Final Lineup)</div>
+            <div>
+                <table class="data-table" id="tableOfficialPanitia">
+                    <thead>
+                        <tr>
+                            <th style="width: 15%;">NIM</th>
+                            <th style="width: 30%;">Nama Mahasiswa</th>
+                            <th style="width: 20%;">Program Studi</th>
+                            <th style="width: 20%;">Divisi Kerja</th>
+                            <th style="width: 15%; text-align: center;">Tingkat Jabatan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- KATEGORI: PANITIA INTI -->
+                        <tr class="category-row">
+                            <td colspan="5">✦ PANITIA INTI (CORE ORGANIZER)</td>
+                        </tr>
+                        <tr>
+                            <td>1231041</td>
+                            <td><strong>Bimo</strong></td>
+                            <td>Information System for Business</td>
+                            <td>Struktur Inti</td>
+                            <td style="text-align: center;"><span class="role-badge badge-inti">Ketua</span></td>
+                        </tr>
+                        <tr>
+                            <td>2401840</td>
+                            <td><strong>Wahyu</strong></td>
+                            <td>Informatics Mobile Tech</td>
+                            <td>Struktur Inti</td>
+                            <td style="text-align: center;"><span class="role-badge badge-inti">Wakil Ketua</span></td>
+                        </tr>
+
+                        <!-- KATEGORI: DIVISI EVENT -->
+                        <tr class="category-row">
+                            <td colspan="5">✦ DIVISI EVENT / ACARA</td>
+                        </tr>
+                        <tr>
+                            <td>07060123</td>
+                            <td><strong>Ichon</strong></td>
+                            <td>Information System for Business</td>
+                            <td>Event</td>
+                            <td style="text-align: center;"><span class="role-badge badge-koor">Koor</span></td>
+                        </tr>
+                        <tr>
+                            <td>07060123</td>
+                            <td><strong>Moli</strong></td>
+                            <td>Visual Communication Design</td>
+                            <td>Event</td>
+                            <td style="text-align: center;"><span class="role-badge badge-anggota">Anggota</span></td>
+                        </tr>
+                        <tr>
+                            <td>07060124</td>
+                            <td><strong>Talilalala</strong></td>
+                            <td>Information System for Business</td>
+                            <td>Event</td>
+                            <td style="text-align: center;"><span class="role-badge badge-anggota">Anggota</span></td>
+                        </tr>
+
+                        <!-- KATEGORI: DIVISI INVENTORY -->
+                        <tr class="category-row">
+                            <td colspan="5">✦ DIVISI INVENTORY / PERLENGKAPAN</td>
+                        </tr>
+                        <tr>
+                            <td>07060123</td>
+                            <td><strong>Sola</strong></td>
+                            <td>Information System for Business</td>
+                            <td>Inventory</td>
+                            <td style="text-align: center;"><span class="role-badge badge-koor">Koor</span></td>
+                        </tr>
+                        <tr>
+                            <td>07060122</td>
+                            <td><strong>Hans</strong></td>
+                            <td>Informatics Mobile Tech</td>
+                            <td>Inventory</td>
+                            <td style="text-align: center;"><span class="role-badge badge-anggota">Anggota</span></td>
+                        </tr>
+
+                        <!-- KATEGORI: DIVISI DOCUMENTATION -->
+                        <tr class="category-row">
+                            <td colspan="5">✦ DIVISI DOCUMENTATION / PUBDOK</td>
+                        </tr>
+                        <tr>
+                            <td>07060121</td>
+                            <td><strong>Neski</strong></td>
+                            <td>Informatics Mobile Tech</td>
+                            <td>Documentation</td>
+                            <td style="text-align: center;"><span class="role-badge badge-koor">Koor</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="padding: 15px; background-color: #F8F9FA; display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 9pt; color: #555;">Total Anggota Terdaftar Tetap: <strong>8 Mahasiswa</strong></span>
+                <button type="button" class="btn btn-outline" style="padding: 6px 12px; font-size: 8.5pt;" onclick="alert('Mengekspor daftar panitia tetap ke format Excel (.xlsx)')">📥 Export List Panitia</button>
+            </div>
+        </div>
+
+        <!-- PANEL 2: ST GENERATOR (E-LETTER CONCEPT) -->
+        <div class="panel">
+            <div class="panel-title orange-theme">Section 2: E-Letter Generator Surat Tugas (ST) Panitia</div>
+            <div class="vertical-stack">
+                <div class="inline-row">
+                    <div class="data-group">
+                        <div class="data-label">Nomor Surat Tugas (Auto-Drafted)</div>
+                        <input type="text" id="stNumber" class="form-control" value="042/ST-ORMAWA/UC/VI/2026">
+                    </div>
+                    <div class="data-group">
+                        <div class="data-label">Pihak Penandatangan (Authorized Signatory)</div>
+                        <select id="stSignatory" class="form-control">
+                            <option value="Biro Student Affairs / CEdX Manager">Biro Student Affairs (SA)</option>
+                            <option value="Kepala Program Studi Information System">Kepala Program Studi ISB</option>
+                            <option value="Presiden Student Union (SU)">Presiden Student Union (SU)</option>
+                        </select>
+                    </div>
+                    <div class="data-group">
+                        <div class="data-label">Tanggal Pengeluaran Surat</div>
+                        <input type="date" id="stDate" class="form-control" value="2026-06-11">
+                    </div>
+                </div>
+
+                <div class="data-group">
+                    <div class="data-label">Tembusan Surat Tugas (Cc)</div>
+                    <input type="text" id="stCc" class="form-control" value="1. Wakil Rektor Akademik, 2. Head of Department ISB &amp; IMT, 3. Arsip Internal CEdX">
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-top: 5px;">
+                    <button type="button" class="btn btn-blue" onclick="generateELetterLive()">⚡ Generate E-Letter Preview</button>
+                    <button type="button" class="btn btn-outline" onclick="resetELetter()">Reset Form</button>
+                </div>
+
+                <!-- LIVE PREVIEW WORKSPACE BOX -->
+                <div class="e-letter-preview" id="previewBox">
+                    <div class="letter-header">
+                        <div style="font-size: 14pt; font-weight: bold; color: #003366; letter-spacing: 0.5px;">UNIVERSITAS CIPUTRA SURABAYA</div>
+                        <div style="font-size: 8pt; color: #666; font-style: italic; margin-top: 2px;">CitraLand CBD Boulevard, Made, Kec. Sambikerep, Kota Surabaya, Jawa Timur 60129</div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <p class="letter-title">SURAT TUGAS KEPANITIAAN ORMAWA</p>
+                        <p class="letter-number">Nomor: <span id="lblStNumber"></span></p>
+                    </div>
+
+                    <div class="letter-body">
+                        <p>Mengingat Anggaran Dasar Ormawa Universitas Ciputra Surabaya, dengan ini Pihak Otoritas Kampus/Organisasi memberikan mandat penuh dan menugaskan nama-nama mahasiswa yang tercantum dalam <strong>Section 1 (Daftar Resmi Anggota Panitia)</strong> untuk melaksanakan seluruh rangkaian kegiatan kepanitiaan:</p>
+                        
+                        <table style="width: 100%; margin: 15px 0; font-family: 'Times New Roman', serif; font-size: 11pt;">
+                            <tr>
+                                <td style="width: 25%; font-weight: bold; vertical-align: top;">Nama Kegiatan</td>
+                                <td style="width: 3%; vertical-align: top;">:</td>
+                                <td>Mental Health Month 2026</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold; vertical-align: top;">Penyelenggara</td>
+                                <td style="vertical-align: top;">:</td>
+                                <td>SU &amp; SC Collaboration</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold; vertical-align: top;">Masa Berlaku Tugas</td>
+                                <td style="vertical-align: top;">:</td>
+                                <td>15 Juni 2026 s.d. 20 Juli 2026</td>
+                            </tr>
+                        </table>
+
+                        <p>Demikian surat tugas ini diterbitkan agar dapat dilaksanakan dengan penuh tanggung jawab, dedikasi, serta integritas tinggi demi mendukung poin portofolio kemahasiswaan SIMKATMAWA Universitas Ciputra Surabaya.</p>
+                        
+                        <p style="margin-top: 25px;">Ditetapkan di: Surabaya<br>Pada Tanggal: <span id="lblStDate"></span></p>
+                    </div>
+
+                    <!-- DIGITAL SIGNATURE STAMP -->
+                    <div class="e-signature-zone">
+                        <div class="sig-block">
+                            <p>Mengetahui / Menyetujui,</p>
+                            <p style="font-weight: bold; margin-top: 5px;" id="lblStSignatory"></p>
+                            
+                            <!-- E-LETTER CRYPTO STAMP INTEGRATION -->
+                            <div class="crypto-hash-stamp">
+                                🔒 <strong>E-LETTER VERIFIED</strong><br>
+                                ID: UC-ST-2026-991A<br>
+                                Hash: 8f2a93c7d1e4bf5e6a0c...<br>
+                                Status: Linked to CEdX Vault
+                            </div>
+                            
+                            <p style="border-bottom: 1px solid #333; display: inline-block; padding-bottom: 2px; margin-top: 5px;">Digital Authorization Granted</p>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 30px; font-family: 'Times New Roman', serif; font-size: 9pt; color: #555; border-top: 1px solid #DDD; padding-top: 10px;">
+                        <strong>Tembusan (Cc):</strong> <span id="lblStCc"></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ACTION BOTTOM BUTTONS -->
+        <div style="display: flex; justify-content: flex-end; gap: 15px; margin-bottom: 60px;">
+            <button type="button" class="btn btn-orange" style="padding: 12px 30px;" onclick="submitFinalST()">🔒 Kirim &amp; Publikasi Surat Tugas Resmi</button>
+        </div>
+    </div>
+
+    <!-- FOOTER TECHNICAL STACK -->
+    <div class="tech-support-bar">
+        <div><strong>CIS E-Letter Module:</strong>&nbsp;<span style="color:#25D366;">✓ Secure Digital Signing Engine Connected</span>&nbsp;| Otomatisasi penerbitan SK/ST ke profil SIMKATMAWA Mahasiswa.</div>
+        <div>Engine Document v3.0</div>
+    </div>
+    <div class="footer-bar">
+        <div>📍 CitraLand CBD Boulevard, Made, Kec. Sambikerep, Surabaya, Jawa Timur 60219</div>
+        <div>&copy; 2026 | Universitas Ciputra Surabaya</div>
+    </div>
+
+    <!-- ================= JAVASCRIPT SYSTEM ENGINE ================= -->
+    <script>
+        // Membaca data form dan menyuntikkannya ke tampilan dokumen E-Letter resmi
+        function generateELetterLive() {
+            const stNumber = document.getElementById('stNumber').value;
+            const signatory = document.getElementById('stSignatory').value;
+            const rawDate = document.getElementById('stDate').value;
+            const cc = document.getElementById('stCc').value;
+
+            if(!stNumber || !rawDate) {
+                alert("Mohon lengkapi parameter Nomor Surat dan Tanggal Pengeluaran!");
+                return;
+            }
+
+            // Format tanggal lokal Indonesia
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const formattedDate = new Date(rawDate).toLocaleDateString('id-ID', options);
+
+            // Inject data ke DOM E-Letter preview
+            document.getElementById('lblStNumber').innerText = stNumber;
+            document.getElementById('lblStSignatory').innerText = signatory;
+            document.getElementById('lblStDate').innerText = formattedDate;
+            document.getElementById('lblStCc').innerText = cc;
+
+            // Tampilkan box dengan efek visual scroll down smooth
+            const previewBox = document.getElementById('previewBox');
+            previewBox.style.display = 'block';
+            previewBox.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        }
+
+        function resetELetter() {
+            document.getElementById('previewBox').style.display = 'none';
+            document.getElementById('stNumber').value = "042/ST-ORMAWA/UC/VI/2026";
+            document.getElementById('stCc').value = "1. Wakil Rektor Akademik, 2. Head of Department ISB & IMT, 3. Arsip Internal CEdX";
+        }
+
+        function submitFinalST() {
+            if(document.getElementById('previewBox').style.display !== 'block') {
+                alert("Harap klik tombol 'Generate E-Letter Preview' terlebih dahulu untuk memverifikasi draf Surat Tugas!");
+                return;
+            }
+
+            if(confirm("Apakah Anda yakin ingin mengunci dan mempublikasikan Surat Tugas ini?\nDokumen E-Letter yang terbit akan langsung dikirim ke Student Affairs untuk penandatanganan digital akhir dan otomatis muncul di portal mahasiswa masing-masing.")) {
+                alert("Sukses! Surat Tugas resmi berhasil didaftarkan ke sistem CEdX. Anggota panitia akan menerima notifikasi publikasi dokumen digital.");
+            }
+        }
+    </script>
+</body>
+</html>
