@@ -13,6 +13,28 @@
       from { opacity: 0; transform: scale(0.95); }
       to { opacity: 1; transform: scale(1); }
     }
+
+    /* --- Custom Utility untuk Split Warna CSS Berdasarkan Kebutuhan --- */
+    /* Split 2 Warna: Hijau - Oranye */
+    .split-green-orange {
+      background: linear-gradient(135deg, #22c55e 50%, #f97316 50%);
+      color: white !important;
+    }
+    /* Split 2 Warna: Hijau - Biru */
+    .split-green-blue {
+      background: linear-gradient(135deg, #22c55e 50%, #3b82f6 50%);
+      color: white !important;
+    }
+    /* Split 2 Warna: Oranye - Biru */
+    .split-orange-blue {
+      background: linear-gradient(135deg, #f97316 50%, #3b82f6 50%);
+      color: white !important;
+    }
+    /* Split 3 Warna: Hijau - Oranye - Biru */
+    .split-three-color {
+      background: linear-gradient(90deg, #22c55e 33.33%, #f97316 33.33%, #f97316 66.66%, #3b82f6 66.66%);
+      color: white !important;
+    }
   </style>
 </head>
 <body class="bg-gray-100 p-4 md:p-8 font-sans">
@@ -31,7 +53,7 @@
       <div class="border-b border-gray-200 pb-5 mb-6">
         <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
           <span class="w-2 h-6 bg-orange-500 rounded-sm inline-block"></span>
-          Monitoring Event CIS
+          Monitoring Event CIS (Sistem Deteksi Overlap)
         </h2>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl bg-orange-50 p-4 rounded-lg border border-orange-100">
@@ -126,44 +148,8 @@
                 <th class="p-3.5 text-center font-bold w-40">Action</th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-gray-200 text-gray-700 font-medium">
-              <tr class="hover:bg-amber-50/40 transition">
-                <td class="p-3.5 text-center">
-                  <span class="w-4 h-4 bg-blue-500 rounded-full inline-block ring-4 ring-blue-100"></span>
-                </td>
-                <td class="p-3.5 font-bold text-blue-900 text-base">Mental Health Month 2026</td>
-                <td class="p-3.5 text-gray-600">Mentoring Department</td>
-                <td class="p-3.5">
-                  <div class="text-gray-900 font-semibold">Muh. Nur Alif Akbar</div>
-                  <div class="text-xs text-gray-500 font-mono">07060123</div>
-                </td>
-                <td class="p-3.5 text-gray-600 font-mono">+62 812-3456-789</td>
-                <td class="p-3.5">
-                  <div class="flex justify-center gap-2">
-                    <button onclick="openHistoryModal()" class="px-2.5 py-1.5 bg-sky-100 text-sky-700 font-bold rounded hover:bg-sky-200 text-xs transition shadow-sm">🕒 History</button>
-                    <a href="../Approve-LPJ/detail-lpj.html" class="px-3 py-1.5 bg-gray-500 text-white font-bold rounded hover:bg-gray-600 text-xs transition shadow-sm text-center">Lihat</a>
-                  </div>
-                </td>
-              </tr>
-              <tr class="hover:bg-amber-50/40 transition">
-                <td class="p-3.5 text-center">
-                  <span class="w-4 h-4 bg-orange-500 rounded-full inline-block ring-4 ring-orange-100"></span>
-                </td>
-                <td class="p-3.5 font-bold text-blue-900 text-base">Informatics Hackathon 2026</td>
-                <td class="p-3.5 text-gray-600">Student Union IMT</td>
-                <td class="p-3.5">
-                  <div class="text-gray-900 font-semibold">Gerry Thompson</div>
-                  <div class="text-xs text-gray-500 font-mono">07060122</div>
-                </td>
-                <td class="p-3.5 text-gray-600 font-mono">+62 819-8765-432</td>
-                <td class="p-3.5">
-                  <div class="flex justify-center gap-2">
-                    <button onclick="openHistoryModal()" class="px-2.5 py-1.5 bg-sky-100 text-sky-700 font-bold rounded hover:bg-sky-200 text-xs transition shadow-sm">🕒 History</button>
-                    <a href="../Approve-LPJ/detail-lpj.html" class="px-3 py-1.5 bg-gray-500 text-white font-bold rounded hover:bg-gray-600 text-xs transition shadow-sm text-center">Lihat</a>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
+            <tbody id="modalTableBody" class="divide-y divide-gray-200 text-gray-700 font-medium">
+              </tbody>
           </table>
         </div>
       </div>
@@ -173,7 +159,7 @@
   <div id="historyModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50 p-4">
     <div class="bg-white rounded-xl shadow-2xl w-full max-w-4xl overflow-hidden animate-fade-in border border-gray-200">
       <div class="bg-gray-800 text-white px-6 py-4 flex justify-between items-center">
-        <h4 class="text-base font-bold">History Approval - Mental Health Month 2026</h4>
+        <h4 class="text-base font-bold">History Approval - Status Berkas</h4>
         <button onclick="closeHistoryModal()" class="text-white hover:text-gray-300 text-2xl font-bold focus:outline-none">&times;</button>
       </div>
       <div class="p-6 overflow-x-auto">
@@ -199,8 +185,8 @@
               <td class="p-3 border-r">2023-10-31 14:46:45</td>
               <td class="p-3 border-r">2023-11-03 15:26:13</td>
               <td class="p-3 border-r text-blue-600 font-bold">Need Revision</td>
-              <td class="p-3 border-r text-gray-700 font-semibold">Birgita Dermawani S, Timothy Joshua Malawau</td>
-              <td class="p-3 text-blue-900 bg-blue-50/50">Mohon ke BMA untuk diskusi dengan kak ganang dan kak birgita</td>
+              <td class="p-3 border-r text-gray-700 font-semibold">Birgita Dermawani S</td>
+              <td class="p-3 text-blue-900 bg-blue-50/50">Mohon ke BMA untuk diskusi terkait LPJ kegiatan.</td>
             </tr>
           </tbody>
         </table>
@@ -211,103 +197,227 @@
   <script>
     const namaBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
     
-    // Data dummy simulasi warna status pada tanggal tertentu { "Bulan-Tanggal": "Warna" }
-    // Anda bisa mengganti bagian objek ini menggunakan data dari database/API backend nantinya.
-    const dummyEvents = {
-      "9-1": "bg-blue-500 text-white font-bold",   // Oktober tanggal 1 -> Need Revision
-      "9-2": "bg-orange-500 text-white font-bold", // Oktober tanggal 2 -> Need Approval
-      "9-15": "bg-green-500 text-white font-bold", // Oktober tanggal 15 -> Approved
-      "10-10": "bg-orange-500 text-white font-bold", // November tanggal 10
-      "11-25": "bg-green-500 text-white font-bold"  // Desember tanggal 25
-    };
+    // --- DATA ASLI DENGAN RANGE HARI (Format: YYYY-MM-DD) ---
+    const eventsData = [
+      {
+        judul: "Mental Health Month 2023",
+        organizer: "Mentoring Department",
+        pic: "Muh. Nur Alif Akbar",
+        nim: "07060123",
+        cp: "+62 812-3456-789",
+        status: "blue", // Need Revision
+        start: "2023-10-01",
+        end: "2023-10-05" // Acara A: tanggal 1 sampai 5 Oktober
+      },
+      {
+        judul: "Informatics Hackathon 2023",
+        organizer: "Student Union IMT",
+        pic: "Gerry Thompson",
+        nim: "07060122",
+        cp: "+62 819-8765-432",
+        status: "orange", // Need Approval
+        start: "2023-10-04",
+        end: "2023-10-08" // Acara B: tanggal 4 sampai 8 Oktober (Tabrakan tanggal 4 & 5 dengan Acara A)
+      },
+      {
+        judul: "UC Choir Concert: Symphonic Night",
+        organizer: "UKM Choir",
+        pic: "Alif Akbar",
+        nim: "07060255",
+        cp: "+62 822-4455-667",
+        status: "green", // Approved
+        start: "2023-10-05",
+        end: "2023-10-12" // Acara C: tanggal 5 sampai 12 Oktober (Tabrakan 3 warna sekaligus khusus di tanggal 5!)
+      },
+      {
+        judul: "Business Plan Competition",
+        organizer: "ISB Laboratory",
+        pic: "Clara Bow",
+        nim: "07060999",
+        cp: "+62 857-1122-334",
+        status: "green",
+        start: "2023-10-05",
+        end: "2023-10-05" // Acara D: Menambah tumpukan di tanggal 5 Oktober (Menjadi total 4 Acara serentak!)
+      },
+      {
+        judul: "Seminar Audit Teknologi",
+        organizer: "HIMA SI",
+        pic: "Randi Pro",
+        nim: "07060411",
+        cp: "+62 812-9900-887",
+        status: "orange",
+        start: "2023-11-12",
+        end: "2023-11-18" // Berjalan lancar di bulan November
+      }
+    ];
 
     function render6MonthCalendar() {
       const startMonth = parseInt(document.getElementById('filterBulan').value);
       const startYear = parseInt(document.getElementById('filterTahun').value);
       const gridContainer = document.getElementById('calendarGridContainer');
       
-      // Reset isi grid utama kalender
       gridContainer.innerHTML = "";
 
-      // Looping membuat susunan 6 blok bulan
+      // Hasilkan 6 kotak kalender bulan berurutan
       for (let i = 0; i < 6; i++) {
         let currentMonth = (startMonth + i) % 12;
         let yearOffset = Math.floor((startMonth + i) / 12);
         let currentYear = startYear + yearOffset;
 
-        // Dapatkan informasi kalender umum memakai objek bawaan Date JS
-        let firstDayIndex = new Date(currentYear, currentMonth, 1).getDay(); // 0 = Minggu, 1 = Senin, dst.
-        let totalDays = new Date(currentYear, currentMonth + 1, 0).getDate(); // Jumlah hari dalam bulan terkait
-
-        // Ubah indeks agar hari pertama dimulai dari Senin (S, S, R, K, J, S, M) sesuai mockup civitas UC
-        // Kalender bawaan sistem: Minggu=0, Senin=1... Sabtu=6. Kita ubah jadi: Senin=0, Selasa=1... Minggu=6.
+        let firstDayIndex = new Date(currentYear, currentMonth, 1).getDay(); 
+        let totalDays = new Date(currentYear, currentMonth + 1, 0).getDate(); 
         let adjustedFirstDay = firstDayIndex === 0 ? 6 : firstDayIndex - 1;
 
-        // Buat elemen Kerangka Box Bulan
         const monthBox = document.createElement('div');
         monthBox.className = "border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md hover:border-orange-300 transition cursor-pointer bg-white flex flex-col justify-between";
-        monthBox.setAttribute('onclick', `openEventModal('${namaBulan[currentMonth]} ${currentYear}')`);
+        monthBox.setAttribute('onclick', `openEventModal(${currentMonth}, ${currentYear})`);
 
-        // Bagian Atas: Judul Bulan
         let htmlContent = `
           <div>
             <h3 class="text-center font-bold text-gray-800 mb-3 border-b pb-1.5 text-sm bg-gray-50 rounded py-1">${namaBulan[currentMonth]} ${currentYear}</h3>
             <div class="grid grid-cols-7 gap-1 text-center text-[11px] font-extrabold text-gray-400 mb-2">
               <div>S</div><div>S</div><div>R</div><div>K</div><div>J</div><div>S</div><div>M</div>
             </div>
-            <div class="grid grid-cols-7 gap-1 text-center text-xs font-medium">
+            <div class="grid grid-cols-7 gap-1 text-center text-xs font-semibold">
         `;
 
-        // 1. Mengisi slot kosong tanggal sebelum hari pertama bulan dimulai
+        // Slot kosong tanggal awal bulan
         for (let x = 0; x < adjustedFirstDay; x++) {
-          htmlContent += `<div class="p-1 text-transparent select-none">-</div>`;
+          htmlContent += `<div class="p-2 text-transparent select-none">-</div>`;
         }
 
-        // 2. Mengisi angka tanggal penuh (1 sampai akhir bulan) secara berurutan
+        // Loop untuk memproses perhitungan range & overlap per hari
         for (let day = 1; day <= totalDays; day++) {
-          let eventKey = `${currentMonth}-${day}`;
-          let dayStyle = "text-gray-700 hover:bg-gray-100 rounded-md"; // Style standar kalender umum
+          // Buat string penanda tanggal hari ini
+          let formatBulan = String(currentMonth + 1).padStart(2, '0');
+          let formatHari = String(day).padStart(2, '0');
+          let currentTanggalStr = `${currentYear}-${formatBulan}-${formatHari}`;
 
-          // Jika ada event, timpa dengan warna penanda status
-          if (dummyEvents[eventKey]) {
-            dayStyle = `${dummyEvents[eventKey]} rounded-md shadow-sm`;
+          // Cari tahu event apa saja yang aktif di tanggal ini
+          let activeEventsThisDay = eventsData.filter(ev => {
+            return currentTanggalStr >= ev.start && currentTanggalStr <= ev.end;
+          });
+
+          let count = activeEventsThisDay.length;
+          let dayStyle = "text-gray-700 hover:bg-gray-100 rounded-md relative p-2"; 
+          let badgeHTML = "";
+
+          if (count === 1) {
+            // Hanya 1 Acara: Tampilkan warna penuh statusnya
+            let status = activeEventsThisDay[0].status;
+            if (status === "green") dayStyle = "bg-green-500 text-white rounded-md relative p-2";
+            if (status === "orange") dayStyle = "bg-orange-500 text-white rounded-md relative p-2";
+            if (status === "blue") dayStyle = "bg-blue-500 text-white rounded-md relative p-2";
+          } 
+          else if (count === 2) {
+            // 2 Acara Bertabrakan: Split Sudut Separuh Warna
+            let st1 = activeEventsThisDay[0].status;
+            let st2 = activeEventsThisDay[1].status;
+            
+            let classSplit = "";
+            if ((st1 === "green" && st2 === "orange") || (st1 === "orange" && st2 === "green")) classSplit = "split-green-orange";
+            if ((st1 === "green" && st2 === "blue") || (st1 === "blue" && st2 === "green")) classSplit = "split-green-blue";
+            if ((st1 === "orange" && st2 === "blue") || (st1 === "blue" && st2 === "orange")) classSplit = "split-orange-blue";
+            
+            dayStyle = `${classSplit} rounded-md relative p-2 text-white font-bold`;
+            badgeHTML = `<span class="absolute bottom-0 right-0.5 text-[9px] bg-black text-white px-0.5 rounded-sm scale-90 font-mono">2</span>`;
+          } 
+          else if (count >= 3) {
+            // 3 Acara atau lebih bertabrakan: Split 3 Lajur Warna Sekaligus
+            dayStyle = `split-three-color rounded-md relative p-2 text-white font-bold`;
+            // Tampilkan angka kecil total tumpukan acara di hari tersebut (Misal muncul angka kecil 3, 4, dst)
+            badgeHTML = `<span class="absolute bottom-0 right-0.5 text-[9px] bg-black text-white px-0.5 rounded-sm scale-90 font-mono">${count}</span>`;
           }
 
-          htmlContent += `<div class="p-1 ${dayStyle}">${day}</div>`;
+          htmlContent += `
+            <div class="${dayStyle}">
+              ${day}
+              ${badgeHTML}
+            </div>
+          `;
         }
 
-        htmlContent += `
-            </div>
-          </div>
-        `;
-        
+        htmlContent += `</div></div>`;
         monthBox.innerHTML = htmlContent;
         gridContainer.appendChild(monthBox);
       }
     }
 
-    // Fungsi Pengendali Pop-up
-    function openEventModal(titleText) {
-      document.getElementById('modalMonthTitle').innerText = titleText;
+    // Fungsi Pengendali Konten & Tampilan Pop-up Modal List Event
+    function openEventModal(monthIndex, yearValue) {
+      document.getElementById('modalMonthTitle').innerText = `${namaBulan[monthIndex]} ${yearValue}`;
+      
+      const tableBody = document.getElementById('modalTableBody');
+      tableBody.innerHTML = ""; // Bersihkan tabel terlebih dahulu
+
+      // Ambil seluruh event yang masuk atau melewati rentang bulan terpilih
+      let filteredEvents = eventsData.filter(ev => {
+        let evStart = new Date(ev.start);
+        let evEnd = new Date(ev.end);
+        let targetRangeStart = new Date(yearValue, monthIndex, 1);
+        let targetRangeEnd = new Date(yearValue, monthIndex + 1, 0);
+
+        return (evStart <= targetRangeEnd && evEnd >= targetRangeStart);
+      });
+
+      if (filteredEvents.length === 0) {
+        tableBody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-gray-400 font-medium">Tidak ada pelaksanaan agenda kegiatan di bulan ini.</td></tr>`;
+      } else {
+        filteredEvents.forEach(ev => {
+          let bulatanBg = "bg-green-500 ring-green-100";
+          if (ev.status === "orange") bulatanBg = "bg-orange-500 ring-orange-100";
+          if (ev.status === "blue") bulatanBg = "bg-blue-500 ring-blue-100";
+
+          // Format tanggal tampilan di list tabel detail modal
+          let rangeText = `${ev.start} s/d ${ev.end}`;
+
+          let rowHTML = `
+            <tr class="hover:bg-amber-50/40 transition">
+              <td class="p-3.5 text-center">
+                <span class="w-4 h-4 ${bulatanBg} rounded-full inline-block ring-4"></span>
+              </td>
+              <td class="p-3.5">
+                <div class="font-bold text-blue-900 text-base">${ev.judul}</div>
+                <div class="text-xs text-orange-600 font-semibold mt-0.5">🗓️ Periode: ${rangeText}</div>
+              </td>
+              <td class="p-3.5 text-gray-600">${ev.organizer}</td>
+              <td class="p-3.5">
+                <div class="text-gray-900 font-semibold">${ev.pic}</div>
+                <div class="text-xs text-gray-500 font-mono">${ev.nim}</div>
+              </td>
+              <td class="p-3.5 text-gray-600 font-mono">${ev.cp}</td>
+              <td class="p-3.5">
+                <div class="flex justify-center gap-2">
+                  <button onclick="openHistoryModal(event)" class="px-2.5 py-1.5 bg-sky-100 text-sky-700 font-bold rounded hover:bg-sky-200 text-xs transition shadow-sm">🕒 History</button>
+                  <a href="../Approve-LPJ/detail-lpj.html" class="px-3 py-1.5 bg-gray-500 text-white font-bold rounded hover:bg-gray-600 text-xs transition shadow-sm text-center">Lihat</a>
+                </div>
+              </td>
+            </tr>
+          `;
+          tableBody.innerHTML += rowHTML;
+        });
+      }
+
       document.getElementById('eventModal').classList.remove('hidden');
     }
+
     function closeEventModal() {
       document.getElementById('eventModal').classList.add('hidden');
     }
-    function openHistoryModal() {
+    function openHistoryModal(e) {
+      if (e) e.stopPropagation(); // Mencegah bentrok trigger modal penutup
       document.getElementById('historyModal').classList.remove('hidden');
     }
     function closeHistoryModal() {
       document.getElementById('historyModal').classList.add('hidden');
     }
 
-    // Tutup pop-up ketika klik area luar modal
+    // Tutup pop-up ketika klik area luar modal putih
     window.onclick = function(e) {
       if (e.target === document.getElementById('eventModal')) closeEventModal();
       if (e.target === document.getElementById('historyModal')) closeHistoryModal();
     }
 
-    // Eksekusi fungsi render kalender saat halaman dimuat pertama kali
     window.onload = render6MonthCalendar;
   </script>
 </body>
