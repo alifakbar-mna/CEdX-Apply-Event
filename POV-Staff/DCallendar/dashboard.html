@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kalender Pelaksanaan Event - Full White BG</title>
+  <title>Kalender Pelaksanaan Event - Pop Up View</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     /* Custom Scrollbar untuk Panel Detail kanan */
     .custom-scrollbar::-webkit-scrollbar {
-      width: 6px;
+      width: 5px;
     }
     .custom-scrollbar::-webkit-scrollbar-track {
       background: #ffffff;
     }
     .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #fed7aa;
+      background: #ffedd5;
       border-radius: 10px;
     }
     .custom-scrollbar::-webkit-scrollbar-thumb:hover {
@@ -30,88 +30,79 @@
     }
   </style>
 </head>
-<body class="bg-white min-h-screen p-4 md:p-6 font-sans antialiased text-slate-800">
+<body class="bg-white min-h-screen p-4 md:p-8 font-sans antialiased text-slate-800 flex flex-col items-center justify-start">
 
-  <!-- CONTAINER UTAMA DENGAN BACKGROUND FULL PUTIH -->
-  <div class="max-w-7xl mx-auto bg-white overflow-hidden">
+  <div class="w-full max-w-7xl bg-white">
     
-    <!-- Breadcrumb Navigasi Atas -->
-    <div class="px-2 py-3 flex items-center gap-2 text-xs font-medium text-slate-400 mb-4">
+    <div class="px-2 py-2 flex items-center gap-2 text-xs font-semibold text-slate-400 mb-4 select-none">
       <span class="text-orange-600 hover:underline cursor-pointer">My Activity</span>
-      <span>/</span>
+      <span class="text-slate-300">/</span>
       <span class="text-orange-600 hover:underline cursor-pointer">Competition</span>
-      <span>/</span>
-      <span class="text-slate-400">Monitoring Event Approved</span>
+      <span class="text-slate-300">/</span>
+      <span class="text-slate-400 font-medium">Monitoring Event Approved</span>
     </div>
 
-    <!-- MAIN GRID SYSTEM (KALENDER & DAFTAR AGENDA) -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 min-h-[650px]">
+    <div class="w-full bg-white rounded-2xl border border-gray-150 shadow-[0_10px_30px_rgba(0,0,0,0,06)] overflow-hidden">
       
-      <!-- PANEL KIRI: KALENDER GRID 6 BULAN (8 KOLOM) -->
-      <div class="lg:col-span-8 bg-white">
+      <div class="bg-orange-500 px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm">
+        <div>
+          <h2 class="text-base font-extrabold text-white tracking-tight flex items-center gap-2">
+            <span class="material-symbols-outlined text-lg">calendar_month</span>
+            Kalender Pelaksanaan Event
+          </h2>
+          <p class="text-[11px] text-orange-100 mt-0.5 font-medium">Hanya menampilkan agenda kegiatan yang telah disetujui (Approved)</p>
+        </div>
         
-        <!-- Header Judul Kalender & Dropdown Bulan/Tahun -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 mb-4">
-          <div>
-            <h2 class="text-lg font-extrabold text-slate-900 tracking-tight flex items-center gap-2.5">
-              <span class="w-2.5 h-5 bg-orange-500 rounded inline-block"></span>
-              Kalender Pelaksanaan Event
-            </h2>
-            <p class="text-xs text-slate-400 mt-0.5">Hanya menampilkan agenda kegiatan yang telah disetujui (<span class="text-orange-600 font-semibold">Approved</span>)</p>
-          </div>
-          
-          <!-- Filter Dropdown Atas -->
-          <div class="flex items-center gap-1.5 bg-orange-50/50 p-1 rounded-xl border border-orange-100/70">
-            <select id="filterBulan" onchange="renderCalendarEngine()" class="bg-white text-xs font-bold text-slate-700 rounded-lg px-2.5 py-1.5 shadow-sm focus:outline-none cursor-pointer border border-orange-100">
-              <option value="0">Januari</option>
-              <option value="1">Februari</option>
-              <option value="2">Maret</option>
-              <option value="3">April</option>
-              <option value="4">Mei</option>
-              <option value="5">Juni</option>
-              <option value="6">Juli</option>
-              <option value="7">Agustus</option>
-              <option value="8">September</option>
-              <option value="9" selected>Oktober</option>
-              <option value="10">November</option>
-              <option value="11">Desember</option>
-            </select>
-            <select id="filterTahun" onchange="renderCalendarEngine()" class="bg-white text-xs font-bold text-slate-700 rounded-lg px-2.5 py-1.5 shadow-sm focus:outline-none cursor-pointer border border-orange-100">
-            </select>
-          </div>
-        </div>
-
-        <!-- Info Indikator Klik -->
-        <div class="flex items-center gap-3 text-[11px] font-medium text-slate-600 mb-5 bg-orange-50/40 border border-orange-100/60 p-2.5 rounded-xl">
-          <span class="w-2 h-2 bg-orange-400 rounded-full"></span>
-          <span>Hari Pelaksanaan Event</span>
-          <span class="w-1.5 h-1.5 bg-slate-300 rounded-full mx-1"></span>
-          <span class="text-slate-400 font-normal">*Klik kotak bulan untuk memfilter detail di sebelah kanan</span>
-        </div>
-
-        <!-- Container Grid 6 Kotak Bulan -->
-        <div id="calendarGridContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        <div class="flex items-center gap-1.5 bg-orange-600/40 p-1 rounded-xl border border-orange-400/30">
+          <select id="filterBulan" onchange="renderCalendarEngine()" class="bg-white text-xs font-bold text-slate-700 rounded-lg px-2.5 py-1.5 shadow-sm focus:outline-none cursor-pointer border-none">
+            <option value="0">Januari</option>
+            <option value="1">Februari</option>
+            <option value="2">Maret</option>
+            <option value="3">April</option>
+            <option value="4">Mei</option>
+            <option value="5">Juni</option>
+            <option value="6">Juli</option>
+            <option value="7">Agustus</option>
+            <option value="8">September</option>
+            <option value="9" selected>Oktober</option>
+            <option value="10">November</option>
+            <option value="11">Desember</option>
+          </select>
+          <select id="filterTahun" onchange="renderCalendarEngine()" class="bg-white text-xs font-bold text-slate-700 rounded-lg px-2.5 py-1.5 shadow-sm focus:outline-none cursor-pointer border-none">
+          </select>
         </div>
       </div>
 
-      <!-- PANEL KANAN: DETAIL DATA DAFTAR AGENDA (4 KOLOM) -->
-      <div class="lg:col-span-4 bg-white border-l border-gray-100 pl-0 lg:pl-6 pt-6 lg:pt-0 flex flex-col justify-between">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-0 min-h-[620px]">
         
-        <div>
-          <div class="pb-3 mb-4">
-            <span class="text-[10px] uppercase font-bold tracking-widest text-orange-400 block mb-0.5">Daftar Agenda</span>
-            <h3 id="panelDetailTitle" class="text-base font-bold text-slate-800 tracking-tight">Memuat Data...</h3>
+        <div class="lg:col-span-8 p-6 md:p-8 bg-white border-r border-gray-100">
+          
+          <div class="flex items-center gap-2.5 text-[11px] font-medium text-slate-600 mb-5 bg-orange-50/50 border border-orange-100/70 p-3 rounded-xl">
+            <span class="w-2.5 h-2.5 bg-orange-500 rounded-full animate-pulse"></span>
+            <span class="font-bold text-slate-700">Hari Pelaksanaan Event</span>
+            <span class="w-1 h-3 bg-gray-300 rounded-full mx-1"></span>
+            <span class="text-slate-400 font-normal">*Klik kotak bulan untuk memfilter detail di sebelah kanan</span>
           </div>
 
-          <!-- List Container Card Event -->
-          <div id="panelDetailList" class="space-y-3 max-h-[480px] overflow-y-auto pr-1 custom-scrollbar fade-in-panel">
+          <div id="calendarGridContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           </div>
         </div>
 
-        <!-- Footer Sistem -->
-        <div class="pt-4 border-t border-gray-100 text-[11px] text-slate-400 font-medium flex justify-between items-center mt-6">
-          <span>CIS Monitoring System</span>
-          <span class="font-mono bg-orange-50 text-orange-600 px-1.5 py-0.5 rounded text-[10px] font-bold">v2.2</span>
+        <div class="lg:col-span-4 bg-slate-50/40 p-6 md:p-8 flex flex-col justify-between">
+          <div>
+            <div class="pb-3 mb-4 border-b border-gray-200/60">
+              <span class="text-[10px] uppercase font-bold tracking-widest text-orange-500 block mb-0.5">Daftar Agenda</span>
+              <h3 id="panelDetailTitle" class="text-base font-black text-slate-800 tracking-tight">Memuat Data...</h3>
+            </div>
+
+            <div id="panelDetailList" class="space-y-3 max-h-[440px] overflow-y-auto pr-1 custom-scrollbar fade-in-panel">
+            </div>
+          </div>
+
+          <div class="pt-4 border-t border-gray-200/60 text-[11px] text-slate-400 font-medium flex justify-between items-center mt-6">
+            <span>CIS Monitoring System</span>
+            <span class="font-mono bg-orange-100/70 text-orange-700 px-1.5 py-0.5 rounded text-[10px] font-bold">v2.2</span>
+          </div>
         </div>
 
       </div>
@@ -119,11 +110,10 @@
     </div>
   </div>
 
-  <!-- JAVASCRIPT CORE ENGINE -->
   <script>
     const namaBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
     
-    // --- DATA AGENDA ---
+    // --- DATA EVENT APPROVED ---
     const approvedEvents = [
       {
         judul: "UC Choir Concert: Symphonic Night",
@@ -166,7 +156,6 @@
     let selectedActiveMonth = null;
     let selectedActiveYear = null;
 
-    // Generate Dropdown Tahun Otomatis
     function setupYearDropdownAutomated() {
       const filterTahunSelect = document.getElementById('filterTahun');
       let semuaTahun = [];
@@ -186,7 +175,6 @@
       });
     }
 
-    // Engine Render Kalender Grid 6 Bulan
     function renderCalendarEngine() {
       const startMonth = parseInt(document.getElementById('filterBulan').value);
       const startYear = parseInt(document.getElementById('filterTahun').value);
@@ -210,8 +198,8 @@
 
         const isSelectedBox = (currentMonth === selectedActiveMonth && currentYear === selectedActiveYear);
         const activeBoxClass = isSelectedBox 
-          ? "ring-2 ring-orange-500 border-orange-500 bg-orange-50/10 shadow-sm" 
-          : "border-slate-100 bg-white hover:border-orange-200 shadow-sm transition duration-150";
+          ? "ring-2 ring-orange-500 border-orange-500 bg-orange-50/5 shadow-sm" 
+          : "border-slate-200 bg-white hover:border-orange-300/70 shadow-sm transition duration-150";
 
         const monthBox = document.createElement('div');
         monthBox.className = `border rounded-xl p-3.5 cursor-pointer flex flex-col justify-between ${activeBoxClass}`;
@@ -219,7 +207,7 @@
 
         let htmlContent = `
           <div>
-            <h3 class="text-center font-bold ${isSelectedBox ? 'text-orange-700 bg-orange-50/80' : 'text-slate-700 bg-slate-50'} text-xs tracking-wide mb-2.5 border-b border-slate-100 pb-1 rounded py-0.5">${namaBulan[currentMonth]} ${currentYear}</h3>
+            <h3 class="text-center font-bold ${isSelectedBox ? 'text-orange-700 bg-orange-100/60' : 'text-slate-700 bg-slate-50'} text-xs tracking-wide mb-2.5 border-b border-slate-100 pb-1 rounded py-0.5">${namaBulan[currentMonth]} ${currentYear}</h3>
             <div class="grid grid-cols-7 gap-1 text-center text-[9px] font-bold text-slate-400 mb-1.5">
               <div>S</div><div>S</div><div>R</div><div>K</div><div>J</div><div>S</div><div>M</div>
             </div>
@@ -271,7 +259,6 @@
       renderCalendarEngine();
     }
 
-    // Render List Detail Samping Kanan
     function executeRenderDetails() {
       document.getElementById('panelDetailTitle').innerText = `${namaBulan[selectedActiveMonth]} ${selectedActiveYear}`;
       const listContainer = document.getElementById('panelDetailList');
@@ -301,10 +288,10 @@
         let displayDateText = dStart === dEnd ? `${dStart} ${namaBulan[selectedActiveMonth]}` : `${dStart} - ${dEnd} ${namaBulan[selectedActiveMonth]}`;
 
         let cardHTML = `
-          <div class="bg-white p-3.5 rounded-xl border border-slate-100 shadow-sm hover:shadow-md hover:border-orange-200 transition duration-200 border-l-4 border-l-orange-500">
+          <div class="bg-white p-3.5 rounded-xl border border-gray-150 shadow-sm hover:shadow-md hover:border-orange-200 transition duration-200 border-l-4 border-l-orange-500">
             <span class="inline-block text-[10px] font-bold text-orange-700 bg-orange-50 px-2 py-0.5 rounded-full mb-1.5">🗓️ ${displayDateText}</span>
             <h4 class="text-xs font-bold text-slate-900 leading-snug mb-1.5">${ev.judul}</h4>
-            <div class="flex items-center gap-1 text-[11px] text-slate-500 pt-1.5 border-t border-slate-50">
+            <div class="flex items-center gap-1 text-[11px] text-slate-500 pt-1.5 border-t border-slate-100">
               <span class="text-slate-400">By:</span>
               <span class="font-semibold text-slate-700">${ev.organizer}</span>
             </div>
