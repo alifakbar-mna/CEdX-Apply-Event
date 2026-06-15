@@ -143,7 +143,7 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            padding: 24px 6% 120px 6%;
+            padding: 24px 6% 48px 6%; /* Mengurangi padding bawah karena footer dilepas */
         }
 
         /* BREADCRUMB BAR */
@@ -512,32 +512,10 @@
         .btn-grey:hover {
             background-color: #475569;
         }
-
-        /* Footer Bars */
-        .tech-support-bar, .footer-bar {
-            position: fixed;
-            bottom: 30px;
-            left: 60px;
-            width: calc(100% - 60px);
-            height: 30px;
-            background-color: #0F172A;
-            color: #FFFFFF;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 24px;
-            font-size: 8.5pt;
-            z-index: 1000;
-        }
-        .footer-bar {
-            bottom: 0;
-            background-color: #E65F00;
-        }
     </style>
 </head>
 <body>
 
-    <!-- NAVBAR HEADER -->
     <div class="navbar">
         <div class="nav-col nav-left">
             <div>Universitas Ciputra</div>
@@ -552,34 +530,28 @@
         </div>
     </div>
 
-    <!-- SIDEBAR LEFT -->
     <div class="sidebar">
         <button class="sidebar-btn">☰</button>
         <button class="sidebar-btn">★</button>
     </div>
 
-    <!-- MAIN WORKSPACE WRAPPER -->
     <div class="wrapper">
         
-        <!-- BREADCRUMB BAR -->
         <div class="breadcrumb-bar">
             Student Portal / Activity Control / <span class="active">Input LPJ Event ▼</span>
         </div>
 
-        <!-- NOTIFIKASI REMINDER OTOMATIS -->
         <div class="alert-reminder">
             ⚠️ <strong>SISTEM INFORMASI KEMAHASISWAAN (CIS REMINDER):</strong><br>
             Sistem mendeteksi pelaksanaan kegiatan Anda telah melewati batas waktu pelaksanaan. Harap segera melengkapi formulir <strong>Laporan Pertanggungjawaban (LPJ) Akhir</strong> ini maksimal 7 hari setelah tanggal kegiatan berakhir untuk mencegah penangguhan (sanksi) pencairan dana ormawa berikutnya serta sinkronisasi Poin Kemahasiswaan (SIMKATMAWA).
         </div>
 
-        <!-- BIG ORANGE HEADER TEMPLATE -->
         <div class="hero-header">
             <h1>Input Laporan Pertanggungjawaban (LPJ) Event</h1>
         </div>
 
         <form id="lpjForm" onsubmit="submitLPJ(event)">
             
-            <!-- PANEL 1: IDENTITAS UTAMA EVENT -->
             <div class="panel">
                 <div class="panel-title">Section 1: Laporan Pertanggungjawaban Event Mahasiswa</div>
                 <div class="vertical-stack">
@@ -617,7 +589,6 @@
                 </div>
             </div>
 
-            <!-- PANEL 2: DESKRIPSI & TUJUAN KORELASI CPL/SDGS -->
             <div class="panel">
                 <div class="panel-title orange-theme">Section 2: Deskripsi &amp; Tujuan Strategis Kegiatan</div>
                 <div class="vertical-stack">
@@ -634,7 +605,6 @@
 2. Memfasilitasi konseling kelompok terpandu bersama praktisi psikolog profesional.</textarea>
                     </div>
 
-                    <!-- MATRIX SYSTEM INTEGRATION SIMKATMAWA & 17 SDGS -->
                     <div>
                         <div class="sdgs-title">Checklist Target SDGs (Sustainable Development Goals) &amp; SIMKATMAWA</div>
                         <span class="instruction-blue" style="display:block; margin-bottom: 8px;">* Centang satu atau beberapa goals SDGs yang berhasil direalisasikan lewat event ini:</span>
@@ -665,7 +635,6 @@
                 </div>
             </div>
 
-            <!-- PANEL 3: RUANG LINGKUP -->
             <div class="panel">
                 <div class="panel-title">Section 3: Ruang Lingkup &amp; Sheet Sub-Kegiatan (Realisasi)</div>
                 <div class="vertical-stack">
@@ -688,7 +657,6 @@
                     </div>
 
                     <div class="scope-container">
-                        <!-- SHEET SUB KEGIATAN DROPDOWN MATRIX -->
                         <div>
                             <div class="data-label" style="margin-bottom: 5px;">Sheet Klasifikasi Sub-Kegiatan Realisasi</div>
                             <span class="instruction-blue" style="display:block; margin-bottom: 5px;">* Pilih jenis sub-kegiatan yang berjalan dalam koridor kemahasiswaan:</span>
@@ -712,7 +680,7 @@
                                     <label class="activity-option"><input type="checkbox"> Studi Ekskursi</label>
                                     <label class="activity-option"><input type="checkbox"> Rapat Periode Organisasi</label>
                                     <label class="activity-option"><input type="checkbox"> Gerakan Anti Radikalisme</label>
-                                    <label class="activity-option"><input type="checkbox"> Monitoring Bulanan SA Juli</label>
+                                    <label class="activity-option"><input type="checkbox"> Monitoring Bulanan SA Juni</label>
                                     <label class="activity-option"><input type="checkbox"> Campjur</label>
                                     <label class="activity-option"><input type="checkbox"> Expo</label>
                                     <label class="activity-option"><input type="checkbox"> Kampanye Anti Bullying</label>
@@ -745,7 +713,6 @@
                             </div>
                         </div>
 
-                        <!-- SKALA KEGIATAN BOX -->
                         <div>
                             <div class="data-label" style="margin-bottom: 5px;">Skala Tingkat Kegiatan</div>
                             <span class="instruction-blue" style="display:block; margin-bottom: 5px;">* Konfirmasi dengan SA untuk info valid:</span>
@@ -760,7 +727,6 @@
                 </div>
             </div>
 
-            <!-- PANEL 4: REALISASI WAKTU -->
             <div class="panel">
                 <div class="panel-title orange-theme">Section 4: Deskripsi Kegiatan (Realisasi Pelaksanaan)</div>
                 <div class="vertical-stack">
@@ -795,12 +761,10 @@
                 </div>
             </div>
 
-            <!-- PANEL 5: MATRIX ANGGARAN -->
             <div class="panel">
                 <div class="panel-title">Section 5: Perbandingan Anggaran (Pengajuan VS Realisasi Keuangan)</div>
                 <div class="vertical-stack">
                     
-                    <!-- TABEL 5A -->
                     <div style="margin-bottom: 16px;">
                         <div class="data-label" style="color: #C2410C; margin-bottom: 8px;">A. Anggaran Pengajuan (Draf Proposal Awal)</div>
                         <div class="table-responsive">
@@ -845,7 +809,6 @@
                         </div>
                     </div>
 
-                    <!-- TABEL 5B -->
                     <div>
                         <div class="data-label" style="color: #16A34A; margin-bottom: 8px;">B. Realisasi Anggaran Aktual (Laporan Penggunaan Fisik + Nota)</div>
                         <div class="table-responsive">
@@ -893,7 +856,6 @@
                 </div>
             </div>
 
-            <!-- PANEL 6: DIGITAL ATTACHMENT VAULT -->
             <div class="panel">
                 <div class="panel-title orange-theme">Section 6: Attachment Integration Component</div>
                 <div class="attachment-grid">
@@ -925,7 +887,6 @@
                 </div>
             </div>
 
-            <!-- PANEL 7: MANAGEMENT BIRO APPROVAL -->
             <div class="panel approval-panel">
                 <div class="data-label" style="font-size: 11pt; margin-bottom: 12px;">Seksi Otoritas Pemeriksaan Berkas (Untuk SA / Dosen / HOD)</div>
                 <div class="status-radio-group">
@@ -953,8 +914,7 @@
                 </div>
             </div>
 
-            <!-- BOTTOM COMMAND INTERACTION ACTIONS -->
-            <div style="display: flex; justify-content: flex-end; gap: 16px; margin-bottom: 80px;">
+            <div style="display: flex; justify-content: flex-end; gap: 16px; margin-bottom: 40px;">
                 <button type="button" class="btn btn-grey" onclick="alert('Draf LPJ berhasil disimpan secara lokal di sistem cloud CIS.')">💾 Save as Draft</button>
                 <button type="submit" class="btn btn-orange">🔒 Submit Final LPJ</button>
             </div>
@@ -962,17 +922,6 @@
         </form>
     </div>
 
-    <!-- FOOTER TECHNICAL STACK -->
-    <div class="tech-support-bar">
-        <div><strong>CIS LPJ Validator Module:</strong>&nbsp;<span style="color:#22C55E;">⚡ Auto-Sync Validation Active</span>&nbsp;| Terintegrasi Poin SKK &amp; Transkrip Aktivitas Mahasiswa.</div>
-        <div>Build Engine v4.0.1</div>
-    </div>
-    <div class="footer-bar">
-        <div>📍 CitraLand CBD Boulevard, Made, Kec. Sambikerep, Surabaya, Jawa Timur 60219</div>
-        <div>&copy; 2026 | Universitas Ciputra Surabaya</div>
-    </div>
-
-    <!-- ================= JAVASCRIPT SYSTEM ENGINE ================= -->
     <script {nonce}>
         function submitLPJ(event) {
             event.preventDefault();
