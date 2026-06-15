@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Monitoring Event CIS - Orange Theme</title>
+  <title>Monitoring Event CIS - Approved Only</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     /* Custom Scrollbar untuk Panel Detail agar Terlihat Premium */
@@ -11,15 +11,15 @@
       width: 6px;
     }
     .custom-scrollbar::-webkit-scrollbar-track {
-      background: #fff7ed;
+      background: #f1f1f1;
       border-radius: 10px;
     }
     .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #fed7aa;
+      background: #cbd5e1;
       border-radius: 10px;
     }
     .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-      background: #f97316;
+      background: #94a3b8;
     }
     /* Efek transisi halus saat ganti bulan */
     .fade-in-panel {
@@ -31,11 +31,11 @@
     }
   </style>
 </head>
-<body class="bg-orange-50/30 min-h-screen p-4 md:p-8 font-sans antialiased text-slate-800">
+<body class="bg-slate-50 min-h-screen p-4 md:p-8 font-sans antialiased text-slate-800">
 
-  <div class="max-w-7xl mx-auto bg-white rounded-2xl shadow-xl shadow-orange-100/40 border border-orange-100 overflow-hidden">
+  <div class="max-w-7xl mx-auto bg-white rounded-2xl shadow-xl shadow-slate-100 border border-slate-200/60 overflow-hidden">
     
-    <div class="bg-orange-50/40 backdrop-blur-sm px-6 py-3.5 border-b border-orange-100 flex items-center gap-2 text-xs font-medium text-slate-500">
+    <div class="bg-slate-50/80 backdrop-blur-sm px-6 py-3.5 border-b border-slate-200 flex items-center gap-2 text-xs font-medium text-slate-500">
       <span class="text-orange-600 hover:underline cursor-pointer">My Activity</span>
       <span>/</span>
       <span class="text-orange-600 hover:underline cursor-pointer">Competition</span>
@@ -45,19 +45,19 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-0 min-h-[680px]">
       
-      <div class="lg:col-span-8 p-6 md:p-8 border-r border-orange-50 bg-white">
+      <div class="lg:col-span-8 p-6 md:p-8 border-r border-slate-100 bg-white">
         
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-orange-100 pb-6 mb-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-6 mb-6">
           <div>
             <h2 class="text-xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2.5">
-              <span class="w-2.5 h-6 bg-orange-500 rounded-full inline-block"></span>
+              <span class="w-2.5 h-6 bg-emerald-500 rounded-full inline-block"></span>
               Kalender Pelaksanaan Event
             </h2>
-            <p class="text-xs text-slate-400 mt-1">Hanya menampilkan agenda kegiatan yang telah disetujui (<span class="text-orange-600 font-semibold">Approved</span>)</p>
+            <p class="text-xs text-slate-400 mt-1">Hanya menampilkan agenda kegiatan yang telah disetujui (<span class="text-emerald-600 font-semibold">Approved</span>)</p>
           </div>
           
-          <div class="flex items-center gap-2 bg-orange-50 p-1.5 rounded-xl border border-orange-100 shadow-inner">
-            <select id="filterBulan" onchange="renderCalendarEngine()" class="bg-white text-xs font-bold text-slate-700 rounded-lg px-3 py-2 shadow-sm focus:outline-none cursor-pointer border border-orange-100">
+          <div class="flex items-center gap-2 bg-slate-100 p-1.5 rounded-xl border border-slate-200/60 shadow-inner">
+            <select id="filterBulan" onchange="renderCalendarEngine()" class="bg-white text-xs font-bold text-slate-700 rounded-lg px-3 py-2 shadow-sm focus:outline-none cursor-pointer">
               <option value="0">Januari</option>
               <option value="1">Februari</option>
               <option value="2">Maret</option>
@@ -71,37 +71,40 @@
               <option value="10">November</option>
               <option value="11">Desember</option>
             </select>
-            <select id="filterTahun" onchange="renderCalendarEngine()" class="bg-white text-xs font-bold text-slate-700 rounded-lg px-3 py-2 shadow-sm focus:outline-none cursor-pointer border border-orange-100">
+            <select id="filterTahun" onchange="renderCalendarEngine()" class="bg-white text-xs font-bold text-slate-700 rounded-lg px-3 py-2 shadow-sm focus:outline-none cursor-pointer">
+              <option value="2023" selected>2023</option>
+              <option value="2026">2026</option>
+              <option value="2027">2027</option>
             </select>
           </div>
         </div>
 
-        <div class="flex items-center gap-3 text-xs font-medium text-slate-600 mb-6 bg-orange-50/60 border border-orange-100 p-3 rounded-xl">
-          <span class="w-2.5 h-2.5 bg-orange-500 rounded-full animate-pulse"></span>
+        <div class="flex items-center gap-3 text-xs font-medium text-slate-500 mb-6 bg-emerald-50/50 border border-emerald-100/60 p-3 rounded-xl">
+          <span class="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-pulse"></span>
           <span>Hari Pelaksanaan Event</span>
-          <span class="w-1.5 h-1.5 bg-orange-200 rounded-full mx-1"></span>
+          <span class="w-1.5 h-1.5 bg-slate-300 rounded-full mx-1"></span>
           <span class="text-[11px] text-slate-400 font-normal">*Klik kotak bulan untuk memfilter detail di sebelah kanan</span>
         </div>
 
         <div id="calendarGridContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
-        </div>
+          </div>
       </div>
 
-      <div class="lg:col-span-4 bg-orange-50/20 p-6 md:p-8 flex flex-col h-full sticky top-0 justify-between">
+      <div class="lg:col-span-4 bg-slate-50/60 p-6 md:p-8 flex flex-col h-full sticky top-0 justify-between">
         
         <div>
-          <div class="border-b border-orange-100 pb-4 mb-5">
-            <span class="text-[10px] uppercase font-bold tracking-widest text-orange-400 block mb-1">Daftar Agenda</span>
+          <div class="border-b border-slate-200/80 pb-4 mb-5">
+            <span class="text-[10px] uppercase font-bold tracking-widest text-slate-400 block mb-1">Daftar Agenda</span>
             <h3 id="panelDetailTitle" class="text-base font-bold text-slate-800 tracking-tight">Memuat Data...</h3>
           </div>
 
           <div id="panelDetailList" class="space-y-3 max-h-[500px] overflow-y-auto pr-1 custom-scrollbar fade-in-panel">
-          </div>
+            </div>
         </div>
 
-        <div class="pt-4 border-t border-orange-100 text-[11px] text-slate-400 font-medium flex justify-between items-center mt-6">
+        <div class="pt-4 border-t border-slate-200/60 text-[11px] text-slate-400 font-medium flex justify-between items-center mt-6">
           <span>CIS Monitoring System</span>
-          <span class="font-mono bg-orange-100/60 px-1.5 py-0.5 rounded text-orange-600 text-[10px] font-bold">v2.2</span>
+          <span class="font-mono bg-slate-200/60 px-1.5 py-0.5 rounded text-slate-500 text-[10px]">v2.1</span>
         </div>
 
       </div>
@@ -112,55 +115,49 @@
   <script>
     const namaBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
     
-    // --- DATA AGENDA ASLI DI-FILTER HANYA YANG STATUSNYA APPROVED ---
+    // --- DATA AGENDA - HANYA YANG STATUSNYA APPROVED ---
     const approvedEvents = [
       {
         judul: "UC Choir Concert: Symphonic Night",
         organizer: "UKM Choir",
-        start: "2026-10-03",
-        end: "2026-10-07"
+        start: "2023-10-03",
+        end: "2023-10-07"
       },
       {
-        judul: "22nd Inter-Medical School Physiology Quiz (IMSPQ) Malaysia 2026",
-        organizer: "Department of Physiology, University of Malaya",
-        start: "2026-09-09",
-        end: "2026-09-10"
+        judul: "Grand Opening CIS Festival 2023",
+        organizer: "Student Union Ciputra",
+        start: "2023-10-07",
+        end: "2023-10-10"
       },
       {
-        judul: "2nd International Student Competition/ISC (Cabang Lomba Essay)",
-        organizer: "International Student Competition and Entrepreneurial Development and Graduate Marketability (CEM)",
-        start: "2026-02-13",
-        end: "2026-02-16"
+        judul: "Business Plan Pitching Day",
+        organizer: "ISB Laboratory",
+        start: "2023-10-07",
+        end: "2023-10-07"
+      },
+      {
+        judul: "National Seminar: Tech Innovation",
+        organizer: "FIKOM Universitas Ciputra",
+        start: "2023-11-12",
+        end: "2023-11-14"
+      },
+      {
+        judul: "Informatics Internal Hackathon",
+        organizer: "HIMA IMT",
+        start: "2024-01-20",
+        end: "2024-01-25"
+      },
+      {
+        judul: "Industrial Gathering & Awarding",
+        organizer: "BMA Ciputra",
+        start: "2024-03-05",
+        end: "2024-03-05"
       }
     ];
 
-    // State bulan dan tahun aktif di panel detail kanan
+    // Menyimpan state bulan dan tahun mana yang saat ini sedang aktif dipilih di panel detail kanan
     let selectedActiveMonth = null;
     let selectedActiveYear = null;
-
-    // Fungsi otomatis untuk generate isi Dropdown Tahun dari data asli
-    function setupYearDropdownAutomated() {
-      const filterTahunSelect = document.getElementById('filterTahun');
-      
-      let semuaTahun = [];
-      approvedEvents.forEach(ev => {
-        let tahunStart = new Date(ev.start).getFullYear();
-        let tahunEnd = new Date(ev.end).getFullYear();
-        semuaTahun.push(tahunStart, tahunEnd);
-      });
-
-      let tahunUnik = [...new Set(semuaTahun)].sort((a, b) => a - b);
-
-      filterTahunSelect.innerHTML = "";
-      tahunUnik.forEach(tahun => {
-        let option = document.createElement('option');
-        option.value = tahun;
-        option.innerText = tahun;
-        // Menyesuaikan default pilihan ke tahun 2026 sesuai rentang data aktif
-        if(tahun === 2026) option.selected = true;
-        filterTahunSelect.appendChild(option);
-      });
-    }
 
     function renderCalendarEngine() {
       const startMonth = parseInt(document.getElementById('filterBulan').value);
@@ -169,12 +166,13 @@
       
       gridContainer.innerHTML = "";
 
+      // Jika pertama kali load atau ganti filter utama, set panel kanan ke bulan awal filter
       if (selectedActiveMonth === null) {
         selectedActiveMonth = startMonth;
         selectedActiveYear = startYear;
       }
 
-      // Generate 6 kotak kalender bulan berurutan
+      // Generate 6 box bulan
       for (let i = 0; i < 6; i++) {
         let currentMonth = (startMonth + i) % 12;
         let yearOffset = Math.floor((startMonth + i) / 12);
@@ -184,45 +182,50 @@
         let totalDays = new Date(currentYear, currentMonth + 1, 0).getDate(); 
         let adjustedFirstDay = firstDayIndex === 0 ? 6 : firstDayIndex - 1;
 
+        // Cek apakah box bulan ini adalah box yang sedang aktif di panel detail kanan
         const isSelectedBox = (currentMonth === selectedActiveMonth && currentYear === selectedActiveYear);
         const activeBoxClass = isSelectedBox 
-          ? "ring-2 ring-orange-500 border-orange-500 bg-orange-50/10 shadow-md" 
-          : "border-slate-200 bg-white hover:border-orange-200 shadow-sm hover:shadow transition duration-150";
+          ? "ring-2 ring-emerald-500 border-emerald-500 bg-emerald-50/10 shadow-md" 
+          : "border-slate-200 bg-white hover:border-slate-300 shadow-sm hover:shadow";
 
         const monthBox = document.createElement('div');
-        monthBox.className = `border rounded-xl p-4 cursor-pointer flex flex-col justify-between ${activeBoxClass}`;
+        monthBox.className = `border rounded-xl p-4 transition duration-200 cursor-pointer flex flex-col justify-between ${activeBoxClass}`;
         monthBox.setAttribute('onclick', `updateDetailPanel(${currentMonth}, ${currentYear})`);
 
         let htmlContent = `
           <div>
-            <h3 class="text-center font-bold ${isSelectedBox ? 'text-orange-700 bg-orange-50' : 'text-slate-700 bg-slate-50'} text-xs tracking-wide mb-3 border-b border-slate-100 pb-1.5 rounded py-1">${namaBulan[currentMonth]} ${currentYear}</h3>
+            <h3 class="text-center font-bold ${isSelectedBox ? 'text-emerald-700 bg-emerald-50' : 'text-slate-700 bg-slate-50'} text-xs tracking-wide mb-3 border-b border-slate-100 pb-1.5 rounded py-1">${namaBulan[currentMonth]} ${currentYear}</h3>
             <div class="grid grid-cols-7 gap-1 text-center text-[10px] font-bold text-slate-400 mb-2">
               <div>S</div><div>S</div><div>R</div><div>K</div><div>J</div><div>S</div><div>M</div>
             </div>
             <div class="grid grid-cols-7 gap-1 text-center text-xs font-semibold">
         `;
 
+        // Slot kosong penyeimbang hari kalender
         for (let x = 0; x < adjustedFirstDay; x++) {
           htmlContent += `<div class="p-1.5 text-transparent select-none">-</div>`;
         }
 
+        // Loop Hari Tanggal
         for (let day = 1; day <= totalDays; day++) {
           let formatBulan = String(currentMonth + 1).padStart(2, '0');
           let formatHari = String(day).padStart(2, '0');
           let currentTanggalStr = `${currentYear}-${formatBulan}-${formatHari}`;
 
+          // Filter hitung event yang berjalan di tanggal hari ini
           let activeEventsCount = approvedEvents.filter(ev => {
             return currentTanggalStr >= ev.start && currentTanggalStr <= ev.end;
           }).length;
 
-          let dayStyle = "text-slate-600 hover:bg-orange-50 hover:text-orange-600 rounded-md relative p-1.5";
+          let dayStyle = "text-slate-600 hover:bg-slate-100 rounded-md relative p-1.5";
           let badgeHTML = "";
 
           if (activeEventsCount === 1) {
-            dayStyle = "bg-orange-500 text-white rounded-md relative p-1.5 font-bold shadow-sm shadow-orange-100";
+            dayStyle = "bg-emerald-500 text-white rounded-md relative p-1.5 font-bold shadow-sm shadow-emerald-100";
           } else if (activeEventsCount > 1) {
-            dayStyle = "bg-orange-700 text-white rounded-md relative p-1.5 font-bold shadow-sm shadow-orange-200";
-            badgeHTML = `<span class="absolute -bottom-0.5 -right-0.5 text-[8px] bg-amber-400 text-slate-950 font-extrabold px-0.5 rounded-sm scale-90 font-mono">${activeEventsCount}</span>`;
+            // Jika bertabrakan banyak acara, beri warna hijau lebih gelap premium + penanda jumlah angka acara kecil
+            dayStyle = "bg-emerald-700 text-white rounded-md relative p-1.5 font-bold shadow-sm shadow-emerald-200";
+            badgeHTML = `<span class="absolute -bottom-0.5 -right-0.5 text-[8px] bg-amber-400 text-slate-900 font-extrabold px-0.5 rounded-sm scale-90 font-mono">${activeEventsCount}</span>`;
           }
 
           htmlContent += `
@@ -238,20 +241,25 @@
         gridContainer.appendChild(monthBox);
       }
 
+      // Render data pendukung ke panel detail kanan
       executeRenderDetails();
     }
 
+    // Fungsi trigger ketika box bulan diklik oleh user
     function updateDetailPanel(mIndex, yValue) {
       selectedActiveMonth = mIndex;
       selectedActiveYear = yValue;
+      // Re-render kalender untuk memindahkan ring border fokus aktif
       renderCalendarEngine();
     }
 
+    // Fungsi pengolah list detail di sebelah kanan
     function executeRenderDetails() {
       document.getElementById('panelDetailTitle').innerText = `${namaBulan[selectedActiveMonth]} ${selectedActiveYear}`;
       const listContainer = document.getElementById('panelDetailList');
       listContainer.innerHTML = "";
 
+      // Cari event yang aktif di dalam bulan terpilih
       let filtered = approvedEvents.filter(ev => {
         let evStart = new Date(ev.start);
         let evEnd = new Date(ev.end);
@@ -262,22 +270,24 @@
 
       if (filtered.length === 0) {
         listContainer.innerHTML = `
-          <div class="text-center py-12 px-4 bg-white rounded-xl border border-dashed border-orange-200 text-slate-400">
-            <span class="text-3xl block mb-2">🍁</span>
+          <div class="text-center py-12 px-4 bg-white rounded-xl border border-dashed border-slate-200 text-slate-400">
+            <span class="text-3xl block mb-2">🍃</span>
             <p class="text-xs font-medium">Tidak ada pelaksanaan agenda event yang terdaftar di bulan ini.</p>
           </div>
         `;
         return;
       }
 
+      // Tampilkan list card event yang terfilter
       filtered.forEach(ev => {
+        // Konversi tampilan range text tanggal agar cantik dibaca
         let dStart = new Date(ev.start).getDate();
         let dEnd = new Date(ev.end).getDate();
         let displayDateText = dStart === dEnd ? `${dStart} ${namaBulan[selectedActiveMonth]}` : `${dStart} - ${dEnd} ${namaBulan[selectedActiveMonth]}`;
 
         let cardHTML = `
-          <div class="bg-white p-4 rounded-xl border border-slate-200/70 shadow-sm hover:shadow-md hover:border-orange-200 transition duration-200 border-l-4 border-l-orange-500">
-            <span class="inline-block text-[10px] font-bold text-orange-700 bg-orange-50 px-2 py-0.5 rounded-full mb-2">🗓️ ${displayDateText}</span>
+          <div class="bg-white p-4 rounded-xl border border-slate-200/70 shadow-sm hover:shadow-md transition duration-200 border-l-4 border-l-emerald-500">
+            <span class="inline-block text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full mb-2">🗓️ ${displayDateText}</span>
             <h4 class="text-sm font-bold text-slate-900 leading-tight mb-1 hover:text-orange-600 transition cursor-pointer">${ev.judul}</h4>
             <div class="flex items-center gap-1.5 text-xs text-slate-500 mt-2 pt-2 border-t border-slate-50">
               <span class="text-slate-400 text-[11px]">By:</span>
@@ -289,10 +299,8 @@
       });
     }
 
-    window.onload = function() {
-      setupYearDropdownAutomated();
-      renderCalendarEngine();
-    };
+    // Jalankan sistem pertama kali saat file dibuka browser
+    window.onload = renderCalendarEngine;
   </script>
 </body>
 </html>
