@@ -122,7 +122,7 @@
             left: 0;
             width: 55px;
             height: calc(100vh - 70px);
-            background-color: #D35400;
+            background-color: #E67E22; /* Disesuaikan dengan warna oranye terang khas UC di sidebar */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -141,7 +141,7 @@
             padding: 5px 0;
         }
         .sidebar-btn:hover {
-            background-color: #E67E22;
+            background-color: #D35400;
         }
 
         /* ================= MAIN WRAPPER ================= */
@@ -151,51 +151,38 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            padding: 25px 5% 40px 5%;
+            padding: 20px 4% 40px 4%;
         }
 
-        /* Breadcrumb Container */
+        /* BREADCRUMB BAR (Sesuai Screenshot 2026-06-15 at 14.27.13.png) */
         .breadcrumb-bar {
-            font-size: 9.5pt;
-            color: #666666;
-            margin-bottom: 15px;
-        }
-        .breadcrumb-bar .active {
-            color: #D35400;
-            font-weight: bold;
-        }
-
-        /* ================= BIG HERO HEADER TEMPLATE ================= */
-        .hero-header {
             background-color: #E9ECEF;
-            border: 1px solid #DCDCDC;
-            border-radius: 6px;
-            padding: 24px 30px;
-            margin-bottom: 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .hero-title-area h1 {
-            font-size: 18pt;
-            color: #003366;
-            margin: 0 0 6px 0;
-            font-weight: bold;
-        }
-        .hero-title-area p {
-            font-size: 9.5pt;
-            color: #555555;
-            margin: 0;
-        }
-        .hero-status-tag {
-            background-color: #FFF3EB;
-            border: 1px solid #E67E22;
-            color: #D35400;
-            padding: 6px 14px;
+            padding: 10px 16px;
             border-radius: 4px;
             font-size: 9pt;
+            color: #555555;
+            margin-bottom: 20px;
+            border: 1px solid #DEE2E6;
+        }
+        .breadcrumb-bar .active {
+            color: #E67E22;
             font-weight: bold;
-            text-transform: uppercase;
+        }
+
+        /* ================= BIG HERO HEADER TEMPLATE (Sesuai Screenshot 2026-06-15 at 14.27.13.png) ================= */
+        .hero-header {
+            background-color: #E67E22; /* Warna Oranye Solid Template */
+            border-radius: 8px;
+            padding: 24px 24px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .hero-header h1 {
+            font-size: 20pt;
+            color: #ffffff;
+            margin: 0;
+            font-weight: bold;
+            letter-spacing: 0.3px;
         }
 
         /* ================= PANELS & CARDS ================= */
@@ -210,7 +197,7 @@
         }
 
         .panel-title {
-            background-color: #E67E22;
+            background-color: #003366; /* Biru gelap untuk pemisah section form agar rapi */
             color: #ffffff;
             padding: 12px 20px;
             font-size: 10.5pt;
@@ -345,7 +332,7 @@
         .btn-secondary:hover { background-color: #616A6B; }
         .btn-orange { background-color: #2ECC71; color: white; }
         .btn-orange:hover { background-color: #27AE60; }
-        .btn-outline { background-color: transparent; border: 1px solid #E67E22; color: #D35400; }
+        .btn-outline { background-color: transparent; border: 1px solid #E67E22; color: #E67E22; }
         .btn-outline:hover { background-color: #FFF3EB; border-color: #D35400; color: #D35400; }
 
         /* File Upload Zone */
@@ -396,20 +383,14 @@
     <!-- MAIN WORKSPACE WRAPPER -->
     <div class="wrapper">
         
-        <!-- BREADCRUMB BAR -->
+        <!-- BREADCRUMB BAR (Sesuai Visual Pendukung Layout) -->
         <div class="breadcrumb-bar">
-            Dashboard Panitia / Kegiatan Aktif / <span class="active">Apply &amp; Edit Setup Open Recruitment</span>
+            My Activity / My Event / <span class="active">Apply / Edit Event Open Recruitment ▼</span>
         </div>
 
-        <!-- BIG HERO HEADER TEMPLATE -->
+        <!-- BIG ORANGE HEADER TEMPLATE (Identik dengan Gambar Referensi) -->
         <div class="hero-header">
-            <div class="hero-title-area">
-                <h1>Apply / Edit Event Open Recruitment</h1>
-                <p>Konfigurasi parameter sistem rekruitmen kepanitiaan, alokasi kebutuhan divisi, dan berkas publikasi poster ormawa.</p>
-            </div>
-            <div class="hero-status-tag">
-                📝 Setup Mode
-            </div>
+            <h1>Apply / Edit Event Open Recruitment</h1>
         </div>
 
         <form id="oprecForm" onsubmit="submitForm(event)">
@@ -558,7 +539,7 @@
                             <p style="margin: 8px 0 4px 0; font-size: 10pt; font-weight: bold; color: #003366;">Klik di sini untuk unggah file poster lowongan kepanitiaan</p>
                             <p style="margin: 0; font-size: 8pt; color: #888888;">Mendukung berkas JPG, PNG atau PDF (Maksimal ukuran 5MB)</p>
                             <input type="file" id="posterFile" style="display: none;" onchange="displayFileName(this)">
-                            <p id="fileNameDisplay" style="margin-top: 10px; font-weight: bold; color: #F37021; font-size: 9pt;"></p>
+                            <p id="fileNameDisplay" style="margin-top: 10px; font-weight: bold; color: #E67E22; font-size: 9pt;"></p>
                         </div>
                     </div>
                 </div>
