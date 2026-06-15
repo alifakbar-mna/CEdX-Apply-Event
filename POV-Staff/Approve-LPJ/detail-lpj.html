@@ -41,34 +41,9 @@
             flex-direction: column;
             align-items: flex-start;
         }
-        .nav-center {
-            flex-grow: 1;
-            justify-content: center;
-            max-width: 500px;
-            margin: 0 auto;
-        }
         .nav-right {
             gap: 12px;
             justify-content: flex-end;
-        }
-        
-        .search-container {
-            position: relative;
-            width: 100%;
-        }
-        .search-input {
-            width: 100%;
-            padding: 8px 36px 8px 12px;
-            border: 1px solid #CCCCCC;
-            border-radius: 20px;
-            font-size: 9.5pt;
-        }
-        .search-icon {
-            position: absolute;
-            right: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #888888;
         }
 
         .user-profile {
@@ -99,48 +74,61 @@
             font-weight: bold;
         }
 
-        /* ================= SIDEBAR ================= */
+        /* ================= SIDEBAR (TEMPLATE ORANGE THEME) ================= */
         .sidebar {
             position: fixed;
             top: 60px;
             left: 0;
-            width: 50px;
+            width: 60px;
             height: calc(100vh - 60px);
-            background-color: #003366;
+            background-color: #D35400; /* Oranye gelap sesuai template */
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding-top: 15px;
-            gap: 15px;
+            padding-top: 20px;
+            gap: 20px;
             z-index: 999;
         }
         .sidebar-btn {
             background: none;
             border: none;
             color: #ffffff;
-            font-size: 14pt;
+            font-size: 18pt;
             cursor: pointer;
             width: 100%;
-            padding: 10px 0;
             text-align: center;
+            opacity: 0.9;
         }
-        .sidebar-btn:hover { background-color: rgba(255, 255, 255, 0.1); }
+        .sidebar-btn:hover { opacity: 1; }
 
         /* ================= MAIN WRAPPER ================= */
         .wrapper {
             margin-top: 60px;
-            margin-left: 50px;
-            padding: 24px 12% 100px 12%;
+            margin-left: 60px;
+            padding: 20px;
         }
 
+        /* Breadcrumb Navigation */
         .breadcrumb-bar {
-            font-size: 9.5pt;
-            color: #666666;
-            margin-bottom: 20px;
+            font-size: 10pt;
+            color: #555555;
+            margin-bottom: 15px;
         }
         .breadcrumb-bar .active {
             color: #F37021;
             font-weight: bold;
+        }
+
+        /* Main Heading Banner Template */
+        .main-heading-banner {
+            background-color: #F37021;
+            color: #ffffff;
+            padding: 20px 24px;
+            font-size: 22pt;
+            font-weight: bold;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         /* ================= TOP ACTION BAR ================= */
@@ -391,41 +379,15 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        /* Footer Bars */
-        .tech-support-bar, .footer-bar {
-            position: fixed;
-            bottom: 30px;
-            left: 50px;
-            width: calc(100% - 50px);
-            height: 30px;
-            background-color: #002244;
-            color: #FFFFFF;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-            font-size: 8.5pt;
-            z-index: 1000;
-        }
-        .footer-bar {
-            bottom: 0;
-            background-color: #F37021;
-        }
     </style>
 </head>
 <body>
 
+    <!-- NAVBAR HEADER -->
     <div class="navbar">
         <div class="nav-col nav-left">
             <div style="font-weight: bold; font-size: 14pt; color: #003366; letter-spacing: -0.5px;">UNIVERSITAS CIPUTRA</div>
             <div style="font-size: 7.5pt; color: #666666; margin-top: -2px; letter-spacing: 0.5px;">CREATING WORLD CLASS ENTREPRENEURS</div>
-        </div>
-        <div class="nav-col nav-center">
-            <div class="search-container">
-                <input type="text" class="search-input" placeholder="Search menu / Laporan Pertanggungjawaban...">
-                <span class="search-icon">&#128269;</span>
-            </div>
         </div>
         <div class="nav-col nav-right">
             <span style="font-size: 14pt; margin-right: 15px; cursor: pointer; color: #555555;">&#128276;</span>
@@ -437,15 +399,23 @@
         </div>
     </div>
 
+    <!-- SIDEBAR LEFT TEMPLATE -->
     <div class="sidebar">
         <button class="sidebar-btn">&#9776;</button>
         <button class="sidebar-btn" style="color: #FFEB3B;">&#9733;</button>
     </div>
 
+    <!-- MAIN WORKSPACE WRAPPER -->
     <div class="wrapper">
         
+        <!-- BREADCRUMB NAVIGATION -->
         <div class="breadcrumb-bar">
-            Approval System / Student Affairs / <span class="active">Kategori A (&lt; 50 Panitia)</span>
+            My Activity / My Event / <span class="active">Detail LPJ</span>
+        </div>
+
+        <!-- MAIN HEADING BANNER (MATCHING TEMPLATE) -->
+        <div class="main-heading-banner">
+            Detail LPJ
         </div>
 
         <div class="top-action-bar">
@@ -661,24 +631,15 @@
         </div>
     </div>
 
+    <!-- ENGINE DETAILED POP-UP MODAL -->
     <div id="engineModal" class="modal-overlay">
         <div class="modal-box">
             <div class="modal-header">
                 <span id="modalTitle">Kalkulasi CEdX Engine</span>
                 <button class="modal-close" onclick="closeEngineModal()">&times;</button>
             </div>
-            <div class="modal-body" id="modalBody">
-                </div>
+            <div class="modal-body" id="modalBody"></div>
         </div>
-    </div>
-
-    <div class="tech-support-bar">
-        <div><strong>Tech Support Integration:</strong>&nbsp;<span style="color:#25D366;">&#128172; WhatsApp Business CIS System</span>&nbsp;| Sistem Hitung Aturan Bintang Valid</div>
-        <div>Build System v1.5</div>
-    </div>
-    <div class="footer-bar">
-        <div>&#128205; CitraLand CBD Boulevard, Made, Kec. Sambikerep, Surabaya, Jawa Timur 60219</div>
-        <div>&copy; 2026 | Universitas Ciputra Surabaya</div>
     </div>
 
     <script>
