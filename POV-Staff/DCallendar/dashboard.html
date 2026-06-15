@@ -3,17 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Universitas Ciputra - Competition List</title>
+  <title>Kalender Pelaksanaan Event - Full White BG</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
   <style>
-    /* Custom Scrollbar untuk Panel Detail kanan agar Terlihat Premium */
+    /* Custom Scrollbar untuk Panel Detail kanan */
     .custom-scrollbar::-webkit-scrollbar {
       width: 6px;
     }
     .custom-scrollbar::-webkit-scrollbar-track {
-      background: #fff7ed;
-      border-radius: 10px;
+      background: #ffffff;
     }
     .custom-scrollbar::-webkit-scrollbar-thumb {
       background: #fed7aa;
@@ -32,213 +30,163 @@
     }
   </style>
 </head>
-<body class="bg-[#f3f4f6] min-h-screen font-sans antialiased text-slate-800">
+<body class="bg-white min-h-screen p-4 md:p-6 font-sans antialiased text-slate-800">
 
-  <header class="bg-white h-16 border-b border-gray-200 fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 md:px-8 shadow-sm">
-    <div class="flex items-center gap-4">
-      <div class="flex items-center gap-2">
-        <div class="font-serif italic text-teal-800 font-bold text-lg tracking-tight leading-none flex flex-col">
-          <span>UNIVERSITAS CIPUTRA</span>
-          <span class="text-[9px] font-sans tracking-widest text-orange-500 font-semibold not-italic">CREATING WORLD CLASS ENTREPRENEURS</span>
-        </div>
-      </div>
-    </div>
+  <!-- CONTAINER UTAMA DENGAN BACKGROUND FULL PUTIH -->
+  <div class="max-w-7xl mx-auto bg-white overflow-hidden">
     
-    <div class="flex items-center gap-6">
-      <div class="relative hidden md:block w-64">
-        <input type="text" placeholder="Search menu..." class="w-full bg-gray-50 border border-gray-200 rounded-lg pl-3 pr-10 py-1.5 text-xs focus:outline-none focus:border-orange-500">
-        <span class="absolute right-3 top-2.5 text-gray-400 text-xs">🔍</span>
-      </div>
-      <div class="flex items-center gap-4 border-l pl-4 border-gray-200 text-gray-600 text-sm">
-        <span class="material-symbols-outlined cursor-pointer hover:text-orange-500">notifications</span>
-        <span class="material-symbols-outlined cursor-pointer hover:text-orange-500">palette</span>
-      </div>
-      <div class="flex items-center gap-3 border-l pl-4 border-gray-200">
-        <div class="text-right hidden sm:block">
-          <p class="text-[11px] text-orange-600 font-bold">Hi, Muh. Nur Alif Akbar</p>
-          <p class="text-[10px] text-gray-400">Have a wonderful day</p>
-        </div>
-        <div class="w-9 h-9 bg-orange-500 rounded-full text-white flex items-center justify-center font-bold text-sm shadow-sm">
-          AA
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <aside class="w-14 bg-orange-500 fixed top-16 bottom-0 left-0 z-40 flex flex-col items-center py-4 gap-4 text-white shadow-md">
-    <button class="w-10 h-10 hover:bg-orange-600 rounded-lg flex items-center justify-center transition">
-      <span class="material-symbols-outlined">menu</span>
-    </button>
-    <button class="w-10 h-10 bg-orange-600 rounded-lg flex items-center justify-center transition shadow-inner">
-      <span class="material-symbols-outlined">star</span>
-    </button>
-  </aside>
-
-  <main class="pl-14 pt-16 min-h-screen p-4 md:p-6 space-y-4">
-    
-    <div class="w-full bg-[#e5e7eb] px-4 py-2 rounded-lg flex items-center gap-2 text-xs font-semibold text-gray-600 shadow-sm border border-gray-300/40">
+    <!-- Breadcrumb Navigasi Atas -->
+    <div class="px-2 py-3 flex items-center gap-2 text-xs font-medium text-slate-400 mb-4">
       <span class="text-orange-600 hover:underline cursor-pointer">My Activity</span>
-      <span class="text-gray-400">/</span>
+      <span>/</span>
       <span class="text-orange-600 hover:underline cursor-pointer">Competition</span>
-      <span class="text-gray-400">/</span>
-      <span class="text-gray-500">Competition List</span>
+      <span>/</span>
+      <span class="text-slate-400">Monitoring Event Approved</span>
     </div>
 
-    <div class="w-full bg-white rounded-2xl shadow-xl shadow-orange-100/40 border border-orange-100 overflow-hidden">
+    <!-- MAIN GRID SYSTEM (KALENDER & DAFTAR AGENDA) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 min-h-[650px]">
       
-      <div class="bg-orange-500 px-6 py-3 flex items-center gap-2 text-white font-bold text-xs uppercase tracking-wider shadow-sm">
-        <span class="material-symbols-outlined text-sm">dashboard</span>
-        <span>Competition</span>
-      </div>
-
-      <div class="p-5 bg-white border-b border-gray-100 grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
-        <div class="lg:col-span-5 space-y-3">
-          <button class="px-4 py-2 bg-blue-600 text-white font-bold text-xs rounded shadow hover:bg-blue-700 transition flex items-center gap-1.5 shadow-sm">
-            <span>+</span> New Competition
-          </button>
-          <div class="text-[11px] text-gray-500 font-medium leading-relaxed bg-gray-50/80 p-2.5 rounded border border-gray-200">
-            <p>Periode Ganjil : Antara September - Februari</p>
-            <p>Periode Genap : Antara Februari - September</p>
-          </div>
-        </div>
-
-        <div class="lg:col-span-7 space-y-2 lg:max-w-md lg:ml-auto w-full text-xs">
-          <div class="flex items-center gap-3">
-            <label class="font-bold text-gray-600 w-28 text-right">Period</label>
-            <span class="font-bold text-gray-400">=</span>
-            <div class="flex w-full border border-gray-300 rounded overflow-hidden shadow-sm">
-              <span class="bg-gray-50 px-2.5 py-1.5 border-r text-gray-500 font-mono flex items-center">=</span>
-              <select id="filterBulan" onchange="renderCalendarEngine()" class="w-full bg-white px-2 py-1.5 font-semibold focus:outline-none cursor-pointer">
-                <option value="0">Januari (Awal Tahun)</option>
-                <option value="1">Februari</option>
-                <option value="2">Maret</option>
-                <option value="3">April</option>
-                <option value="4">Mei</option>
-                <option value="5">Juni</option>
-                <option value="6">Juli</option>
-                <option value="7">Agustus</option>
-                <option value="8" selected>September (Awal Ganjil)</option>
-                <option value="9">Oktober</option>
-                <option value="10">November</option>
-                <option value="11">Desember</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="flex items-center gap-3">
-            <label class="font-bold text-gray-600 w-28 text-right">Approval Status</label>
-            <span class="font-bold text-gray-400">=</span>
-            <div class="flex w-full border border-gray-300 rounded overflow-hidden shadow-sm">
-              <span class="bg-gray-50 px-2.5 py-1.5 border-r text-gray-500 font-mono flex items-center">=</span>
-              <select id="filterTahun" onchange="renderCalendarEngine()" class="w-full bg-white px-2 py-1.5 font-bold text-orange-600 focus:outline-none cursor-pointer">
-              </select>
-            </div>
-          </div>
-
-          <div class="flex justify-end gap-2 pt-1">
-            <button class="px-3 py-1.5 bg-gray-500 text-white font-bold rounded shadow hover:bg-gray-600 transition flex items-center gap-1"><span class="material-symbols-outlined text-xs">filter_list</span> Add Filter</button>
-            <button onclick="renderCalendarEngine()" class="px-4 py-1.5 bg-slate-700 text-white font-bold rounded shadow hover:bg-slate-800 transition flex items-center gap-1"><span class="material-symbols-outlined text-xs">search</span> Search</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-0 min-h-[600px]">
+      <!-- PANEL KIRI: KALENDER GRID 6 BULAN (8 KOLOM) -->
+      <div class="lg:col-span-8 bg-white">
         
-        <div class="lg:col-span-8 p-6 md:p-8 border-r border-orange-50 bg-white">
-          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-orange-100 pb-4 mb-4">
-            <div>
-              <h2 class="text-sm font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
-                <span class="w-2.5 h-4 bg-orange-500 rounded-full inline-block"></span>
-                Kalender Pelaksanaan Event
-              </h2>
-              <p class="text-[11px] text-slate-400 mt-0.5">Menampilkan rentang waktu pelaksanaan agenda kompetisi berstatus <span class="text-orange-600 font-semibold">Approved</span></p>
-            </div>
+        <!-- Header Judul Kalender & Dropdown Bulan/Tahun -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 mb-4">
+          <div>
+            <h2 class="text-lg font-extrabold text-slate-900 tracking-tight flex items-center gap-2.5">
+              <span class="w-2.5 h-5 bg-orange-500 rounded inline-block"></span>
+              Kalender Pelaksanaan Event
+            </h2>
+            <p class="text-xs text-slate-400 mt-0.5">Hanya menampilkan agenda kegiatan yang telah disetujui (<span class="text-orange-600 font-semibold">Approved</span>)</p>
           </div>
-
-          <div class="flex items-center gap-3 text-xs font-medium text-slate-600 mb-4 bg-orange-50/60 border border-orange-100 p-2.5 rounded-xl">
-            <span class="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></span>
-            <span>Hari Pelaksanaan Event Resmi</span>
-            <span class="w-1.5 h-1.5 bg-orange-200 rounded-full mx-1"></span>
-            <span class="text-[11px] text-slate-400 font-normal">*Klik kotak bulan untuk melihat detail agenda di sebelah kanan</span>
-          </div>
-
-          <div id="calendarGridContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          
+          <!-- Filter Dropdown Atas -->
+          <div class="flex items-center gap-1.5 bg-orange-50/50 p-1 rounded-xl border border-orange-100/70">
+            <select id="filterBulan" onchange="renderCalendarEngine()" class="bg-white text-xs font-bold text-slate-700 rounded-lg px-2.5 py-1.5 shadow-sm focus:outline-none cursor-pointer border border-orange-100">
+              <option value="0">Januari</option>
+              <option value="1">Februari</option>
+              <option value="2">Maret</option>
+              <option value="3">April</option>
+              <option value="4">Mei</option>
+              <option value="5">Juni</option>
+              <option value="6">Juli</option>
+              <option value="7">Agustus</option>
+              <option value="8">September</option>
+              <option value="9" selected>Oktober</option>
+              <option value="10">November</option>
+              <option value="11">Desember</option>
+            </select>
+            <select id="filterTahun" onchange="renderCalendarEngine()" class="bg-white text-xs font-bold text-slate-700 rounded-lg px-2.5 py-1.5 shadow-sm focus:outline-none cursor-pointer border border-orange-100">
+            </select>
           </div>
         </div>
 
-        <div class="lg:col-span-4 bg-orange-50/20 p-6 md:p-8 flex flex-col h-full sticky top-0 justify-between">
-          <div>
-            <div class="border-b border-orange-100 pb-4 mb-4">
-              <span class="text-[10px] uppercase font-bold tracking-widest text-orange-400 block mb-0.5">Daftar Agenda</span>
-              <h3 id="panelDetailTitle" class="text-base font-bold text-slate-800 tracking-tight">Memuat Data...</h3>
-            </div>
+        <!-- Info Indikator Klik -->
+        <div class="flex items-center gap-3 text-[11px] font-medium text-slate-600 mb-5 bg-orange-50/40 border border-orange-100/60 p-2.5 rounded-xl">
+          <span class="w-2 h-2 bg-orange-400 rounded-full"></span>
+          <span>Hari Pelaksanaan Event</span>
+          <span class="w-1.5 h-1.5 bg-slate-300 rounded-full mx-1"></span>
+          <span class="text-slate-400 font-normal">*Klik kotak bulan untuk memfilter detail di sebelah kanan</span>
+        </div>
 
-            <div id="panelDetailList" class="space-y-3 max-h-[440px] overflow-y-auto pr-1 custom-scrollbar fade-in-panel">
-            </div>
+        <!-- Container Grid 6 Kotak Bulan -->
+        <div id="calendarGridContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        </div>
+      </div>
+
+      <!-- PANEL KANAN: DETAIL DATA DAFTAR AGENDA (4 KOLOM) -->
+      <div class="lg:col-span-4 bg-white border-l border-gray-100 pl-0 lg:pl-6 pt-6 lg:pt-0 flex flex-col justify-between">
+        
+        <div>
+          <div class="pb-3 mb-4">
+            <span class="text-[10px] uppercase font-bold tracking-widest text-orange-400 block mb-0.5">Daftar Agenda</span>
+            <h3 id="panelDetailTitle" class="text-base font-bold text-slate-800 tracking-tight">Memuat Data...</h3>
           </div>
 
-          <div class="pt-4 border-t border-orange-100 text-[11px] text-slate-400 font-medium flex justify-between items-center mt-4">
-            <span>CIS Monitoring System</span>
-            <span class="font-mono bg-orange-100/60 px-1.5 py-0.5 rounded text-orange-600 text-[10px] font-bold">v2.2-Combined</span>
+          <!-- List Container Card Event -->
+          <div id="panelDetailList" class="space-y-3 max-h-[480px] overflow-y-auto pr-1 custom-scrollbar fade-in-panel">
           </div>
+        </div>
+
+        <!-- Footer Sistem -->
+        <div class="pt-4 border-t border-gray-100 text-[11px] text-slate-400 font-medium flex justify-between items-center mt-6">
+          <span>CIS Monitoring System</span>
+          <span class="font-mono bg-orange-50 text-orange-600 px-1.5 py-0.5 rounded text-[10px] font-bold">v2.2</span>
         </div>
 
       </div>
 
     </div>
-  </main>
+  </div>
 
+  <!-- JAVASCRIPT CORE ENGINE -->
   <script>
     const namaBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
     
-    // --- DATA AGENDA RIIL (DARI TABEL KEDUA BARIS DI GAMBAR 1) ---
+    // --- DATA AGENDA ---
     const approvedEvents = [
       {
-        judul: "22nd Inter-Medical School Physiology Quiz (IMSPQ) Malaysia 2026",
-        organizer: "Department of Physiology, University of Malaya",
-        category: "Keilmuan/Penalaran",
-        type: "Team Offline",
-        fee: "IDR 1,421,535.55",
-        start: "2026-09-09",
-        end: "2026-09-10"
+        judul: "UC Choir Concert: Symphonic Night",
+        organizer: "UKM Choir",
+        start: "2023-10-03",
+        end: "2023-10-07"
       },
       {
-        judul: "2nd International Student Competition/ISC (Cabang Lomba Essay)",
-        organizer: "International Student Competition and Entrepreneurial Development and Graduate Marketability (CEM)",
-        category: "Keilmuan/Penalaran",
-        type: "Team Offline",
-        fee: "2.698.000",
-        start: "2026-02-13",
-        end: "2026-02-16"
+        judul: "Grand Opening CIS Festival 2023",
+        organizer: "Student Union Ciputra",
+        start: "2023-10-07",
+        end: "2023-10-10"
+      },
+      {
+        judul: "Business Plan Pitching Day",
+        organizer: "ISB Laboratory",
+        start: "2023-10-07",
+        end: "2023-10-07"
+      },
+      {
+        judul: "National Seminar: Tech Innovation",
+        organizer: "FIKOM Universitas Ciputra",
+        start: "2023-11-12",
+        end: "2023-11-14"
+      },
+      {
+        judul: "Informatics Internal Hackathon",
+        organizer: "HIMA IMT",
+        start: "2024-01-20",
+        end: "2024-01-25"
+      },
+      {
+        judul: "Industrial Gathering & Awarding",
+        organizer: "BMA Ciputra",
+        start: "2024-03-05",
+        end: "2024-03-05"
       }
     ];
 
     let selectedActiveMonth = null;
     let selectedActiveYear = null;
 
-    // Fungsi Pengisi Dropdown Tahun Otomatis Berdasarkan Data Riil
+    // Generate Dropdown Tahun Otomatis
     function setupYearDropdownAutomated() {
       const filterTahunSelect = document.getElementById('filterTahun');
       let semuaTahun = [];
-      
       approvedEvents.forEach(ev => {
-        semuaTahun.push(new Date(ev.start).getFullYear());
-        semuaTahun.push(new Date(ev.end).getFullYear());
+        semuaTahun.push(new Date(ev.start).getFullYear(), new Date(ev.end).getFullYear());
       });
 
       let tahunUnik = [...new Set(semuaTahun)].sort((a, b) => a - b);
-
       filterTahunSelect.innerHTML = "";
+      
       tahunUnik.forEach(tahun => {
         let option = document.createElement('option');
         option.value = tahun;
-        option.innerText = `Tahun Kejuaraan ${tahun}`;
-        if(tahun === 2026) option.selected = true; // Sesuai tahun data di Gambar 1
+        option.innerText = tahun;
+        if(tahun === 2023) option.selected = true;
         filterTahunSelect.appendChild(option);
       });
     }
 
-    // Engine Render Kalender Grid 6 Bulan Sesuai Aturan Kalender Akurat
+    // Engine Render Kalender Grid 6 Bulan
     function renderCalendarEngine() {
       const startMonth = parseInt(document.getElementById('filterBulan').value);
       const startYear = parseInt(document.getElementById('filterTahun').value);
@@ -262,8 +210,8 @@
 
         const isSelectedBox = (currentMonth === selectedActiveMonth && currentYear === selectedActiveYear);
         const activeBoxClass = isSelectedBox 
-          ? "ring-2 ring-orange-500 border-orange-500 bg-orange-50/10 shadow-md" 
-          : "border-slate-200 bg-white hover:border-orange-200 shadow-sm hover:shadow transition duration-150";
+          ? "ring-2 ring-orange-500 border-orange-500 bg-orange-50/10 shadow-sm" 
+          : "border-slate-100 bg-white hover:border-orange-200 shadow-sm transition duration-150";
 
         const monthBox = document.createElement('div');
         monthBox.className = `border rounded-xl p-3.5 cursor-pointer flex flex-col justify-between ${activeBoxClass}`;
@@ -271,11 +219,11 @@
 
         let htmlContent = `
           <div>
-            <h3 class="text-center font-bold ${isSelectedBox ? 'text-orange-700 bg-orange-50' : 'text-slate-700 bg-slate-50'} text-[11px] tracking-wide mb-2.5 border-b border-slate-100 pb-1 rounded py-0.5">${namaBulan[currentMonth]} ${currentYear}</h3>
+            <h3 class="text-center font-bold ${isSelectedBox ? 'text-orange-700 bg-orange-50/80' : 'text-slate-700 bg-slate-50'} text-xs tracking-wide mb-2.5 border-b border-slate-100 pb-1 rounded py-0.5">${namaBulan[currentMonth]} ${currentYear}</h3>
             <div class="grid grid-cols-7 gap-1 text-center text-[9px] font-bold text-slate-400 mb-1.5">
               <div>S</div><div>S</div><div>R</div><div>K</div><div>J</div><div>S</div><div>M</div>
             </div>
-            <div class="grid grid-cols-7 gap-1 text-center text-[11px] font-semibold">
+            <div class="grid grid-cols-7 gap-1 text-center text-xs font-semibold">
         `;
 
         for (let x = 0; x < adjustedFirstDay; x++) {
@@ -323,7 +271,7 @@
       renderCalendarEngine();
     }
 
-    // Engine Render Kartu Informasi Kompetisi Lengkap Sesuai Parameter Kolom Gambar 1
+    // Render List Detail Samping Kanan
     function executeRenderDetails() {
       document.getElementById('panelDetailTitle').innerText = `${namaBulan[selectedActiveMonth]} ${selectedActiveYear}`;
       const listContainer = document.getElementById('panelDetailList');
@@ -339,9 +287,9 @@
 
       if (filtered.length === 0) {
         listContainer.innerHTML = `
-          <div class="text-center py-10 px-4 bg-white rounded-xl border border-dashed border-orange-200 text-slate-400">
-            <span class="text-2xl block mb-1">🍁</span>
-            <p class="text-[11px] font-medium">Tidak ada pelaksanaan kompetisi resmi pada bulan ini.</p>
+          <div class="text-center py-10 px-4 bg-white rounded-xl border border-dashed border-slate-200 text-slate-400">
+            <span class="text-xl block mb-1">🍁</span>
+            <p class="text-[11px] font-medium">Tidak ada pelaksanaan agenda event pada bulan ini.</p>
           </div>
         `;
         return;
@@ -353,23 +301,12 @@
         let displayDateText = dStart === dEnd ? `${dStart} ${namaBulan[selectedActiveMonth]}` : `${dStart} - ${dEnd} ${namaBulan[selectedActiveMonth]}`;
 
         let cardHTML = `
-          <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-sm hover:shadow-md hover:border-orange-200 transition duration-200 border-l-4 border-l-orange-500 space-y-2">
-            <div class="flex flex-wrap gap-1">
-              <span class="text-[9px] font-bold text-orange-700 bg-orange-50 px-2 py-0.5 rounded-full">🗓️ ${displayDateText}</span>
-              <span class="text-[9px] font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-full">${ev.type}</span>
-            </div>
-            
-            <h4 class="text-xs font-bold text-slate-900 leading-snug hover:text-orange-600 transition cursor-pointer">${ev.judul}</h4>
-            
-            <div class="text-[11px] space-y-1 pt-1.5 mt-1.5 border-t border-gray-100 text-slate-600">
-              <p><span class="text-gray-400 font-medium">Penyelenggara:</span> <span class="font-semibold text-slate-700">${ev.organizer}</span></p>
-              <p><span class="text-gray-400 font-medium">Kategori:</span> <span class="bg-gray-100 px-1.5 py-0.2 rounded text-[10px] font-medium">${ev.category}</span></p>
-              <p><span class="text-gray-400 font-medium">Biaya:</span> <span class="text-emerald-600 font-bold">${ev.fee}</span></p>
-            </div>
-
-            <div class="grid grid-cols-2 gap-2 pt-2 text-center text-[10px] font-bold">
-              <a href="#" class="bg-blue-500 text-white py-1 rounded hover:bg-blue-600 transition shadow-sm flex items-center justify-center gap-1">🌐 Website</a>
-              <a href="#" class="bg-emerald-600 text-white py-1 rounded hover:bg-emerald-700 transition shadow-sm flex items-center justify-center gap-1">📥 Poster</a>
+          <div class="bg-white p-3.5 rounded-xl border border-slate-100 shadow-sm hover:shadow-md hover:border-orange-200 transition duration-200 border-l-4 border-l-orange-500">
+            <span class="inline-block text-[10px] font-bold text-orange-700 bg-orange-50 px-2 py-0.5 rounded-full mb-1.5">🗓️ ${displayDateText}</span>
+            <h4 class="text-xs font-bold text-slate-900 leading-snug mb-1.5">${ev.judul}</h4>
+            <div class="flex items-center gap-1 text-[11px] text-slate-500 pt-1.5 border-t border-slate-50">
+              <span class="text-slate-400">By:</span>
+              <span class="font-semibold text-slate-700">${ev.organizer}</span>
             </div>
           </div>
         `;
