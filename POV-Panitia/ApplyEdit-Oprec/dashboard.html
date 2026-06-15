@@ -11,21 +11,22 @@
         }
         
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: #F4F5F7;
-            color: #333333;
+            font-family: 'Inter', 'Segoe UI', Helvetica, Arial, sans-serif;
+            background-color: #F8FAFC; /* Abu-abu ultra terang yang sejuk di mata */
+            color: #334155; /* Slate dark untuk keterbacaan teks yang lebih lembut dibanding hitam pekat */
             margin: 0;
             padding: 0;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
         }
 
         /* ================= TOP NAVBAR HEADER ================= */
         .navbar {
             background-color: #ffffff;
-            border-bottom: 1px solid #E0E0E0;
-            padding: 10px 24px;
+            border-bottom: 1px solid #E2E8F0;
+            padding: 10px 32px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -35,6 +36,7 @@
             width: 100%;
             height: 70px;
             z-index: 1000;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
         }
         .nav-col {
             display: flex;
@@ -45,27 +47,27 @@
             align-items: flex-start;
         }
         .nav-left div:first-child {
-            font-weight: bold;
+            font-weight: 800;
             font-size: 13pt;
-            color: #003366;
+            color: #0F172A;
             letter-spacing: -0.5px;
             text-transform: uppercase;
         }
         .nav-left div:last-child {
             font-size: 7pt;
-            color: #666666;
-            margin-top: -2px;
-            font-weight: bold;
-            letter-spacing: 0.5px;
+            color: #64748B;
+            margin-top: -1px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
         }
         .nav-center {
             flex-grow: 1;
             justify-content: center;
-            max-width: 500px;
+            max-width: 460px;
             margin: 0 auto;
         }
         .nav-right {
-            gap: 12px;
+            gap: 16px;
             justify-content: flex-end;
         }
         
@@ -75,183 +77,204 @@
         }
         .search-input {
             width: 100%;
-            padding: 8px 36px 8px 12px;
-            border: 1px solid #CCCCCC;
-            border-radius: 20px;
+            padding: 10px 16px 10px 40px;
+            border: 1px solid #CBD5E1;
+            border-radius: 24px;
             font-size: 9.5pt;
+            background-color: #F1F5F9;
+            transition: all 0.2s;
+        }
+        .search-input:focus {
+            background-color: #FFFFFF;
+            border-color: #E65F00;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(230, 95, 0, 0.15);
         }
         .search-icon {
             position: absolute;
-            right: 12px;
+            left: 14px;
             top: 50%;
             transform: translateY(-50%);
-            color: #888888;
+            color: #64748B;
+            font-size: 11pt;
         }
 
         .user-profile {
             text-align: right;
-            line-height: 1.2;
+            line-height: 1.3;
         }
         .user-name {
-            font-size: 9pt;
-            color: #333333;
+            font-size: 9.5pt;
+            font-weight: 600;
+            color: #1E293B;
             margin: 0;
         }
         .user-status {
             font-size: 8pt;
-            color: #777777;
+            color: #64748B;
             margin: 0;
+            font-weight: 500;
         }
         .avatar {
-            width: 36px;
-            height: 36px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            background-color: #B0C4DE;
-            color: #ffffff;
+            background-color: #E2E8F0;
+            color: #475569;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
-            font-weight: bold;
+            font-size: 11pt;
+            font-weight: 600;
+            border: 1px solid #CBD5E1;
         }
 
-        /* ================= SIDEBAR (ORANGE THEME FULL HEIGHT) ================= */
+        /* ================= SIDEBAR (CLEAN INTEGRATED ORANGE) ================= */
         .sidebar {
             position: fixed;
             top: 70px;
             left: 0;
-            width: 55px;
+            width: 60px;
             height: calc(100vh - 70px);
-            background-color: #E67E22; /* Disesuaikan dengan warna oranye terang khas UC di sidebar */
+            background-color: #E65F00; /* Warna Jingga UC yang solid dan matang */
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding-top: 20px;
-            gap: 25px;
+            padding-top: 24px;
+            gap: 24px;
             z-index: 999;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.05);
         }
         .sidebar-btn {
             background: none;
             border: none;
-            color: white;
-            font-size: 14pt;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 15pt;
             cursor: pointer;
-            width: 100%;
-            text-align: center;
-            padding: 5px 0;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            transition: all 0.2s;
         }
         .sidebar-btn:hover {
-            background-color: #D35400;
+            background-color: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
         }
 
         /* ================= MAIN WRAPPER ================= */
         .wrapper {
             margin-top: 70px;
-            margin-left: 55px;
+            margin-left: 60px;
             flex: 1;
             display: flex;
             flex-direction: column;
-            padding: 20px 4% 40px 4%;
+            padding: 24px 6% 48px 6%;
         }
 
-        /* BREADCRUMB BAR (Sesuai Screenshot 2026-06-15 at 14.27.13.png) */
+        /* BREADCRUMB BAR (Sesuai Presisi Screenshot 2026-06-15 at 14.27.13.png) */
         .breadcrumb-bar {
-            background-color: #E9ECEF;
-            padding: 10px 16px;
-            border-radius: 4px;
-            font-size: 9pt;
-            color: #555555;
-            margin-bottom: 20px;
-            border: 1px solid #DEE2E6;
+            background-color: #EEF2F6;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 9.5pt;
+            color: #64748B;
+            margin-bottom: 24px;
+            border: 1px solid #E2E8F0;
+            font-weight: 500;
         }
         .breadcrumb-bar .active {
-            color: #E67E22;
-            font-weight: bold;
+            color: #E65F00;
+            font-weight: 700;
         }
 
         /* ================= BIG HERO HEADER TEMPLATE (Sesuai Screenshot 2026-06-15 at 14.27.13.png) ================= */
         .hero-header {
-            background-color: #E67E22; /* Warna Oranye Solid Template */
-            border-radius: 8px;
-            padding: 24px 24px;
-            margin-bottom: 25px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            background: #E65F00; /* Identik Oranye UC hangat */
+            border-radius: 10px;
+            padding: 28px 32px;
+            margin-bottom: 32px;
+            box-shadow: 0 4px 12px rgba(230, 95, 0, 0.15);
         }
         .hero-header h1 {
-            font-size: 20pt;
+            font-size: 22pt;
             color: #ffffff;
             margin: 0;
-            font-weight: bold;
-            letter-spacing: 0.3px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
         }
 
         /* ================= PANELS & CARDS ================= */
         .panel {
             background-color: #ffffff;
-            border: 1px solid #E0E0E0;
-            border-radius: 6px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
-            margin-bottom: 25px;
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02), 0 2px 4px -1px rgba(0,0,0,0.01);
+            margin-bottom: 32px;
             overflow: hidden;
-            padding-bottom: 20px;
         }
 
         .panel-title {
-            background-color: #D35400; /* Biru gelap untuk pemisah section form agar rapi */
-            color: #ffffff;
-            padding: 12px 20px;
-            font-size: 10.5pt;
-            font-weight: bold;
-            text-transform: uppercase;
+            background-color: #F8FAFC; /* Transisi warna lembut, tidak merusak pandangan mata */
+            color: #1E293B;
+            padding: 16px 24px;
+            font-size: 11pt;
+            font-weight: 700;
             letter-spacing: 0.3px;
+            border-bottom: 1px solid #E2E8F0;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         .panel-title.orange-theme {
-            background-color: #E67E22;
+            background-color: #FFF7ED;
+            color: #C2410C;
+            border-bottom: 1px solid #FFEDD5;
         }
 
         /* Vertical Stack Layout */
         .vertical-stack {
             display: flex;
             flex-direction: column;
-            gap: 16px;
-            padding: 20px;
+            gap: 20px;
+            padding: 24px;
         }
 
         .data-group {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 8px;
             width: 100%;
         }
 
         .data-label {
             font-size: 9.5pt;
-            color: #D35400;
-            font-weight: bold;
+            color: #475569;
+            font-weight: 600;
         }
 
         /* Form Controls */
         .form-control {
             width: 100%;
-            padding: 10px 12px;
-            border: 1px solid #CCCCCC;
-            border-radius: 4px;
+            padding: 11px 14px;
+            border: 1px solid #CBD5E1;
+            border-radius: 8px;
             font-size: 10pt;
             background-color: #FFFFFF;
-            color: #333333;
+            color: #1E293B;
             outline: none;
-            min-height: 38px;
+            min-height: 42px;
+            transition: all 0.2s ease;
         }
         .form-control:focus {
-            border-color: #E67E22;
-            box-shadow: 0 0 4px rgba(230, 126, 34, 0.2);
+            border-color: #E65F00;
+            box-shadow: 0 0 0 3px rgba(230, 95, 0, 0.12);
         }
         .form-control[readonly] {
-            background-color: #FAFAFA;
-            color: #555555;
+            background-color: #F1F5F9;
+            color: #64748B;
             border: 1px solid #E2E8F0;
             cursor: not-allowed;
         }
@@ -259,7 +282,7 @@
         /* Inline Row Grouping */
         .inline-row {
             display: flex;
-            gap: 15px;
+            gap: 20px;
         }
         .inline-row .data-group {
             flex: 1;
@@ -267,47 +290,62 @@
 
         /* Dynamic Section Container for Vacancies */
         .vacancy-block {
-            background-color: #FAFAFA;
-            border: 1px solid #E0E0E0;
-            border-radius: 4px;
-            padding: 20px;
-            margin-bottom: 15px;
+            background-color: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 20px;
             position: relative;
+            transition: all 0.2s;
+        }
+        .vacancy-block:hover {
+            border-color: #CBD5E1;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.01);
         }
         .vacancy-block .remove-btn {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            background-color: #E74C3C;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-size: 8pt;
+            top: 20px;
+            right: 20px;
+            background-color: #FEE2E2;
+            color: #EF4444;
+            border: 1px solid #FCA5A5;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 8.5pt;
+            font-weight: 600;
             cursor: pointer;
+            transition: all 0.2s;
+        }
+        .vacancy-block .remove-btn:hover {
+            background-color: #EF4444;
+            color: #ffffff;
+            border-color: #EF4444;
         }
 
         /* Toggle Button Group */
         .radio-box-group {
             display: flex;
-            gap: 15px;
+            gap: 20px;
             align-items: center;
             background: #FFFFFF;
-            padding: 10px;
-            border: 1px solid #CCCCCC;
-            border-radius: 4px;
+            padding: 10px 16px;
+            border: 1px solid #CBD5E1;
+            border-radius: 8px;
+            min-height: 42px;
         }
         .radio-item {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             font-size: 9.5pt;
+            font-weight: 500;
             cursor: pointer;
+            color: #334155;
         }
         .radio-item input {
-            accent-color: #E67E22;
-            width: 16px;
-            height: 16px;
+            accent-color: #E65F00;
+            width: 17px;
+            height: 17px;
             margin: 0;
         }
 
@@ -315,38 +353,61 @@
         .btn-container {
             display: flex;
             justify-content: flex-end;
-            gap: 12px;
-            margin-top: 20px;
-            margin-bottom: 20px;
+            gap: 16px;
+            margin-top: 12px;
+            margin-bottom: 32px;
         }
         .btn {
-            padding: 12px 24px;
+            padding: 12px 28px;
             font-size: 10pt;
-            font-weight: bold;
+            font-weight: 600;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
-        .btn-secondary { background-color: #7F8C8D; color: white; }
-        .btn-secondary:hover { background-color: #616A6B; }
-        .btn-orange { background-color: #2ECC71; color: white; }
-        .btn-orange:hover { background-color: #27AE60; }
-        .btn-outline { background-color: transparent; border: 1px solid #E67E22; color: #E67E22; }
-        .btn-outline:hover { background-color: #FFF3EB; border-color: #D35400; color: #D35400; }
+        .btn-secondary { 
+            background-color: #64748B; 
+            color: white; 
+        }
+        .btn-secondary:hover { 
+            background-color: #475569; 
+        }
+        .btn-orange { 
+            background-color: #E65F00; 
+            color: white; 
+            box-shadow: 0 4px 6px -1px rgba(230, 95, 0, 0.2);
+        }
+        .btn-orange:hover { 
+            background-color: #CC5500; 
+        }
+        .btn-outline { 
+            background-color: #FFFFFF; 
+            border: 1px dashed #E65F00; 
+            color: #E65F00; 
+            font-weight: 600;
+        }
+        .btn-outline:hover { 
+            background-color: #FFF7ED; 
+            border-style: solid;
+        }
 
         /* File Upload Zone */
         .upload-zone {
-            border: 2px dashed #E67E22;
-            padding: 30px;
+            border: 2px dashed #CBD5E1;
+            padding: 36px;
             text-align: center;
-            background: #FFF3EB;
-            border-radius: 6px;
+            background: #F8FAFC;
+            border-radius: 10px;
             cursor: pointer;
+            transition: all 0.2s ease;
         }
         .upload-zone:hover {
-            border-color: #D35400;
-            background: #FFE5D4;
+            border-color: #E65F00;
+            background: #FFF7ED;
         }
     </style>
 </head>
@@ -360,12 +421,12 @@
         </div>
         <div class="nav-col nav-center">
             <div class="search-container">
-                <input type="text" class="search-input" placeholder="Search menu / Oprec Management...">
                 <span class="search-icon">&#128269;</span>
+                <input type="text" class="search-input" placeholder="Search menu / Oprec Management...">
             </div>
         </div>
         <div class="nav-col nav-right">
-            <span style="font-size: 14pt; margin-right: 15px; cursor: pointer; color: #555555;">&#128276;</span>
+            <span style="font-size: 14pt; margin-right: 8px; cursor: pointer; color: #64748B;">&#128276;</span>
             <div class="user-profile">
                 <p class="user-name">Hi, Muh. Nur Alif Akbar</p>
                 <p class="user-status">Project Manager Mode</p>
@@ -374,7 +435,7 @@
         </div>
     </div>
 
-    <!-- SIDEBAR LEFT (ORANGE THEME FULL HEIGHT) -->
+    <!-- SIDEBAR LEFT -->
     <div class="sidebar">
         <button class="sidebar-btn">☰</button>
         <button class="sidebar-btn">★</button>
@@ -383,12 +444,12 @@
     <!-- MAIN WORKSPACE WRAPPER -->
     <div class="wrapper">
         
-        <!-- BREADCRUMB BAR (Sesuai Visual Pendukung Layout) -->
+        <!-- BREADCRUMB BAR (Referensi Screenshot 2026-06-15 at 14.27.13.png) -->
         <div class="breadcrumb-bar">
             My Activity / My Event / <span class="active">Apply / Edit Event Open Recruitment ▼</span>
         </div>
 
-        <!-- BIG ORANGE HEADER TEMPLATE (Identik dengan Gambar Referensi) -->
+        <!-- BIG ORANGE HEADER TEMPLATE (Sesuai Referensi Gambar Utama) -->
         <div class="hero-header">
             <h1>Apply / Edit Event Open Recruitment</h1>
         </div>
@@ -449,7 +510,7 @@
                     <div class="vacancy-block" id="block_1">
                         <button type="button" class="remove-btn" onclick="removeVacancyBlock('block_1')">Hapus Divisi</button>
                         
-                        <div class="inline-row" style="margin-bottom: 12px;">
+                        <div class="inline-row" style="margin-bottom: 16px;">
                             <div class="data-group" style="flex: 2;">
                                 <div class="data-label">Pilih Judul Nama Divisi (O-Week Standard / Kustom)</div>
                                 <select class="form-control" onchange="handleDivisionType(this)" required>
@@ -474,7 +535,7 @@
                             </div>
                         </div>
 
-                        <div class="inline-row" style="margin-bottom: 12px;">
+                        <div class="inline-row" style="margin-bottom: 16px;">
                             <div class="data-group">
                                 <div class="data-label">Posisi yang Dibuka (Multiple Selectable)</div>
                                 <div class="radio-box-group">
@@ -511,8 +572,8 @@
                 </div>
                 
                 <!-- ACTION TO ADD NEW DIVISION BLOCK -->
-                <div style="padding: 0 20px;">
-                    <button type="button" class="btn btn-outline" style="width: 100%; text-align: center;" onclick="addNewVacancyBlock()">
+                <div style="padding: 0 24px 24px 24px;">
+                    <button type="button" class="btn btn-outline" style="width: 100%; justify-content: center;" onclick="addNewVacancyBlock()">
                         ➕ Tambah Struktur Divisi Baru (Add Division +)
                     </button>
                 </div>
@@ -535,11 +596,11 @@
                     <div class="data-group">
                         <div class="data-label">Upload Desain Media Poster OPREC Resmi (Format Gambar/PDF)</div>
                         <div class="upload-zone" onclick="document.getElementById('posterFile').click()">
-                            <span style="font-size: 24pt; color: #777777;">📁</span>
-                            <p style="margin: 8px 0 4px 0; font-size: 10pt; font-weight: bold; color: #003366;">Klik di sini untuk unggah file poster lowongan kepanitiaan</p>
-                            <p style="margin: 0; font-size: 8pt; color: #888888;">Mendukung berkas JPG, PNG atau PDF (Maksimal ukuran 5MB)</p>
+                            <span style="font-size: 28pt; color: #94A3B8;">📁</span>
+                            <p style="margin: 12px 0 4px 0; font-size: 10.5pt; font-weight: 600; color: #1E293B;">Klik di sini untuk unggah file poster lowongan kepanitiaan</p>
+                            <p style="margin: 0; font-size: 8.5pt; color: #64748B;">Mendukung berkas JPG, PNG atau PDF (Maksimal ukuran 5MB)</p>
                             <input type="file" id="posterFile" style="display: none;" onchange="displayFileName(this)">
-                            <p id="fileNameDisplay" style="margin-top: 10px; font-weight: bold; color: #E67E22; font-size: 9pt;"></p>
+                            <p id="fileNameDisplay" style="margin-top: 10px; font-weight: 600; color: #E65F00; font-size: 9.5pt;"></p>
                         </div>
                     </div>
                 </div>
@@ -587,7 +648,7 @@
             newBlock.innerHTML = `
                 <button type="button" class="remove-btn" onclick="removeVacancyBlock('block_${blockCount}')">Hapus Divisi</button>
                 
-                <div class="inline-row" style="margin-bottom: 12px;">
+                <div class="inline-row" style="margin-bottom: 16px;">
                     <div class="data-group" style="flex: 2;">
                         <div class="data-label">Pilih Judul Nama Divisi (O-Week Standard / Kustom)</div>
                         <select class="form-control" onchange="handleDivisionType(this)" required>
@@ -612,7 +673,7 @@
                     </div>
                 </div>
 
-                <div class="inline-row" style="margin-bottom: 12px;">
+                <div class="inline-row" style="margin-bottom: 16px;">
                     <div class="data-group">
                         <div class="data-label">Posisi yang Dibuka (Multiple Selectable)</div>
                         <div class="radio-box-group">
