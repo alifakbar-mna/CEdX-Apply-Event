@@ -16,6 +16,9 @@
             color: #333333;
             margin: 0;
             padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         /* ================= TOP NAVBAR HEADER ================= */
@@ -30,7 +33,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 60px;
+            height: 70px;
             z-index: 1000;
         }
         .nav-col {
@@ -40,6 +43,20 @@
         .nav-left {
             flex-direction: column;
             align-items: flex-start;
+        }
+        .nav-left div:first-child {
+            font-weight: bold;
+            font-size: 13pt;
+            color: #003366;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+        }
+        .nav-left div:last-child {
+            font-size: 7pt;
+            color: #666666;
+            margin-top: -2px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
         }
         .nav-center {
             flex-grow: 1;
@@ -76,10 +93,9 @@
             line-height: 1.2;
         }
         .user-name {
-            font-size: 9.5pt;
-            font-weight: bold;
-            margin: 0;
+            font-size: 9pt;
             color: #333333;
+            margin: 0;
         }
         .user-status {
             font-size: 8pt;
@@ -90,7 +106,7 @@
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            background-color: #003366;
+            background-color: #B0C4DE;
             color: #ffffff;
             display: flex;
             align-items: center;
@@ -99,47 +115,57 @@
             font-weight: bold;
         }
 
-        /* ================= SIDEBAR ================= */
+        /* ================= SIDEBAR (ORANGE THEME FULL HEIGHT) ================= */
         .sidebar {
             position: fixed;
-            top: 60px;
+            top: 70px;
             left: 0;
-            width: 50px;
-            height: calc(100vh - 60px);
-            background-color: #003366;
+            width: 55px;
+            height: calc(100vh - 70px);
+            background-color: #D35400; /* Warna Oranye Gelap UC */
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding-top: 15px;
-            gap: 15px;
+            padding-top: 20px;
+            gap: 25px;
             z-index: 999;
         }
         .sidebar-btn {
             background: none;
             border: none;
-            color: #ffffff;
+            color: white;
             font-size: 14pt;
             cursor: pointer;
             width: 100%;
-            padding: 10px 0;
             text-align: center;
+            padding: 5px 0;
         }
-        .sidebar-btn:hover { background-color: rgba(255, 255, 255, 0.1); }
+        .sidebar-btn:hover {
+            background-color: #E67E22;
+        }
 
         /* ================= MAIN WRAPPER ================= */
         .wrapper {
-            margin-top: 60px;
-            margin-left: 50px;
-            padding: 24px 12% 100px 12%;
+            margin-top: 70px;
+            margin-left: 55px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 25px 5% 40px 5%; /* Jarak bawah disesuaikan karena tanpa footer */
         }
 
+        /* Gray Panel Breadcrumb Container */
         .breadcrumb-bar {
+            background-color: #E9ECEF;
+            padding: 12px 20px;
+            border-radius: 6px;
             font-size: 9.5pt;
-            color: #666666;
+            color: #495057;
             margin-bottom: 20px;
+            border: 1px solid #E0E0E0;
         }
         .breadcrumb-bar .active {
-            color: #F37021;
+            color: #D35400;
             font-weight: bold;
         }
 
@@ -147,27 +173,27 @@
         .panel {
             background-color: #ffffff;
             border: 1px solid #E0E0E0;
-            border-radius: 4px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
             margin-bottom: 25px;
             overflow: hidden;
             padding-bottom: 20px;
         }
 
         .panel-title {
-            background-color: #003366;
+            background-color: #E67E22;
             color: #ffffff;
             padding: 12px 20px;
-            font-size: 11pt;
+            font-size: 10.5pt;
             font-weight: bold;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         .panel-title.orange-theme {
-            background-color: #F37021;
+            background-color: #E67E22;
         }
 
         /* Vertical Stack Layout */
@@ -204,12 +230,13 @@
             min-height: 38px;
         }
         .form-control:focus {
-            border-color: #F37021;
-            box-shadow: 0 0 4px rgba(243, 112, 33, 0.2);
+            border-color: #E67E22;
+            box-shadow: 0 0 4px rgba(230, 126, 34, 0.2);
         }
         .form-control[readonly] {
-            background-color: #F5F5F5;
-            color: #777777;
+            background-color: #FAFAFA;
+            color: #555555;
+            border: 1px solid #E2E8F0;
             cursor: not-allowed;
         }
 
@@ -262,7 +289,7 @@
             cursor: pointer;
         }
         .radio-item input {
-            accent-color: #F37021;
+            accent-color: #E67E22;
             width: 16px;
             height: 16px;
             margin: 0;
@@ -274,7 +301,7 @@
             justify-content: flex-end;
             gap: 12px;
             margin-top: 20px;
-            margin-bottom: 50px;
+            margin-bottom: 20px;
         }
         .btn {
             padding: 12px 24px;
@@ -287,44 +314,23 @@
         }
         .btn-secondary { background-color: #7F8C8D; color: white; }
         .btn-secondary:hover { background-color: #616A6B; }
-        .btn-orange { background-color: #F37021; color: white; }
-        .btn-orange:hover { background-color: #D35400; }
-        .btn-outline { background-color: transparent; border: 1px solid #003366; color: #003366; }
-        .btn-outline:hover { background-color: #FFF3EB; border-color: #F37021; color: #F37021; }
+        .btn-orange { background-color: #2ECC71; color: white; } /* Diubah menjadi Hijau agar kontras saat submit */
+        .btn-orange:hover { background-color: #27AE60; }
+        .btn-outline { background-color: transparent; border: 1px solid #E67E22; color: #D35400; }
+        .btn-outline:hover { background-color: #FFF3EB; border-color: #D35400; color: #D35400; }
 
         /* File Upload Zone */
         .upload-zone {
-            border: 2px dashed #CCCCCC;
+            border: 2px dashed #E67E22;
             padding: 30px;
             text-align: center;
-            background: #FAFAFA;
-            border-radius: 4px;
+            background: #FFF3EB;
+            border-radius: 6px;
             cursor: pointer;
         }
         .upload-zone:hover {
-            border-color: #F37021;
-            background: #FFF3EB;
-        }
-
-        /* Footer Bars */
-        .tech-support-bar, .footer-bar {
-            position: fixed;
-            bottom: 30px;
-            left: 50px;
-            width: calc(100% - 50px);
-            height: 30px;
-            background-color: #002244;
-            color: #FFFFFF;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-            font-size: 8.5pt;
-            z-index: 1000;
-        }
-        .footer-bar {
-            bottom: 0;
-            background-color: #F37021;
+            border-color: #D35400;
+            background: #FFE5D4;
         }
     </style>
 </head>
@@ -333,8 +339,8 @@
     <!-- NAVBAR HEADER -->
     <div class="navbar">
         <div class="nav-col nav-left">
-            <div style="font-weight: bold; font-size: 14pt; color: #003366; letter-spacing: -0.5px;">UNIVERSITAS CIPUTRA</div>
-            <div style="font-size: 7.5pt; color: #666666; margin-top: -2px; letter-spacing: 0.5px;">CREATING WORLD CLASS ENTREPRENEURS</div>
+            <div>Universitas Ciputra</div>
+            <div>CREATING WORLD CLASS ENTREPRENEURS</div>
         </div>
         <div class="nav-col nav-center">
             <div class="search-container">
@@ -352,22 +358,23 @@
         </div>
     </div>
 
-    <!-- SIDEBAR -->
+    <!-- SIDEBAR LEFT (ORANGE THEME FULL HEIGHT) -->
     <div class="sidebar">
-        <button class="sidebar-btn">&#9776;</button>
-        <button class="sidebar-btn" style="color: #FFEB3B;">&#9733;</button>
+        <button class="sidebar-btn">☰</button>
+        <button class="sidebar-btn">★</button>
     </div>
 
     <!-- MAIN WORKSPACE WRAPPER -->
     <div class="wrapper">
         
+        <!-- BREADCRUMB BAR (GRAY PANEL) -->
         <div class="breadcrumb-bar">
             Dashboard Panitia / Kegiatan Aktif / <span class="active">Apply &amp; Edit Setup Open Recruitment</span>
         </div>
 
         <form id="oprecForm" onsubmit="submitForm(event)">
             
-            <!-- PANEL 1: INFORMASI UTAMA (OTOMATIS / READONLY) -->
+            <!-- PANEL 1: INFORMASI UTAMA -->
             <div class="panel">
                 <div class="panel-title">Section 1: Data Utama Kegiatan (Sinkronisasi Otomatis)</div>
                 <div class="vertical-stack">
@@ -412,7 +419,7 @@
                 </div>
             </div>
 
-            <!-- PANEL 2: STRUKTUR STRATEGIS LOWONGAN DIVISI (VACANCY ENGINE) -->
+            <!-- PANEL 2: STRUKTUR STRATEGIS LOWONGAN DIVISI -->
             <div class="panel">
                 <div class="panel-title orange-theme">Section 2: Pengaturan Lowongan Divisi (Vacancy Grid)</div>
                 <div class="vertical-stack" id="vacancyContainer">
@@ -526,23 +533,10 @@
         </form>
     </div>
 
-    <!-- FOOTER TECHNICAL STACK -->
-    <div class="tech-support-bar">
-        <div class="footer-col">
-            <strong>System Engine Integration:</strong>&nbsp;<span style="color:#25D366;">&#128172; CIS Oprec Gate Module</span>&nbsp;| Otomatisasi Filter Validasi Syarat Anggota Ormawa
-        </div>
-        <div>Build Engine v1.4</div>
-    </div>
-    <div class="footer-bar">
-        <div>&#128205; CitraLand CBD Boulevard, Made, Kec. Sambikerep, Surabaya, Jawa Timur 60219</div>
-        <div>&copy; 2026 | Universitas Ciputra Surabaya</div>
-    </div>
-
     <!-- ================= JAVASCRIPT LOGIC DYNAMIC ENGINE ================= -->
-    <script>
+    <script {nonce}>
         let blockCount = 1;
 
-        // Menangani input jika user memilih mengetik tipe divisi kustom sendiri
         function handleDivisionType(selectElement) {
             const customInput = selectElement.parentElement.querySelector('.custom-div-input');
             if (selectElement.value === 'CUSTOM_TYPE') {
@@ -554,7 +548,6 @@
             }
         }
 
-        // Menampilkan nama file poster yang berhasil diunggah
         function displayFileName(inputElement) {
             const display = document.getElementById('fileNameDisplay');
             if(inputElement.files.length > 0) {
@@ -562,7 +555,6 @@
             }
         }
 
-        // Menambahkan Blok Divisi Baru secara Dinamis
         function addNewVacancyBlock() {
             blockCount++;
             const container = document.getElementById('vacancyContainer');
@@ -636,7 +628,6 @@
             container.appendChild(newBlock);
         }
 
-        // Menghapus Blok Divisi
         function removeVacancyBlock(id) {
             const block = document.getElementById(id);
             if (confirm("Apakah Anda yakin ingin menghapus opsi penyiapan divisi lowongan ini?")) {
@@ -644,16 +635,13 @@
             }
         }
 
-        // Action Save Draft
         function saveDraft() {
             alert("Draft Berhasil Disimpan! Anda dapat mengubah konfigurasi struktur rekrutmen ini kapan saja sebelum disubmit.");
         }
 
-        // Action Submit Form
         function submitForm(event) {
             event.preventDefault();
             alert("Sukses! Form Open Recruitment (OPREC) berhasil diajukan ke Student Affairs untuk divalidasi dan dipublikasi.");
-            // Logika redirect atau integrasi lanjutan AJAX
         }
     </script>
 </body>
