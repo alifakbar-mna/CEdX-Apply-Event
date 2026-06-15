@@ -11,18 +11,22 @@
         }
     
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: #F4F5F7;
-            color: #333333;
+            font-family: 'Inter', 'Segoe UI', Helvetica, Arial, sans-serif;
+            background-color: #F8FAFC; /* Abu-abu ultra terang sejuk di mata sesuai template */
+            color: #334155; /* Slate dark untuk keterbacaan teks yang lebih lembut */
             margin: 0;
             padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
         }
 
         /* ================= TOP NAVBAR HEADER ================= */
         .navbar {
             background-color: #ffffff;
-            border-bottom: 1px solid #E0E0E0;
-            padding: 10px 24px;
+            border-bottom: 1px solid #E2E8F0;
+            padding: 10px 32px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -30,86 +34,267 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 60px;
+            height: 70px;
             z-index: 1000;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
         }
-        .nav-col { display: flex; align-items: center; }
-        .nav-left { flex-direction: column; align-items: flex-start; }
-        .nav-center { flex-grow: 1; justify-content: center; max-width: 500px; margin: 0 auto; }
-        .nav-right { gap: 12px; justify-content: flex-end; }
+        .nav-col {
+            display: flex;
+            align-items: center;
+        }
+        .nav-left {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .nav-left div:first-child {
+            font-weight: 800;
+            font-size: 13pt;
+            color: #0F172A;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+        }
+        .nav-left div:last-child {
+            font-size: 7pt;
+            color: #64748B;
+            margin-top: -1px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+        }
+        .nav-center {
+            flex-grow: 1;
+            justify-content: center;
+            max-width: 460px;
+            margin: 0 auto;
+        }
+        .nav-right {
+            gap: 16px;
+            justify-content: flex-end;
+        }
         
         .search-container { position: relative; width: 100%; }
-        .search-input { width: 100%; padding: 8px 36px 8px 12px; border: 1px solid #CCCCCC; border-radius: 20px; font-size: 9.5pt; }
-        .search-icon { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #888888; }
+        .search-input { 
+            width: 100%; 
+            padding: 9px 36px 9px 14px; 
+            border: 1px solid #CBD5E1; 
+            border-radius: 20px; 
+            font-size: 9.5pt; 
+            outline: none;
+            transition: all 0.2s;
+        }
+        .search-input:focus {
+            border-color: #E65F00;
+            box-shadow: 0 0 0 3px rgba(230, 95, 0, 0.12);
+        }
+        .search-icon { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: #64748B; }
 
-        .user-profile { text-align: right; line-height: 1.2; }
-        .user-name { font-size: 9.5pt; font-weight: bold; margin: 0; color: #333333; }
-        .user-status { font-size: 8pt; color: #777777; margin: 0; }
-        .avatar { width: 36px; height: 36px; border-radius: 50%; background-color: #003366; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; }
+        .user-profile {
+            text-align: right;
+            line-height: 1.3;
+        }
+        .user-name {
+            font-size: 9.5pt;
+            font-weight: 600;
+            color: #1E293B;
+            margin: 0;
+        }
+        .user-status {
+            font-size: 8pt;
+            color: #64748B;
+            margin: 0;
+            font-weight: 500;
+        }
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #E2E8F0;
+            color: #475569;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11pt;
+            font-weight: 600;
+            border: 1px solid #CBD5E1;
+        }
 
-        /* ================= SIDEBAR ================= */
-        .sidebar { position: fixed; top: 60px; left: 0; width: 50px; height: calc(100vh - 60px); background-color: #003366; display: flex; flex-direction: column; align-items: center; padding-top: 15px; gap: 15px; z-index: 999; }
-        .sidebar-btn { background: none; border: none; color: #ffffff; font-size: 14pt; cursor: pointer; width: 100%; padding: 10px 0; text-align: center; }
-        .sidebar-btn:hover { background-color: rgba(255, 255, 255, 0.1); }
+        /* ================= SIDEBAR (SOLID INTEGRATED ORANGE) ================= */
+        .sidebar {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 60px;
+            height: calc(100vh - 70px);
+            background-color: #E65F00; /* Warna Jingga UC Solid */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 24px;
+            gap: 24px;
+            z-index: 999;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+        }
+        .sidebar-btn {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 15pt;
+            cursor: pointer;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            transition: all 0.2s;
+        }
+        .sidebar-btn:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+        }
 
         /* ================= MAIN WRAPPER ================= */
-        .wrapper { margin-top: 60px; margin-left: 50px; padding: 24px 6% 100px 6%; }
-        .breadcrumb-bar { font-size: 9.5pt; color: #666666; margin-bottom: 20px; }
-        .breadcrumb-bar .active { color: #F37021; font-weight: bold; }
+        .wrapper { 
+            margin-top: 70px; 
+            margin-left: 60px; 
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 24px 6% 48px 6%; /* Aman tanpa footer di bagian bawah */
+        }
+        
+        /* BREADCRUMB BAR */
+        .breadcrumb-bar { 
+            background-color: #EEF2F6;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 9.5pt; 
+            color: #64748B; 
+            margin-bottom: 24px; 
+            border: 1px solid #E2E8F0;
+            font-weight: 500;
+        }
+        .breadcrumb-bar .active { 
+            color: #E65F00; 
+            font-weight: 700; 
+        }
+
+        /* ================= BIG HERO HEADER TEMPLATE ================= */
+        .hero-header {
+            background: #E65F00;
+            border-radius: 10px;
+            padding: 28px 32px;
+            margin-bottom: 32px;
+            box-shadow: 0 4px 12px rgba(230, 95, 0, 0.15);
+        }
+        .hero-header h1 {
+            font-size: 22pt;
+            color: #ffffff;
+            margin: 0;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
 
         /* ================= PANELS & CARDS ================= */
-        .panel { background-color: #ffffff; border: 1px solid #E0E0E0; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 25px; overflow: hidden; }
-        .panel-title { background-color: #003366; color: #ffffff; padding: 12px 20px; font-size: 11pt; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; display: flex; justify-content: space-between; align-items: center; }
-        .panel-title.orange-theme { background-color: #F37021; }
+        .panel { 
+            background-color: #ffffff; 
+            border: 1px solid #E2E8F0; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); 
+            margin-bottom: 32px; 
+            overflow: hidden; 
+        }
+        .panel-title { 
+            background-color: #F8FAFC; 
+            color: #1E293B; 
+            padding: 16px 24px; 
+            font-size: 11pt; 
+            font-weight: 700; 
+            letter-spacing: 0.3px; 
+            border-bottom: 1px solid #E2E8F0;
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        .panel-title.orange-theme { 
+            background-color: #FFF7ED; 
+            color: #C2410C; 
+            border-bottom: 1px solid #FFEDD5;
+        }
 
-        .vertical-stack { display: flex; flex-direction: column; gap: 16px; padding: 20px; }
-        .inline-row { display: flex; gap: 15px; flex-wrap: wrap; }
-        .inline-row .data-group { flex: 1; min-width: 200px; }
+        .vertical-stack { display: flex; flex-direction: column; gap: 20px; padding: 24px; }
+        .inline-row { display: flex; gap: 20px; flex-wrap: wrap; }
+        .inline-row .data-group { flex: 1; min-width: 220px; }
         
-        .data-group { display: flex; flex-direction: column; gap: 6px; width: 100%; }
-        .data-label { font-size: 9.5pt; color: #003366; font-weight: bold; }
+        .data-group { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+        .data-label { font-size: 9.5pt; color: #1E293B; font-weight: 600; }
 
         /* Form Controls */
-        .form-control { width: 100%; padding: 10px 12px; border: 1px solid #CCCCCC; border-radius: 4px; font-size: 9.5pt; background-color: #FFFFFF; color: #333333; outline: none; }
-        .form-control:focus { border-color: #F37021; box-shadow: 0 0 4px rgba(243, 112, 33, 0.2); }
+        .form-control { 
+            width: 100%; 
+            padding: 11px 14px; 
+            border: 1px solid #CBD5E1; 
+            border-radius: 8px; 
+            font-size: 10pt; 
+            background-color: #FFFFFF; 
+            color: #1E293B; 
+            outline: none; 
+            transition: all 0.2s ease;
+        }
+        .form-control:focus { 
+            border-color: #E65F00; 
+            box-shadow: 0 0 0 3px rgba(230, 95, 0, 0.12); 
+        }
 
         /* ================= TABLES DATA STYLING ================= */
+        .table-responsive {
+            overflow-x: auto;
+            border-bottom: 1px solid #E2E8F0;
+        }
         .data-table { width: 100%; border-collapse: collapse; font-size: 9.5pt; text-align: left; }
-        .data-table th { background-color: #F8F9FA; color: #003366; font-weight: bold; padding: 12px 10px; border-bottom: 2px solid #E0E0E0; }
-        .data-table td { padding: 10px; border-bottom: 1px solid #E0E0E0; background-color: #FFFFFF; vertical-align: middle; }
-        .data-table tr.category-row td { background-color: #FFF3EB; color: #F37021; font-weight: bold; font-size: 10pt; border-bottom: 2px solid #F37021; }
-        .data-table tr:hover td { background-color: #F9FBFC; }
-        tr.category-row:hover td { background-color: #FFF3EB; }
+        .data-table th { background-color: #F8FAFC; color: #1E293B; font-weight: 700; padding: 12px 14px; border-bottom: 2px solid #E2E8F0; }
+        .data-table td { padding: 12px 14px; border-bottom: 1px solid #E2E8F0; background-color: #FFFFFF; vertical-align: middle; }
+        .data-table tr.category-row td { background-color: #FFF7ED; color: #C2410C; font-weight: 700; font-size: 10pt; border-bottom: 1px solid #FFEDD5; }
+        .data-table tr:hover td { background-color: #F8FAFC; }
+        tr.category-row:hover td { background-color: #FFF7ED; }
 
         /* Badges */
-        .role-badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 8pt; font-weight: bold; text-transform: uppercase; }
-        .badge-inti { background-color: #003366; color: #ffffff; }
-        .badge-koor { background-color: #F37021; color: #ffffff; }
-        .badge-anggota { background-color: #95A5A6; color: #ffffff; }
+        .role-badge { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 8pt; font-weight: 700; text-transform: uppercase; }
+        .badge-inti { background-color: #0F172A; color: #ffffff; }
+        .badge-koor { background-color: #E65F00; color: #ffffff; }
+        .badge-anggota { background-color: #64748B; color: #ffffff; }
 
         /* Buttons */
-        .btn { padding: 10px 20px; font-size: 9.5pt; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; }
-        .btn-orange { background-color: #F37021; color: white; }
-        .btn-orange:hover { background-color: #D35400; }
-        .btn-blue { background-color: #003366; color: white; }
-        .btn-blue:hover { background-color: #002244; }
-        .btn-outline { background-color: transparent; border: 1px solid #003366; color: #003366; }
-        .btn-outline:hover { background-color: #FFF3EB; border-color: #F37021; color: #F37021; }
+        .btn { 
+            padding: 12px 24px; 
+            font-size: 10pt; 
+            font-weight: 600; 
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            transition: all 0.2s ease; 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 8px; 
+        }
+        .btn-orange { background-color: #E65F00; color: white; box-shadow: 0 4px 6px -1px rgba(230, 95, 0, 0.2); }
+        .btn-orange:hover { background-color: #CC5500; }
+        .btn-blue { background-color: #0F172A; color: white; }
+        .btn-blue:hover { background-color: #1E293B; }
+        .btn-outline { background-color: transparent; border: 1px solid #CBD5E1; color: #475569; }
+        .btn-outline:hover { background-color: #FFF7ED; border-color: #E65F00; color: #E65F00; }
 
         /* ================= E-LETTER LIVE PREVIEW BOX ================= */
-        .e-letter-preview { background-color: #FFFFFF; border: 2px dashed #003366; border-radius: 4px; padding: 40px; box-shadow: inset 0 0 10px rgba(0,0,0,0.02); display: none; margin-top: 15px; position: relative; }
-        .letter-header { text-align: center; border-bottom: 3px double #003366; padding-bottom: 15px; margin-bottom: 25px; }
-        .letter-title { font-family: 'Times New Roman', Times, serif; font-size: 14pt; font-weight: bold; text-decoration: underline; text-transform: uppercase; margin-bottom: 5px; color: #003366; }
-        .letter-number { font-family: 'Times New Roman', Times, serif; font-size: 11pt; margin: 0; color: #555555; }
-        .letter-body { font-family: 'Times New Roman', Times, serif; font-size: 11pt; line-height: 1.6; color: #222222; text-align: justify; }
+        .e-letter-preview { background-color: #FFFFFF; border: 2px dashed #CBD5E1; border-radius: 8px; padding: 40px; box-shadow: inset 0 0 10px rgba(0,0,0,0.01); display: none; margin-top: 15px; position: relative; }
+        .e-letter-preview:hover { border-color: #E65F00; }
+        .letter-header { text-align: center; border-bottom: 3px double #0F172A; padding-bottom: 15px; margin-bottom: 25px; }
+        .letter-title { font-family: 'Times New Roman', Times, serif; font-size: 14pt; font-weight: bold; text-decoration: underline; text-transform: uppercase; margin-bottom: 5px; color: #0F172A; }
+        .letter-number { font-family: 'Times New Roman', Times, serif; font-size: 11pt; margin: 0; color: #475569; }
+        .letter-body { font-family: 'Times New Roman', Times, serif; font-size: 11pt; line-height: 1.6; color: #1E293B; text-align: justify; }
         
         .e-signature-zone { display: flex; justify-content: flex-end; margin-top: 40px; font-family: 'Times New Roman', Times, serif; }
         .sig-block { text-align: center; width: 250px; }
-        .crypto-hash-stamp { margin: 10px 0; border: 1px dashed #2ECC71; padding: 6px; border-radius: 4px; background: #EAFAF1; color: #27AE60; font-size: 7.5pt; font-family: monospace; text-align: left; word-break: break-all; }
+        .crypto-hash-stamp { margin: 10px 0; border: 1px dashed #16A34A; padding: 8px; border-radius: 6px; background: #F0FDF4; color: #166534; font-size: 7.5pt; font-family: monospace; text-align: left; word-break: break-all; }
 
-        /* Footer Bars */
-        .tech-support-bar, .footer-bar { position: fixed; bottom: 30px; left: 50px; width: calc(100% - 50px); height: 30px; background-color: #002244; color: #FFFFFF; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; font-size: 8.5pt; z-index: 1000; }
-        .footer-bar { bottom: 0; background-color: #F37021; }
     </style>
 </head>
 <body>
@@ -117,8 +302,8 @@
     <!-- NAVBAR HEADER -->
     <div class="navbar">
         <div class="nav-col nav-left">
-            <div style="font-weight: bold; font-size: 14pt; color: #003366; letter-spacing: -0.5px;">UNIVERSITAS CIPUTRA</div>
-            <div style="font-size: 7.5pt; color: #666666; margin-top: -2px; letter-spacing: 0.5px;">CREATING WORLD CLASS ENTREPRENEURS</div>
+            <div>Universitas Ciputra</div>
+            <div>CREATING WORLD CLASS ENTREPRENEURS</div>
         </div>
         <div class="nav-col nav-center">
             <div class="search-container">
@@ -127,7 +312,7 @@
             </div>
         </div>
         <div class="nav-col nav-right">
-            <span style="font-size: 14pt; margin-right: 15px; cursor: pointer; color: #555555;">&#128276;</span>
+            <span style="font-size: 14pt; margin-right: 5px; cursor: pointer; color: #64748B;">&#128276;</span>
             <div class="user-profile">
                 <p class="user-name">Hi, Muh. Nur Alif Akbar</p>
                 <p class="user-status">Project Manager Mode</p>
@@ -139,7 +324,7 @@
     <!-- SIDEBAR -->
     <div class="sidebar">
         <button class="sidebar-btn">&#9776;</button>
-        <button class="sidebar-btn" style="color: #FFEB3B;">&#9733;</button>
+        <button class="sidebar-btn">&#9733;</button>
     </div>
 
     <!-- MAIN WORKSPACE WRAPPER -->
@@ -148,10 +333,15 @@
             Dashboard Panitia / Finalization / <span class="active">List Panitia &amp; Surat Tugas Generator</span>
         </div>
 
-        <!-- PANEL 1: LIST PANITIA TETAP (PASCA SELEKSI LULUS) -->
+        <!-- BIG HERO HEADER TEMPLATE -->
+        <div class="hero-header">
+            <h1>List Panitia</h1>
+        </div>
+
+        <!-- PANEL 1: LIST PANITIA TETAP -->
         <div class="panel">
             <div class="panel-title">Section 1: Daftar Resmi Anggota Panitia (Final Lineup)</div>
-            <div>
+            <div class="table-responsive">
                 <table class="data-table" id="tableOfficialPanitia">
                     <thead>
                         <tr>
@@ -241,9 +431,9 @@
                     </tbody>
                 </table>
             </div>
-            <div style="padding: 15px; background-color: #F8F9FA; display: flex; justify-content: space-between; align-items: center;">
-                <span style="font-size: 9pt; color: #555;">Total Anggota Terdaftar Tetap: <strong>8 Mahasiswa</strong></span>
-                <button type="button" class="btn btn-outline" style="padding: 6px 12px; font-size: 8.5pt;" onclick="alert('Mengekspor daftar panitia tetap ke format Excel (.xlsx)')">📥 Export List Panitia</button>
+            <div style="padding: 16px 24px; background-color: #F8FAFC; display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 9pt; color: #64748B; font-weight: 500;">Total Anggota Terdaftar Tetap: <strong>8 Mahasiswa</strong></span>
+                <button type="button" class="btn btn-outline" style="padding: 8px 16px; font-size: 9pt;" onclick="alert('Mengekspor daftar panitia tetap ke format Excel (.xlsx)')">📥 Export List Panitia</button>
             </div>
         </div>
 
@@ -275,7 +465,7 @@
                     <input type="text" id="stCc" class="form-control" value="1. Wakil Rektor Akademik, 2. Head of Department ISB &amp; IMT, 3. Arsip Internal CEdX">
                 </div>
 
-                <div style="display: flex; gap: 10px; margin-top: 5px;">
+                <div style="display: flex; gap: 12px; margin-top: 4px;">
                     <button type="button" class="btn btn-blue" onclick="generateELetterLive()">⚡ Generate E-Letter Preview</button>
                     <button type="button" class="btn btn-outline" onclick="resetELetter()">Reset Form</button>
                 </div>
@@ -283,8 +473,8 @@
                 <!-- LIVE PREVIEW WORKSPACE BOX -->
                 <div class="e-letter-preview" id="previewBox">
                     <div class="letter-header">
-                        <div style="font-size: 14pt; font-weight: bold; color: #003366; letter-spacing: 0.5px;">UNIVERSITAS CIPUTRA SURABAYA</div>
-                        <div style="font-size: 8pt; color: #666; font-style: italic; margin-top: 2px;">CitraLand CBD Boulevard, Made, Kec. Sambikerep, Kota Surabaya, Jawa Timur 60129</div>
+                        <div style="font-size: 14pt; font-weight: bold; color: #0F172A; letter-spacing: 0.5px;">UNIVERSITAS CIPUTRA SURABAYA</div>
+                        <div style="font-size: 8pt; color: #64748B; font-style: italic; margin-top: 2px;">CitraLand CBD Boulevard, Made, Kec. Sambikerep, Kota Surabaya, Jawa Timur 60129</div>
                     </div>
                     
                     <div style="text-align: center; margin-bottom: 20px;">
@@ -336,7 +526,7 @@
                         </div>
                     </div>
 
-                    <div style="margin-top: 30px; font-family: 'Times New Roman', serif; font-size: 9pt; color: #555; border-top: 1px solid #DDD; padding-top: 10px;">
+                    <div style="margin-top: 30px; font-family: 'Times New Roman', serif; font-size: 9pt; color: #64748B; border-top: 1px solid #E2E8F0; padding-top: 10px;">
                         <strong>Tembusan (Cc):</strong> <span id="lblStCc"></span>
                     </div>
                 </div>
@@ -345,24 +535,13 @@
         </div>
 
         <!-- ACTION BOTTOM BUTTONS -->
-        <div style="display: flex; justify-content: flex-end; gap: 15px; margin-bottom: 60px;">
+        <div style="display: flex; justify-content: flex-end; gap: 15px; margin-bottom: 40px;">
             <button type="button" class="btn btn-orange" style="padding: 12px 30px;" onclick="submitFinalST()">🔒 Kirim &amp; Publikasi Surat Tugas Resmi</button>
         </div>
     </div>
 
-    <!-- FOOTER TECHNICAL STACK -->
-    <div class="tech-support-bar">
-        <div><strong>CIS E-Letter Module:</strong>&nbsp;<span style="color:#25D366;">✓ Secure Digital Signing Engine Connected</span>&nbsp;| Otomatisasi penerbitan SK/ST ke profil SIMKATMAWA Mahasiswa.</div>
-        <div>Engine Document v3.0</div>
-    </div>
-    <div class="footer-bar">
-        <div>📍 CitraLand CBD Boulevard, Made, Kec. Sambikerep, Surabaya, Jawa Timur 60219</div>
-        <div>&copy; 2026 | Universitas Ciputra Surabaya</div>
-    </div>
-
     <!-- ================= JAVASCRIPT SYSTEM ENGINE ================= -->
     <script>
-        // Membaca data form dan menyuntikkannya ke tampilan dokumen E-Letter resmi
         function generateELetterLive() {
             const stNumber = document.getElementById('stNumber').value;
             const signatory = document.getElementById('stSignatory').value;
@@ -374,17 +553,14 @@
                 return;
             }
 
-            // Format tanggal lokal Indonesia
             const options = { year: 'numeric', month: 'long', day: 'numeric' };
             const formattedDate = new Date(rawDate).toLocaleDateString('id-ID', options);
 
-            // Inject data ke DOM E-Letter preview
             document.getElementById('lblStNumber').innerText = stNumber;
             document.getElementById('lblStSignatory').innerText = signatory;
             document.getElementById('lblStDate').innerText = formattedDate;
             document.getElementById('lblStCc').innerText = cc;
 
-            // Tampilkan box dengan efek visual scroll down smooth
             const previewBox = document.getElementById('previewBox');
             previewBox.style.display = 'block';
             previewBox.scrollIntoView({ behavior: 'smooth', block: 'end' });
