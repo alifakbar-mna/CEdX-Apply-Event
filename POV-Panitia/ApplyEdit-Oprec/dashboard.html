@@ -122,7 +122,7 @@
             left: 0;
             width: 55px;
             height: calc(100vh - 70px);
-            background-color: #D35400; /* Warna Oranye Gelap UC */
+            background-color: #D35400;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -151,22 +151,51 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            padding: 25px 5% 40px 5%; /* Jarak bawah disesuaikan karena tanpa footer */
+            padding: 25px 5% 40px 5%;
         }
 
-        /* Gray Panel Breadcrumb Container */
+        /* Breadcrumb Container */
         .breadcrumb-bar {
-            background-color: #E9ECEF;
-            padding: 12px 20px;
-            border-radius: 6px;
             font-size: 9.5pt;
-            color: #495057;
-            margin-bottom: 20px;
-            border: 1px solid #E0E0E0;
+            color: #666666;
+            margin-bottom: 15px;
         }
         .breadcrumb-bar .active {
             color: #D35400;
             font-weight: bold;
+        }
+
+        /* ================= BIG HERO HEADER TEMPLATE ================= */
+        .hero-header {
+            background-color: #E9ECEF;
+            border: 1px solid #DCDCDC;
+            border-radius: 6px;
+            padding: 24px 30px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .hero-title-area h1 {
+            font-size: 18pt;
+            color: #003366;
+            margin: 0 0 6px 0;
+            font-weight: bold;
+        }
+        .hero-title-area p {
+            font-size: 9.5pt;
+            color: #555555;
+            margin: 0;
+        }
+        .hero-status-tag {
+            background-color: #FFF3EB;
+            border: 1px solid #E67E22;
+            color: #D35400;
+            padding: 6px 14px;
+            border-radius: 4px;
+            font-size: 9pt;
+            font-weight: bold;
+            text-transform: uppercase;
         }
 
         /* ================= PANELS & CARDS ================= */
@@ -314,7 +343,7 @@
         }
         .btn-secondary { background-color: #7F8C8D; color: white; }
         .btn-secondary:hover { background-color: #616A6B; }
-        .btn-orange { background-color: #2ECC71; color: white; } /* Diubah menjadi Hijau agar kontras saat submit */
+        .btn-orange { background-color: #2ECC71; color: white; }
         .btn-orange:hover { background-color: #27AE60; }
         .btn-outline { background-color: transparent; border: 1px solid #E67E22; color: #D35400; }
         .btn-outline:hover { background-color: #FFF3EB; border-color: #D35400; color: #D35400; }
@@ -367,9 +396,20 @@
     <!-- MAIN WORKSPACE WRAPPER -->
     <div class="wrapper">
         
-        <!-- BREADCRUMB BAR (GRAY PANEL) -->
+        <!-- BREADCRUMB BAR -->
         <div class="breadcrumb-bar">
             Dashboard Panitia / Kegiatan Aktif / <span class="active">Apply &amp; Edit Setup Open Recruitment</span>
+        </div>
+
+        <!-- BIG HERO HEADER TEMPLATE -->
+        <div class="hero-header">
+            <div class="hero-title-area">
+                <h1>Apply / Edit Event Open Recruitment</h1>
+                <p>Konfigurasi parameter sistem rekruitmen kepanitiaan, alokasi kebutuhan divisi, dan berkas publikasi poster ormawa.</p>
+            </div>
+            <div class="hero-status-tag">
+                📝 Setup Mode
+            </div>
         </div>
 
         <form id="oprecForm" onsubmit="submitForm(event)">
