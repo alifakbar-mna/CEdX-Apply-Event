@@ -11,18 +11,22 @@
         }
         
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: #F4F5F7;
-            color: #333333;
+            font-family: 'Inter', 'Segoe UI', Helvetica, Arial, sans-serif;
+            background-color: #F8FAFC; /* Abu-abu ultra terang yang sejuk di mata */
+            color: #334155; /* Slate dark untuk keterbacaan teks yang lebih lembut */
             margin: 0;
             padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
         }
 
         /* ================= TOP NAVBAR HEADER ================= */
         .navbar {
             background-color: #ffffff;
-            border-bottom: 1px solid #E0E0E0;
-            padding: 10px 24px;
+            border-bottom: 1px solid #E2E8F0;
+            padding: 10px 32px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -30,102 +34,505 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 60px;
+            height: 70px;
             z-index: 1000;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
         }
-        .nav-col { display: flex; align-items: center; }
-        .nav-left { flex-direction: column; align-items: flex-start; }
-        .nav-right { gap: 12px; justify-content: flex-end; }
-        
-        .user-profile { text-align: right; line-height: 1.2; }
-        .user-name { font-size: 9.5pt; font-weight: bold; margin: 0; color: #333333; }
-        .user-status { font-size: 8pt; color: #777777; margin: 0; }
-        .avatar { width: 36px; height: 36px; border-radius: 50%; background-color: #003366; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; }
+        .nav-col {
+            display: flex;
+            align-items: center;
+        }
+        .nav-left {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .nav-left div:first-child {
+            font-weight: 800;
+            font-size: 13pt;
+            color: #0F172A;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+        }
+        .nav-left div:last-child {
+            font-size: 7pt;
+            color: #64748B;
+            margin-top: -1px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+        }
+        .nav-center {
+            flex-grow: 1;
+            justify-content: center;
+            max-width: 460px;
+            margin: 0 auto;
+        }
+        .nav-right {
+            gap: 16px;
+            justify-content: flex-end;
+        }
 
-        /* ================= SIDEBAR ================= */
-        .sidebar { position: fixed; top: 60px; left: 0; width: 50px; height: calc(100vh - 60px); background-color: #003366; display: flex; flex-direction: column; align-items: center; padding-top: 15px; gap: 15px; z-index: 999; }
-        .sidebar-btn { background: none; border: none; color: #ffffff; font-size: 14pt; cursor: pointer; width: 100%; padding: 10px 0; text-align: center; }
+        .user-profile {
+            text-align: right;
+            line-height: 1.3;
+        }
+        .user-name {
+            font-size: 9.5pt;
+            font-weight: 600;
+            color: #1E293B;
+            margin: 0;
+        }
+        .user-status {
+            font-size: 8pt;
+            color: #64748B;
+            margin: 0;
+            font-weight: 500;
+        }
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #E2E8F0;
+            color: #475569;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11pt;
+            font-weight: 600;
+            border: 1px solid #CBD5E1;
+        }
+
+        /* ================= SIDEBAR (SOLID INTEGRATED ORANGE) ================= */
+        .sidebar {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 60px;
+            height: calc(100vh - 70px);
+            background-color: #E65F00; /* Warna Jingga UC Solid */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 24px;
+            gap: 24px;
+            z-index: 999;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+        }
+        .sidebar-btn {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 15pt;
+            cursor: pointer;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            transition: all 0.2s;
+        }
+        .sidebar-btn:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+        }
 
         /* ================= MAIN WRAPPER ================= */
-        .wrapper { margin-top: 60px; margin-left: 50px; padding: 24px 6% 120px 6%; }
-        .breadcrumb-bar { font-size: 9.5pt; color: #666666; margin-bottom: 20px; }
-        .breadcrumb-bar .active { color: #F37021; font-weight: bold; }
+        .wrapper {
+            margin-top: 70px;
+            margin-left: 60px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 24px 6% 120px 6%;
+        }
+
+        /* BREADCRUMB BAR */
+        .breadcrumb-bar {
+            background-color: #EEF2F6;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 9.5pt;
+            color: #64748B;
+            margin-bottom: 24px;
+            border: 1px solid #E2E8F0;
+            font-weight: 500;
+        }
+        .breadcrumb-bar .active {
+            color: #E65F00;
+            font-weight: 700;
+        }
 
         /* ================= SYSTEM AUTOMATED NOTIFICATION ================= */
-        .alert-reminder { background-color: #FFF3CD; border-left: 5px solid #FFC107; color: #856404; padding: 15px 20px; border-radius: 4px; font-size: 9.5pt; margin-bottom: 25px; line-height: 1.5; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .alert-reminder strong { color: #664d03; }
+        .alert-reminder {
+            background-color: #FFFBEB;
+            border-left: 4px solid #F59E0B;
+            color: #78350F;
+            padding: 16px 20px;
+            border-radius: 8px;
+            font-size: 9.5pt;
+            margin-bottom: 24px;
+            line-height: 1.6;
+            border-top: 1px solid #FEF3C7;
+            border-right: 1px solid #FEF3C7;
+            border-bottom: 1px solid #FEF3C7;
+        }
+        .alert-reminder strong {
+            color: #451A03;
+        }
+
+        /* ================= BIG HERO HEADER TEMPLATE ================= */
+        .hero-header {
+            background: #E65F00;
+            border-radius: 10px;
+            padding: 28px 32px;
+            margin-bottom: 32px;
+            box-shadow: 0 4px 12px rgba(230, 95, 0, 0.15);
+        }
+        .hero-header h1 {
+            font-size: 22pt;
+            color: #ffffff;
+            margin: 0;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
 
         /* ================= PANELS & CARDS ================= */
-        .panel { background-color: #ffffff; border: 1px solid #E0E0E0; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 25px; overflow: hidden; }
-        .panel-title { background-color: #003366; color: #ffffff; padding: 12px 20px; font-size: 11pt; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; }
-        .panel-title.orange-theme { background-color: #F37021; }
+        .panel {
+            background-color: #ffffff;
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+            margin-bottom: 32px;
+            overflow: hidden;
+        }
+
+        .panel-title {
+            background-color: #F8FAFC;
+            color: #1E293B;
+            padding: 16px 24px;
+            font-size: 11pt;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            border-bottom: 1px solid #E2E8F0;
+        }
+        .panel-title.orange-theme {
+            background-color: #FFF7ED;
+            color: #C2410C;
+            border-bottom: 1px solid #FFEDD5;
+        }
         
-        .vertical-stack { display: flex; flex-direction: column; gap: 16px; padding: 20px; }
-        .inline-row { display: flex; gap: 15px; flex-wrap: wrap; }
-        .inline-row .data-group { flex: 1; min-width: 220px; }
+        .vertical-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 24px;
+        }
+        .inline-row {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .inline-row .data-group {
+            flex: 1;
+            min-width: 220px;
+        }
         
-        .data-group { display: flex; flex-direction: column; gap: 6px; width: 100%; }
-        .data-label { font-size: 9.5pt; color: #003366; font-weight: bold; }
-        .instruction-blue { font-size: 8.5pt; color: #2980B9; font-style: italic; margin-top: -2px; }
+        .data-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 100%;
+        }
+        .data-label {
+            font-size: 9.5pt;
+            color: #1E293B;
+            font-weight: 600;
+        }
+        .instruction-blue {
+            font-size: 8.5pt;
+            color: #2563EB;
+            font-style: italic;
+            margin-top: -4px;
+        }
 
         /* Form Controls */
-        .form-control { width: 100%; padding: 10px 12px; border: 1px solid #CCCCCC; border-radius: 4px; font-size: 9.5pt; background-color: #FFFFFF; color: #333333; outline: none; }
-        .form-control:focus { border-color: #F37021; box-shadow: 0 0 4px rgba(243, 112, 33, 0.2); }
-        textarea.form-control { resize: vertical; min-height: 100px; font-family: inherit; }
+        .form-control {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1px solid #CBD5E1;
+            border-radius: 8px;
+            font-size: 10pt;
+            background-color: #FFFFFF;
+            color: #1E293B;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+        .form-control:focus {
+            border-color: #E65F00;
+            box-shadow: 0 0 0 3px rgba(230, 95, 0, 0.12);
+        }
+        textarea.form-control {
+            resize: vertical;
+            min-height: 110px;
+        }
 
         /* ================= SDGS GRID MATRIX CHECKLIST ================= */
-        .sdgs-title { font-size: 10pt; color: #E67E22; font-weight: bold; border-bottom: 1px solid #E0E0E0; padding-bottom: 4px; margin-bottom: 10px; text-transform: uppercase; }
-        .sdgs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; background: #FAFAFA; padding: 15px; border: 1px solid #E0E0E0; border-radius: 4px; }
-        .sdgs-item { display: flex; align-items: flex-start; gap: 8px; font-size: 9pt; color: #444; cursor: pointer; }
-        .sdgs-item input[type="checkbox"] { margin-top: 3px; transform: scale(1.1); }
+        .sdgs-title {
+            font-size: 10pt;
+            color: #C2410C;
+            font-weight: 700;
+            border-bottom: 1px solid #E2E8F0;
+            padding-bottom: 6px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .sdgs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 12px;
+            background: #F8FAFC;
+            padding: 18px;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+        }
+        .sdgs-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 9.5pt;
+            color: #334155;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .sdgs-item input[type="checkbox"] {
+            margin-top: 3px;
+            accent-color: #E65F00;
+        }
 
         /* ================= GRID RUANG LINGKUP & SUB-KEGIATAN ================= */
-        .scope-container { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
-        @media (max-width: 900px) { .scope-container { grid-template-columns: 1fr; } }
+        .scope-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+        }
+        @media (max-width: 900px) {
+            .scope-container { grid-template-columns: 1fr; }
+        }
         
-        .activity-sheet { background: #FFFFFF; border: 1px solid #DDDDDD; border-radius: 4px; height: 320px; overflow-y: scroll; padding: 10px; }
-        .activity-grid-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-        .activity-option { display: flex; align-items: center; gap: 6px; font-size: 8.5pt; padding: 4px; border-bottom: 1px solid #F0F0F0; }
-        .activity-option input { transform: scale(1); }
+        .activity-sheet {
+            background: #FFFFFF;
+            border: 1px solid #CBD5E1;
+            border-radius: 8px;
+            height: 320px;
+            overflow-y: scroll;
+            padding: 14px;
+        }
+        .activity-grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .activity-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 9pt;
+            padding: 6px;
+            border-bottom: 1px solid #F1F5F9;
+            color: #475569;
+        }
+        .activity-option input {
+            accent-color: #E65F00;
+        }
 
-        .scale-box { background: #FFF3EB; border: 1px solid #F37021; padding: 15px; border-radius: 4px; }
-        .scale-option { display: flex; align-items: center; gap: 8px; font-size: 9.5pt; margin-bottom: 10px; font-weight: 500; }
+        .scale-box {
+            background: #FFF7ED;
+            border: 1px solid #FFEDD5;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .scale-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 9.5pt;
+            margin-bottom: 12px;
+            font-weight: 500;
+            color: #431407;
+            cursor: pointer;
+        }
+        .scale-option input {
+            accent-color: #E65F00;
+        }
 
         /* ================= TABLES BUDGET & FINANCIAL REALIZATION ================= */
-        .data-table { width: 100%; border-collapse: collapse; font-size: 9pt; text-align: left; }
-        .data-table th { background-color: #F8F9FA; color: #003366; font-weight: bold; padding: 10px; border-bottom: 2px solid #E0E0E0; border-top: 1px solid #E0E0E0; }
-        .data-table td { padding: 8px 10px; border-bottom: 1px solid #E0E0E0; background-color: #FFFFFF; vertical-align: middle; }
-        .table-input { width: 100%; padding: 6px; border: 1px solid #CCCCCC; border-radius: 3px; font-size: 9pt; }
-        .table-select { width: 100%; padding: 6px; border: 1px solid #CCCCCC; border-radius: 3px; font-size: 9pt; background-color: #FFF; }
-        .row-grand-total { background-color: #EAEDED !important; font-weight: bold; color: #003366; }
+        .table-responsive {
+            overflow-x: auto;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 9.5pt;
+            text-align: left;
+        }
+        .data-table th {
+            background-color: #F8FAFC;
+            color: #1E293B;
+            font-weight: 700;
+            padding: 12px 14px;
+            border-bottom: 2px solid #E2E8F0;
+        }
+        .data-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #E2E8F0;
+            background-color: #FFFFFF;
+            vertical-align: middle;
+        }
+        .table-input {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #CBD5E1;
+            border-radius: 6px;
+            font-size: 9.5pt;
+        }
+        .table-input:focus {
+            outline: none;
+            border-color: #E65F00;
+        }
+        .table-select {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #CBD5E1;
+            border-radius: 6px;
+            font-size: 9.5pt;
+            background-color: #FFF;
+        }
+        .row-grand-total {
+            background-color: #F1F5F9 !important;
+            font-weight: 700;
+            color: #0F172A;
+        }
 
         /* ================= ATTACHMENT DRAG & DROP/BOX LINK ================= */
-        .attachment-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; padding: 20px; }
-        .attachment-box { border: 2px dashed #BDC3C7; background: #FAFAFA; border-radius: 4px; padding: 15px; display: flex; flex-direction: column; gap: 8px; }
-        .attachment-box:hover { border-color: #F37021; background: #FFFDFB; }
-        .attachment-label { font-size: 9pt; font-weight: bold; color: #333; }
+        .attachment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 24px;
+        }
+        .attachment-box {
+            border: 2px dashed #CBD5E1;
+            background: #F8FAFC;
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .attachment-box:hover {
+            border-color: #E65F00;
+            background: #FFF7ED;
+        }
+        .attachment-label {
+            font-size: 9.5pt;
+            font-weight: 600;
+            color: #1E293B;
+        }
 
         /* ================= APPROVAL STATUS REGION ================= */
-        .approval-panel { background-color: #FBFCFC; border-top: 3px solid #BDC3C7; padding: 20px; }
-        .status-radio-group { display: flex; gap: 20px; margin-bottom: 15px; }
-        .radio-label { display: flex; align-items: center; gap: 6px; font-weight: bold; font-size: 10pt; cursor: pointer; }
-        .radio-approved { color: #2ECC71; }
-        .radio-revision { color: #F39C12; }
-        .radio-rejected { color: #E74C3C; }
+        .approval-panel {
+            background-color: #FAFAFA;
+            border-top: 4px solid #CBD5E1;
+            padding: 24px;
+        }
+        .status-radio-group {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .radio-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            font-size: 10pt;
+            cursor: pointer;
+        }
+        .radio-label input {
+            accent-color: #E65F00;
+        }
+        .radio-approved { color: #16A34A; }
+        .radio-revision { color: #D97706; }
+        .radio-rejected { color: #DC2626; }
 
-        .signature-flow { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; margin-top: 25px; text-align: center; font-size: 9.5pt; }
-        .sig-space { height: 60px; margin: 10px 0; border-bottom: 1px dashed #CCC; }
+        .signature-flow {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-top: 32px;
+            text-align: center;
+            font-size: 10pt;
+        }
+        .sig-space {
+            height: 70px;
+            margin: 12px 0;
+            border-bottom: 1px dashed #CBD5E1;
+        }
 
         /* Buttons Core */
-        .btn { padding: 12px 24px; font-size: 9.5pt; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; transition: background 0.2s; display: inline-flex; align-items: center; gap: 8px; }
-        .btn-orange { background-color: #F37021; color: white; }
-        .btn-orange:hover { background-color: #D35400; }
-        .btn-grey { background-color: #7F8C8D; color: white; }
-        .btn-grey:hover { background-color: #626567; }
+        .btn {
+            padding: 12px 28px;
+            font-size: 10pt;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-orange {
+            background-color: #E65F00;
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(230, 95, 0, 0.2);
+        }
+        .btn-orange:hover {
+            background-color: #CC5500;
+        }
+        .btn-grey {
+            background-color: #64748B;
+            color: white;
+        }
+        .btn-grey:hover {
+            background-color: #475569;
+        }
 
         /* Footer Bars */
-        .tech-support-bar, .footer-bar { position: fixed; bottom: 30px; left: 50px; width: calc(100% - 50px); height: 30px; background-color: #002244; color: #FFFFFF; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; font-size: 8.5pt; z-index: 1000; }
-        .footer-bar { bottom: 0; background-color: #F37021; }
+        .tech-support-bar, .footer-bar {
+            position: fixed;
+            bottom: 30px;
+            left: 60px;
+            width: calc(100% - 60px);
+            height: 30px;
+            background-color: #0F172A;
+            color: #FFFFFF;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+            font-size: 8.5pt;
+            z-index: 1000;
+        }
+        .footer-bar {
+            bottom: 0;
+            background-color: #E65F00;
+        }
     </style>
 </head>
 <body>
@@ -133,8 +540,8 @@
     <!-- NAVBAR HEADER -->
     <div class="navbar">
         <div class="nav-col nav-left">
-            <div style="font-weight: bold; font-size: 14pt; color: #003366; letter-spacing: -0.5px;">UNIVERSITAS CIPUTRA</div>
-            <div style="font-size: 7.5pt; color: #666666; margin-top: -2px; letter-spacing: 0.5px;">CREATING WORLD CLASS ENTREPRENEURS</div>
+            <div>Universitas Ciputra</div>
+            <div>CREATING WORLD CLASS ENTREPRENEURS</div>
         </div>
         <div class="nav-col nav-right">
             <div class="user-profile">
@@ -145,28 +552,36 @@
         </div>
     </div>
 
-    <!-- SIDEBAR -->
+    <!-- SIDEBAR LEFT -->
     <div class="sidebar">
-        <button class="sidebar-btn" style="color: white; background: none; border: none;">☰</button>
+        <button class="sidebar-btn">☰</button>
+        <button class="sidebar-btn">★</button>
     </div>
 
     <!-- MAIN WORKSPACE WRAPPER -->
     <div class="wrapper">
+        
+        <!-- BREADCRUMB BAR -->
         <div class="breadcrumb-bar">
-            Student Portal / Activity Control / <span class="active">Input LPJ Event</span>
+            Student Portal / Activity Control / <span class="active">Input LPJ Event ▼</span>
         </div>
 
-        <!-- NOTIFIKASI REMINDER OTOMATIS (MUNCUL DI CIS H+7 SETELAH TANGGAL KEGIATAN) -->
+        <!-- NOTIFIKASI REMINDER OTOMATIS -->
         <div class="alert-reminder">
             ⚠️ <strong>SISTEM INFORMASI KEMAHASISWAAN (CIS REMINDER):</strong><br>
             Sistem mendeteksi pelaksanaan kegiatan Anda telah melewati batas waktu pelaksanaan. Harap segera melengkapi formulir <strong>Laporan Pertanggungjawaban (LPJ) Akhir</strong> ini maksimal 7 hari setelah tanggal kegiatan berakhir untuk mencegah penangguhan (sanksi) pencairan dana ormawa berikutnya serta sinkronisasi Poin Kemahasiswaan (SIMKATMAWA).
+        </div>
+
+        <!-- BIG ORANGE HEADER TEMPLATE -->
+        <div class="hero-header">
+            <h1>Input Laporan Pertanggungjawaban (LPJ) Event</h1>
         </div>
 
         <form id="lpjForm" onsubmit="submitLPJ(event)">
             
             <!-- PANEL 1: IDENTITAS UTAMA EVENT -->
             <div class="panel">
-                <div class="panel-title">LAPORAN PERTANGGUNGJAWABAN EVENT MAHASISWA</div>
+                <div class="panel-title">Section 1: Laporan Pertanggungjawaban Event Mahasiswa</div>
                 <div class="vertical-stack">
                     <div class="inline-row">
                         <div class="data-group">
@@ -204,7 +619,7 @@
 
             <!-- PANEL 2: DESKRIPSI & TUJUAN KORELASI CPL/SDGS -->
             <div class="panel">
-                <div class="panel-title orange-theme">DESKRIPSI &amp; TUJUAN STRATEGIS KEGIATAN</div>
+                <div class="panel-title orange-theme">Section 2: Deskripsi &amp; Tujuan Strategis Kegiatan</div>
                 <div class="vertical-stack">
                     <div class="data-group">
                         <div class="data-label">Latar Belakang &amp; Manfaat</div>
@@ -250,9 +665,9 @@
                 </div>
             </div>
 
-            <!-- PANEL 3: RUANG LINGKUP (REALISASI DAN SHEET SUB-KEGIATAN) -->
+            <!-- PANEL 3: RUANG LINGKUP -->
             <div class="panel">
-                <div class="panel-title">RUANG LINGKUP &amp; SHEET SUB-KEGIATAN (REALISASI)</div>
+                <div class="panel-title">Section 3: Ruang Lingkup &amp; Sheet Sub-Kegiatan (Realisasi)</div>
                 <div class="vertical-stack">
                     <div class="inline-row">
                         <div class="data-group">
@@ -345,9 +760,9 @@
                 </div>
             </div>
 
-            <!-- PANEL 4: DESKRIPSI DETAIL REALISASI WAKTU & TIMELINE -->
+            <!-- PANEL 4: REALISASI WAKTU -->
             <div class="panel">
-                <div class="panel-title orange-theme">DESKRIPSI KEGIATAN (REALISASI PELAKSANAAN)</div>
+                <div class="panel-title orange-theme">Section 4: Deskripsi Kegiatan (Realisasi Pelaksanaan)</div>
                 <div class="vertical-stack">
                     <div class="inline-row">
                         <div class="data-group">
@@ -374,109 +789,113 @@
                         <span class="instruction-blue">* Sebutkan poin-poin evaluasi kendala di lapangan beserta solusi yang diambil</span>
                         <textarea class="form-control" required>Kendala: Distribusi konsumsi mengalami keterlambatan 10 menit dari jadwal rundown akibat kemacetan lalu lintas vendor. Solusi: Acara ice breaking diperpanjang oleh MC untuk mengisi kekosongan waktu secara interaktif.</textarea>
                     </div>
-                    <div style="background-color: #EBF5FB; padding: 10px; border-radius: 4px; font-size: 8.5pt; color: #2980B9; font-weight: bold;">
+                    <div style="background-color: #EFF6FF; padding: 12px 16px; border-radius: 6px; font-size: 9pt; color: #1D4ED8; font-weight: 600; border: 1px solid #DBEAFE;">
                         📎 Wajib menyertakan attachment timeline detail, rundown realisasi, dan data absensi kehadiran pada kolom berkas lampiran bawah.
                     </div>
                 </div>
             </div>
 
-            <!-- PANEL 5: MATRIX ANGGARAN - PENGAJUAN VS REALISASI -->
+            <!-- PANEL 5: MATRIX ANGGARAN -->
             <div class="panel">
-                <div class="panel-title">PERBANDINGAN ANGGARAN (PENGAJUAN VS REALISASI KEUANGAN)</div>
+                <div class="panel-title">Section 5: Perbandingan Anggaran (Pengajuan VS Realisasi Keuangan)</div>
                 <div class="vertical-stack">
                     
-                    <!-- TABEL 5A: ANGGARAN PENGAJUAN AWAL -->
-                    <div style="margin-bottom: 15px;">
-                        <div class="data-label" style="color: #E67E22; margin-bottom: 6px;">A. Anggaran Pengajuan (Draf Proposal Awal)</div>
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th style="width: 5%;">No</th>
-                                    <th style="width: 40%;">Item Pengajuan</th>
-                                    <th style="width: 15%;">Harga Satuan</th>
-                                    <th style="width: 10%;">Jumlah</th>
-                                    <th style="width: 15%;">Total</th>
-                                    <th style="width: 15%;">Sumber Dana</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Dana Alokasi Pokok Prodi / SA</td>
-                                    <td><input type="number" class="table-input" value="1500000"></td>
-                                    <td><input type="number" class="table-input" value="1"></td>
-                                    <td><input type="number" class="table-input" value="1500000" readonly></td>
-                                    <td>
-                                        <select class="table-select"><option>Dana Prodi</option><option selected>Dana SA</option><option>Dana Sponsorship</option></select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Konsumsi Pemateri External</td>
-                                    <td><input type="number" class="table-input" value="50000"></td>
-                                    <td><input type="number" class="table-input" value="4"></td>
-                                    <td><input type="number" class="table-input" value="200000" readonly></td>
-                                    <td>
-                                        <select class="table-select"><option>Dana Prodi</option><option selected>Dana SA</option><option>Dana Organisasi</option></select>
-                                    </td>
-                                </tr>
-                                <tr class="row-grand-total">
-                                    <td colspan="4" style="text-align: right;">Grand Total Pendapatan &amp; Pengeluaran Pengajuan:</td>
-                                    <td colspan="2">Rp 1.700.000</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <!-- TABEL 5A -->
+                    <div style="margin-bottom: 16px;">
+                        <div class="data-label" style="color: #C2410C; margin-bottom: 8px;">A. Anggaran Pengajuan (Draf Proposal Awal)</div>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 5%;">No</th>
+                                        <th style="width: 40%;">Item Pengajuan</th>
+                                        <th style="width: 15%;">Harga Satuan</th>
+                                        <th style="width: 10%;">Jumlah</th>
+                                        <th style="width: 15%;">Total</th>
+                                        <th style="width: 15%;">Sumber Dana</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Dana Alokasi Pokok Prodi / SA</td>
+                                        <td><input type="number" class="table-input" value="1500000"></td>
+                                        <td><input type="number" class="table-input" value="1"></td>
+                                        <td><input type="number" class="table-input" value="1500000" readonly></td>
+                                        <td>
+                                            <select class="table-select"><option>Dana Prodi</option><option selected>Dana SA</option><option>Dana Sponsorship</option></select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Konsumsi Pemateri External</td>
+                                        <td><input type="number" class="table-input" value="50000"></td>
+                                        <td><input type="number" class="table-input" value="4"></td>
+                                        <td><input type="number" class="table-input" value="200000" readonly></td>
+                                        <td>
+                                            <select class="table-select"><option>Dana Prodi</option><option selected>Dana SA</option><option>Dana Organisasi</option></select>
+                                        </td>
+                                    </tr>
+                                    <tr class="row-grand-total">
+                                        <td colspan="4" style="text-align: right;">Grand Total Pendapatan &amp; Pengeluaran Pengajuan:</td>
+                                        <td colspan="2">Rp 1.700.000</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
-                    <!-- TABEL 5B: REALISASI ANGGARAN AKTUAL -->
+                    <!-- TABEL 5B -->
                     <div>
-                        <div class="data-label" style="color: #2ECC71; margin-bottom: 6px;">B. Realisasi Anggaran Aktual (Laporan Penggunaan Fisik + Nota)</div>
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th style="width: 5%;">No</th>
-                                    <th style="width: 40%;">Item Realisasi Lapangan</th>
-                                    <th style="width: 15%;">Harga Satuan Real</th>
-                                    <th style="width: 10%;">Jumlah</th>
-                                    <th style="width: 15%;">Total Aktual</th>
-                                    <th style="width: 15%;">Alokasi Dropdown</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Realisasi Sewa Perlengkapan Sound System</td>
-                                    <td><input type="number" class="table-input" value="1450000"></td>
-                                    <td><input type="number" class="table-input" value="1"></td>
-                                    <td><input type="number" class="table-input" value="1450000" readonly></td>
-                                    <td>
-                                        <select class="table-select"><option selected>Dana SA</option><option>Dana Organisasi</option></select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Realisasi Box Konsumsi Snack Peserta</td>
-                                    <td><input type="number" class="table-input" value="48000"></td>
-                                    <td><input type="number" class="table-input" value="4"></td>
-                                    <td><input type="number" class="table-input" value="192000" readonly></td>
-                                    <td>
-                                        <select class="table-select"><option>Dana Prodi</option><option selected>Dana SA</option></select>
-                                    </td>
-                                </tr>
-                                <tr class="row-grand-total" style="background-color: #D5F5E3 !important;">
-                                    <td colspan="4" style="text-align: right; color: #196F3D;">Grand Total Realisasi Riil Finansial:</td>
-                                    <td colspan="2" style="color: #196F3D;">Rp 1.642.000</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="data-label" style="color: #16A34A; margin-bottom: 8px;">B. Realisasi Anggaran Aktual (Laporan Penggunaan Fisik + Nota)</div>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 5%;">No</th>
+                                        <th style="width: 40%;">Item Realisasi Lapangan</th>
+                                        <th style="width: 15%;">Harga Satuan Real</th>
+                                        <th style="width: 10%;">Jumlah</th>
+                                        <th style="width: 15%;">Total Aktual</th>
+                                        <th style="width: 15%;">Alokasi Dropdown</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Realisasi Sewa Perlengkapan Sound System</td>
+                                        <td><input type="number" class="table-input" value="1450000"></td>
+                                        <td><input type="number" class="table-input" value="1"></td>
+                                        <td><input type="number" class="table-input" value="1450000" readonly></td>
+                                        <td>
+                                            <select class="table-select"><option selected>Dana SA</option><option>Dana Organisasi</option></select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Realisasi Box Konsumsi Snack Peserta</td>
+                                        <td><input type="number" class="table-input" value="48000"></td>
+                                        <td><input type="number" class="table-input" value="4"></td>
+                                        <td><input type="number" class="table-input" value="192000" readonly></td>
+                                        <td>
+                                            <select class="table-select"><option>Dana Prodi</option><option selected>Dana SA</option></select>
+                                        </td>
+                                    </tr>
+                                    <tr class="row-grand-total" style="background-color: #DCFCE7 !important; color: #166534;">
+                                        <td colspan="4" style="text-align: right;">Grand Total Realisasi Riil Finansial:</td>
+                                        <td colspan="2">Rp 1.642.000</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                 </div>
             </div>
 
-            <!-- PANEL 6: DIGITAL ATTACHMENT VAULT (DRIVE LINKS & FILES) -->
+            <!-- PANEL 6: DIGITAL ATTACHMENT VAULT -->
             <div class="panel">
-                <div class="panel-title orange-theme">ATTACHMENT INTEGRATION COMPONENT</div>
+                <div class="panel-title orange-theme">Section 6: Attachment Integration Component</div>
                 <div class="attachment-grid">
                     <div class="attachment-box">
                         <span class="attachment-label">1. Sertifikat Kepanitiaan Mahasiswa</span>
@@ -498,7 +917,7 @@
                         <span class="instruction-blue">* Unggah berkas pembukuan kas yang sinkron dengan tabel keuangan:</span>
                         <input type="file" class="form-control">
                     </div>
-                    <div class="attachment-box" style="grid-column: span 1;">
+                    <div class="attachment-box">
                         <span class="attachment-label">5. Bukti Validasi Peserta / Delegasi Lomba</span>
                         <span class="instruction-blue">* Bukti negara/provinsi/universitas jika berskala kompetisi:</span>
                         <input type="file" class="form-control">
@@ -506,23 +925,23 @@
                 </div>
             </div>
 
-            <!-- PANEL 7: MANAGEMENT BIRO APPROVAL VALIDATION SYSTEM -->
+            <!-- PANEL 7: MANAGEMENT BIRO APPROVAL -->
             <div class="panel approval-panel">
-                <div class="data-label" style="font-size: 11pt; margin-bottom: 10px;">Seksi Otoritas Pemeriksaan Berkas (Untuk SA / Dosen / HOD)</div>
+                <div class="data-label" style="font-size: 11pt; margin-bottom: 12px;">Seksi Otoritas Pemeriksaan Berkas (Untuk SA / Dosen / HOD)</div>
                 <div class="status-radio-group">
                     <label class="radio-label radio-approved"><input type="radio" name="panelStatus" checked> APPROVED (Disetujui)</label>
                     <label class="radio-label radio-revision"><input type="radio" name="panelStatus"> NEED REVISION (Butuh Revisi)</label>
                     <label class="radio-label radio-rejected"><input type="radio" name="panelStatus"> REJECT (Ditolak Sistem)</label>
                 </div>
                 
-                <div class="data-group" style="margin-bottom: 15px;">
+                <div class="data-group" style="margin-bottom: 20px;">
                     <div class="data-label">Catatan Alasan Pemeriksa (Reason Log):</div>
                     <input type="text" class="form-control" placeholder="Tuliskan catatan perbaikan jika berstatus Need Revision / Reject...">
                 </div>
 
                 <div class="signature-flow">
                     <div>
-                        <p>Surabaya, 11 Juni 2026<br><strong>Diajukan oleh,</strong></p>
+                        <p>Surabaya, 15 Juni 2026<br><strong>Diajukan oleh,</strong></p>
                         <div class="sig-space"></div>
                         <p><strong><u>Muh. Nur Alif Akbar</u></strong><br>Jabatan: PIC Ketua Event</p>
                     </div>
@@ -535,7 +954,7 @@
             </div>
 
             <!-- BOTTOM COMMAND INTERACTION ACTIONS -->
-            <div style="display: flex; justify-content: flex-end; gap: 12px; margin-bottom: 80px;">
+            <div style="display: flex; justify-content: flex-end; gap: 16px; margin-bottom: 80px;">
                 <button type="button" class="btn btn-grey" onclick="alert('Draf LPJ berhasil disimpan secara lokal di sistem cloud CIS.')">💾 Save as Draft</button>
                 <button type="submit" class="btn btn-orange">🔒 Submit Final LPJ</button>
             </div>
@@ -545,7 +964,7 @@
 
     <!-- FOOTER TECHNICAL STACK -->
     <div class="tech-support-bar">
-        <div><strong>CIS LPJ Validator Module:</strong>&nbsp;<span style="color:#25D366;">⚡ Auto-Sync Validation Active</span>&nbsp;| Terintegrasi Poin SKK &amp; Transkrip Aktivitas Mahasiswa.</div>
+        <div><strong>CIS LPJ Validator Module:</strong>&nbsp;<span style="color:#22C55E;">⚡ Auto-Sync Validation Active</span>&nbsp;| Terintegrasi Poin SKK &amp; Transkrip Aktivitas Mahasiswa.</div>
         <div>Build Engine v4.0.1</div>
     </div>
     <div class="footer-bar">
@@ -554,7 +973,7 @@
     </div>
 
     <!-- ================= JAVASCRIPT SYSTEM ENGINE ================= -->
-    <script>
+    <script {nonce}>
         function submitLPJ(event) {
             event.preventDefault();
             if(confirm("Apakah Anda yakin data Laporan Pertanggungjawaban (LPJ) ini sudah valid dan sesuai dengan bukti fisik nota keuangan?\nSetelah dikunci, berkas akan diteruskan ke Biro Student Affairs.")) {
