@@ -72,14 +72,14 @@
             color: #FFF;
         }
 
-        /* ================= SIDEBAR (ORANGE THEME - SCREENSHOT VERSION) ================= */
+        /* ================= SIDEBAR (SAMA PERSIS DENGAN SCREENSHOT) ================= */
         .sidebar {
             position: fixed;
             top: 70px;
             left: 0;
             width: 55px;
             height: calc(100vh - 70px);
-            background-color: #D35400; /* Oranye gelap sesuai referensi gambar */
+            background-color: #D35400; /* Warna Oranye Khas UC */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -108,7 +108,7 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            padding: 25px 5% 80px 5%;
+            padding: 25px 5% 40px 5%; /* Padding bawah disesuaikan karena tanpa footer */
         }
 
         /* Gray Panel Breadcrumb Container */
@@ -133,7 +133,7 @@
             padding: 20px 24px;
             font-size: 20pt;
             font-weight: bold;
-            border-radius: 8px; /* Rounded di seluruh sudut sesuai Screenshot 2026-06-15 at 13.47.46.png */
+            border-radius: 8px; /* Rounded di semua sisi sesuai screenshot */
             margin-bottom: 25px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
@@ -291,30 +291,6 @@
             background: #FFF3EB;
             border-radius: 6px;
         }
-
-        /* Fixed Bottom Info Bars */
-        .tech-support-bar, .footer-bar {
-            position: fixed;
-            bottom: 30px;
-            left: 55px;
-            width: calc(100% - 55px);
-            height: 30px;
-            background-color: #002244;
-            color: #FFFFFF;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-            font-size: 8.5pt;
-            z-index: 1000;
-            border-bottom: 1px solid #001122;
-        }
-        .footer-bar {
-            bottom: 0;
-            background-color: #E67E22;
-            border-bottom: none;
-        }
-        .footer-col { display: flex; align-items: center; }
     </style>
 </head>
 <body>
@@ -331,16 +307,16 @@
         </div>
     </div>
 
-    <!-- SIDEBAR LEFT (ORANGE FULL HEIGHT) -->
+    <!-- SIDEBAR LEFT (SAMA PERSIS DENGAN SCREENSHOT 2026-06-15) -->
     <div class="sidebar">
         <button class="side-btn">☰</button>
-        <button class="side-btn" style="color: #FFEB3B;">★</button>
+        <button class="side-btn">★</button>
     </div>
 
     <!-- MAIN WORKSPACE CONTAINER -->
     <div class="main-container">
         
-        <!-- BREADCRUMB BAR (GRAY PANEL PANJANG) -->
+        <!-- BREADCRUMB BAR (GRAY PANEL) -->
         <div class="breadcrumb-container">
             My Activity / My Event / <span class="active">Detail Oprec</span>
         </div>
@@ -537,20 +513,8 @@
 
     </div>
 
-    <!-- FIXED TECH SUPPORT FOOTER -->
-    <div class="tech-support-bar">
-        <div class="footer-col footer-left">
-            <strong>Tech Support:</strong>&nbsp;<span style="color:#25D366; cursor:pointer;">🟢 WhatsApp Business Active</span>&nbsp;|&nbsp;CIS Core Database Synced Real-Time
-        </div>
-        <div class="footer-col footer-right">Build System v1.4</div>
-    </div>
-    <div class="footer-bar">
-        <div class="footer-col footer-left">📍 CitraLand CBD Boulevard, Made, Kec. Sambikerep, Kota SBY, Jawa Timur 60219</div>
-        <div class="footer-col footer-right">&copy; 2026 | Universitas Ciputra Surabaya</div>
-    </div>
-
     <!-- ENGINE JAVASCRIPT FOR ACTION -->
-    <script>
+    <script {nonce}>
         function processApproval(actionType) {
             if (actionType === 'Approve') {
                 if (confirm("Apakah Anda yakin menyetujui seluruh berkas struktural Open Recruitment ini?")) {
