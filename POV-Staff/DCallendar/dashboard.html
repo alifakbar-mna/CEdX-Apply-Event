@@ -1,310 +1,366 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kalender Pelaksanaan Event - Pop Up View</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    /* Custom Scrollbar untuk Panel Detail kanan */
-    .custom-scrollbar::-webkit-scrollbar {
-      width: 5px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-track {
-      background: #ffffff;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #ffedd5;
-      border-radius: 10px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-      background: #f97316;
-    }
-    /* Efek transisi halus saat ganti bulan kalender */
-    .fade-in-panel {
-      animation: fadeInSmooth 0.3s ease-out;
-    }
-    @keyframes fadeInSmooth {
-      from { opacity: 0; transform: translateY(4px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kalender Pelaksanaan Event - Pop Up View</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+/* Custom Scrollbar untuk Panel Detail kanan */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #ffedd5;
+  border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #f97316;
+}
+/* Efek transisi halus saat ganti bulan kalender */
+.fade-in-panel {
+  animation: fadeInSmooth 0.3s ease-out;
+}
+@keyframes fadeInSmooth {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
 </head>
 <body class="bg-white min-h-screen p-4 md:p-8 font-sans antialiased text-slate-800 flex flex-col items-center justify-start">
 
-  <div class="w-full max-w-7xl bg-white">
-    
-    <div class="px-2 py-2 flex items-center gap-2 text-xs font-semibold text-slate-400 mb-4 select-none">
-      <span class="text-orange-600 hover:underline cursor-pointer">My Activity</span>
-      <span class="text-slate-300">/</span>
-      <span class="text-orange-600 hover:underline cursor-pointer">Competition</span>
-      <span class="text-slate-300">/</span>
-      <span class="text-slate-400 font-medium">Monitoring Event Approved</span>
-    </div>
+<div class="w-full max-w-7xl bg-white">
 
-    <div class="w-full bg-white rounded-2xl border border-gray-150 shadow-[0_10px_30px_rgba(0,0,0,0,06)] overflow-hidden">
-      
-      <div class="bg-orange-500 px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm">
-        <div>
-          <h2 class="text-base font-extrabold text-white tracking-tight flex items-center gap-2">
-            <span class="material-symbols-outlined text-lg">calendar_month</span>
-            Kalender Pelaksanaan Event
-          </h2>
-          <p class="text-[11px] text-orange-100 mt-0.5 font-medium">Hanya menampilkan agenda kegiatan yang telah disetujui (Approved)</p>
-        </div>
-        
-        <div class="flex items-center gap-1.5 bg-orange-600/40 p-1 rounded-xl border border-orange-400/30">
-          <select id="filterBulan" onchange="renderCalendarEngine()" class="bg-white text-xs font-bold text-slate-700 rounded-lg px-2.5 py-1.5 shadow-sm focus:outline-none cursor-pointer border-none">
-            <option value="0">Januari</option>
-            <option value="1">Februari</option>
-            <option value="2">Maret</option>
-            <option value="3">April</option>
-            <option value="4">Mei</option>
-            <option value="5">Juni</option>
-            <option value="6">Juli</option>
-            <option value="7">Agustus</option>
-            <option value="8">September</option>
-            <option value="9" selected>Oktober</option>
-            <option value="10">November</option>
-            <option value="11">Desember</option>
-          </select>
-          <select id="filterTahun" onchange="renderCalendarEngine()" class="bg-white text-xs font-bold text-slate-700 rounded-lg px-2.5 py-1.5 shadow-sm focus:outline-none cursor-pointer border-none">
-          </select>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-0 min-h-[620px]">
-        
-        <div class="lg:col-span-8 p-6 md:p-8 bg-white border-r border-gray-100">
-          
-          <div class="flex items-center gap-2.5 text-[11px] font-medium text-slate-600 mb-5 bg-orange-50/50 border border-orange-100/70 p-3 rounded-xl">
-            <span class="w-2.5 h-2.5 bg-orange-500 rounded-full animate-pulse"></span>
-            <span class="font-bold text-slate-700">Hari Pelaksanaan Event</span>
-            <span class="w-1 h-3 bg-gray-300 rounded-full mx-1"></span>
-            <span class="text-slate-400 font-normal">*Klik kotak bulan untuk memfilter detail di sebelah kanan</span>
-          </div>
-
-          <div id="calendarGridContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          </div>
-        </div>
-
-        <div class="lg:col-span-4 bg-slate-50/40 p-6 md:p-8 flex flex-col justify-between">
-          <div>
-            <div class="pb-3 mb-4 border-b border-gray-200/60">
-              <span class="text-[10px] uppercase font-bold tracking-widest text-orange-500 block mb-0.5">Daftar Agenda</span>
-              <h3 id="panelDetailTitle" class="text-base font-black text-slate-800 tracking-tight">Memuat Data...</h3>
-            </div>
-
-            <div id="panelDetailList" class="space-y-3 max-h-[440px] overflow-y-auto pr-1 custom-scrollbar fade-in-panel">
-            </div>
-          </div>
-
-          <div class="pt-4 border-t border-gray-200/60 text-[11px] text-slate-400 font-medium flex justify-between items-center mt-6">
-            <span>CIS Monitoring System</span>
-            <span class="font-mono bg-orange-100/70 text-orange-700 px-1.5 py-0.5 rounded text-[10px] font-bold">v2.2</span>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
+  <div class="px-2 py-2 flex items-center gap-2 text-xs font-semibold text-slate-400 mb-4 select-none">
+    <span class="text-orange-600 hover:underline cursor-pointer">My Activity</span>
+    <span class="text-slate-300">/</span>
+    <span class="text-orange-600 hover:underline cursor-pointer">Competition</span>
+    <span class="text-slate-300">/</span>
+    <span class="text-slate-400 font-medium">Monitoring Event Approved</span>
   </div>
 
-  <script>
-    const namaBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-    
-    // --- DATA EVENT APPROVED ---
-    const approvedEvents = [
-      {
-        judul: "UC Choir Concert: Symphonic Night",
-        organizer: "UKM Choir",
-        start: "2023-10-03",
-        end: "2023-10-07"
-      },
-      {
-        judul: "Grand Opening CIS Festival 2023",
-        organizer: "Student Union Ciputra",
-        start: "2023-10-07",
-        end: "2023-10-10"
-      },
-      {
-        judul: "Business Plan Pitching Day",
-        organizer: "ISB Laboratory",
-        start: "2023-10-07",
-        end: "2023-10-07"
-      },
-      {
-        judul: "National Seminar: Tech Innovation",
-        organizer: "FIKOM Universitas Ciputra",
-        start: "2023-11-12",
-        end: "2023-11-14"
-      },
-      {
-        judul: "Informatics Internal Hackathon",
-        organizer: "HIMA IMT",
-        start: "2024-01-20",
-        end: "2024-01-25"
-      },
-      {
-        judul: "Industrial Gathering & Awarding",
-        organizer: "BMA Ciputra",
-        start: "2024-03-05",
-        end: "2024-03-05"
-      }
-    ];
+  <div class="w-full bg-white rounded-2xl border border-gray-150 shadow-[0_10px_30px_rgba(0,0,0,0.06)] overflow-hidden">
 
-    let selectedActiveMonth = null;
-    let selectedActiveYear = null;
+    <!-- Header Filter Bar -->
+    <div class="bg-orange-500 px-6 py-4 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm">
+      <div>
+        <h2 class="text-base font-extrabold text-white tracking-tight flex items-center gap-2">
+          <span class="material-symbols-outlined text-lg">calendar_month</span>
+          Kalender Pelaksanaan Event
+        </h2>
+        <p class="text-[11px] text-orange-100 mt-0.5 font-medium">Hanya menampilkan agenda kegiatan yang telah disetujui (Approved)</p>
+      </div>
 
-    function setupYearDropdownAutomated() {
-      const filterTahunSelect = document.getElementById('filterTahun');
-      let semuaTahun = [];
-      approvedEvents.forEach(ev => {
-        semuaTahun.push(new Date(ev.start).getFullYear(), new Date(ev.end).getFullYear());
-      });
+      <div class="flex flex-wrap items-center gap-2 bg-orange-600/40 p-1.5 rounded-xl border border-orange-400/30">
+        <!-- Filter Skala -->
+        <select id="filterSkala" onchange="renderCalendarEngine()" class="bg-white text-xs font-bold text-slate-700 rounded-lg px-2.5 py-1.5 shadow-sm focus:outline-none cursor-pointer border-none">
+          <option value="ALL">Semua Skala</option>
+          <option value="International">International</option>
+          <option value="Nasional">Nasional</option>
+          <option value="Provinsi">Provinsi</option>
+          <option value="Universitas">Universitas</option>
+          <option value="Internal Jurusan">Internal Jurusan</option>
+        </select>
 
-      let tahunUnik = [...new Set(semuaTahun)].sort((a, b) => a - b);
-      filterTahunSelect.innerHTML = "";
-      
-      tahunUnik.forEach(tahun => {
-        let option = document.createElement('option');
-        option.value = tahun;
-        option.innerText = tahun;
-        if(tahun === 2023) option.selected = true;
-        filterTahunSelect.appendChild(option);
-      });
+        <!-- Filter Bulan -->
+        <select id="filterBulan" onchange="renderCalendarEngine()" class="bg-white text-xs font-bold text-slate-700 rounded-lg px-2.5 py-1.5 shadow-sm focus:outline-none cursor-pointer border-none">
+          <option value="0">Januari</option>
+          <option value="1">Februari</option>
+          <option value="2">Maret</option>
+          <option value="3">April</option>
+          <option value="4">Mei</option>
+          <option value="5">Juni</option>
+          <option value="6">Juli</option>
+          <option value="7">Agustus</option>
+          <option value="8" selected>September</option>
+          <option value="9">Oktober</option>
+          <option value="10">November</option>
+          <option value="11">Desember</option>
+        </select>
+
+        <!-- Filter Tahun -->
+        <select id="filterTahun" onchange="renderCalendarEngine()" class="bg-white text-xs font-bold text-slate-700 rounded-lg px-2.5 py-1.5 shadow-sm focus:outline-none cursor-pointer border-none">
+        </select>
+      </div>
+    </div>
+
+    <!-- Layout Main Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-0 min-h-[620px]">
+
+      <!-- Grid Kalender Kiri -->
+      <div class="lg:col-span-8 p-6 md:p-8 bg-white border-r border-gray-100">
+        <div class="flex items-center gap-2.5 text-[11px] font-medium text-slate-600 mb-5 bg-orange-50/50 border border-orange-100/70 p-3 rounded-xl">
+          <span class="w-2.5 h-2.5 bg-orange-500 rounded-full animate-pulse"></span>
+          <span class="font-bold text-slate-700">Hari Pelaksanaan Event</span>
+          <span class="w-1 h-3 bg-gray-300 rounded-full mx-1"></span>
+          <span class="text-slate-400 font-normal">*Klik kotak bulan untuk memfilter detail di sebelah kanan</span>
+        </div>
+
+        <div id="calendarGridContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        </div>
+      </div>
+
+      <!-- Detail Panel Kanan -->
+      <div class="lg:col-span-4 bg-slate-50/40 p-6 md:p-8 flex flex-col justify-between">
+        <div>
+          <div class="pb-3 mb-4 border-b border-gray-200/60">
+            <span class="text-[10px] uppercase font-bold tracking-widest text-orange-500 block mb-0.5">Daftar Agenda</span>
+            <h3 id="panelDetailTitle" class="text-base font-black text-slate-800 tracking-tight">Memuat Data...</h3>
+          </div>
+
+          <div id="panelDetailList" class="space-y-3 max-h-[440px] overflow-y-auto pr-1 custom-scrollbar fade-in-panel">
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-gray-200/60 text-[11px] text-slate-400 font-medium flex justify-between items-center mt-6">
+          <span>CIS Monitoring System</span>
+          <span class="font-mono bg-orange-100/70 text-orange-700 px-1.5 py-0.5 rounded text-[10px] font-bold">v2.3</span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<script>
+const namaBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+
+// --- DATA EVENT APPROVED & DIPERBARUI ---
+const approvedEvents = [
+  // Data Lama
+  { judul: "UC Choir Concert: Symphonic Night", organizer: "UKM Choir", kategori: "Konser", skala: "Universitas", start: "2023-10-03", end: "2023-10-07" },
+  { judul: "Grand Opening CIS Festival 2023", organizer: "Student Union Ciputra", kategori: "Festival", skala: "Universitas", start: "2023-10-07", end: "2023-10-10" },
+  { judul: "Business Plan Pitching Day", organizer: "ISB Laboratory", kategori: "Kompetisi", skala: "Universitas", start: "2023-10-07", end: "2023-10-07" },
+  
+  // Data Tambahan Baru
+  { judul: "EPIC National", organizer: "SU ISB", kategori: "Tuan Rumah Lomba", skala: "Nasional", start: "2026-01-23", end: "2026-01-23" },
+  { judul: "Universitas Ciputra Debate Competition Nasional", organizer: "UKM UCDS", kategori: "Tuan Rumah Lomba", skala: "Nasional", start: "2026-02-20", end: "2026-02-21" },
+  { judul: "Universitas Ciputra Debate Competition Internasional", organizer: "UKM UCDS", kategori: "Tuan Rumah Lomba", skala: "International", start: "2026-03-13", end: "2026-03-14" },
+  { judul: "SPARC", organizer: "SU ISB", kategori: "Tuan Rumah Lomba", skala: "Nasional", start: "2026-03-13", end: "2026-03-13" },
+  { judul: "EPIC International", organizer: "SU ISB", kategori: "Tuan Rumah Lomba", skala: "International", start: "2026-04-10", end: "2026-04-10" },
+  { judul: "PRISM 3.0", organizer: "UKM UCIC", kategori: "Kompetisi", skala: "Universitas", start: "2026-04-14", end: "2026-04-15" },
+  { judul: "Matrikulasi", organizer: "SU MED", kategori: "Pelatihan/Camp", skala: "Internal Jurusan", start: "2026-08-24", end: "2026-08-27" },
+  { judul: "Pembekalan Mentor 1", organizer: "MD", kategori: "Pelatihan", skala: "Universitas", start: "2026-09-11", end: "2026-09-11" },
+  { judul: "UC Champion (UCDC Schools)", organizer: "UKM UCDS", kategori: "Tuan Rumah Lomba", skala: "Nasional", start: "2026-09-13", end: "2026-09-14" },
+  { judul: "Pertemuan UKM pertama semester ganjil", organizer: "UKM General", kategori: "Gathering", skala: "Universitas", start: "2026-09-14", end: "2026-09-14" },
+  { judul: "EXPOSURE", organizer: "SC", kategori: "Exhibition", skala: "Universitas", start: "2026-09-14", end: "2026-09-18" },
+  { judul: "Mentoring Pertama", organizer: "MD", kategori: "Mentoring", skala: "Universitas", start: "2026-09-17", end: "2026-09-17" },
+  { judul: "Faringeal", organizer: "SU MED", kategori: "Kegiatan Jurusan", skala: "Internal Jurusan", start: "2026-09-18", end: "2026-09-18" },
+  { judul: "Studi Banding (September)", organizer: "SU PSY", kategori: "Studi Banding", skala: "Universitas", start: "2026-09-19", end: "2026-09-19" },
+  { judul: "Studi Banding (Maret)", organizer: "SU PSY", kategori: "Studi Banding", skala: "Universitas", start: "2027-03-13", end: "2027-03-13" },
+  { judul: "Open Volunteer Recruitment", organizer: "UKM PMK", kategori: "Recruitment", skala: "Universitas", start: "2026-09-21", end: "2026-10-05" },
+  { judul: "Artuphoria", organizer: "UKM Artupic", kategori: "Tuan Rumah Lomba", skala: "International", start: "2026-09-21", end: "2026-10-26" },
+  { judul: "Bonding Internal", organizer: "SU MED", kategori: "Pelatihan/Camp", skala: "Internal Jurusan", start: "2026-09-26", end: "2026-09-26" },
+  { judul: "Open Recruitment Member", organizer: "UKM UCIC", kategori: "Recruitment", skala: "Universitas", start: "2026-09-02", end: "2026-09-27" },
+  { judul: "Webinar Career Center", organizer: "SU ISB", kategori: "Seminar/Workshop", skala: "Universitas", start: "2026-09-28", end: "2026-09-28" },
+  { judul: "Scribble Art Workshop", organizer: "UKM Canvas", kategori: "Seminar/Workshop", skala: "Universitas", start: "2026-09-29", end: "2026-09-29" },
+  { judul: "Workshop PDD", organizer: "SU ISB", kategori: "Seminar/Workshop", skala: "Universitas", start: "2026-09-30", end: "2026-09-30" },
+  { judul: "Studi banding", organizer: "SU MED", kategori: "Studi Banding", skala: "Provinsi", start: "2026-09-30", end: "2026-10-01" },
+  { judul: "Pelantikan Angmud", organizer: "SRB", kategori: "Seremonial", skala: "Universitas", start: "2026-09-30", end: "2026-09-30" },
+  { judul: "International Essay Competition", organizer: "UKM UCIC", kategori: "Tuan Rumah Lomba", skala: "International", start: "2026-10-19", end: "2026-11-28" },
+  { judul: "Psymate", organizer: "SU PSY", kategori: "Recruitment", skala: "Internal Jurusan", start: "2026-10-01", end: "2027-05-31" },
+  { judul: "MD_Mentoring Kedua", organizer: "MD", kategori: "Mentoring", skala: "Universitas", start: "2026-10-01", end: "2026-10-01" }
+];
+
+let selectedActiveMonth = null;
+let selectedActiveYear = null;
+
+// Fungsi Helper untuk Styling Warna Badge Skala Event
+function getSkalaBadge(skala) {
+  switch (skala) {
+    case 'International':
+      return `<span class="text-[9px] font-black uppercase tracking-wider text-purple-700 bg-purple-100 px-2 py-0.5 rounded-md border border-purple-200">🌐 ${skala}</span>`;
+    case 'Nasional':
+      return `<span class="text-[9px] font-black uppercase tracking-wider text-blue-700 bg-blue-100 px-2 py-0.5 rounded-md border border-blue-200">🇮🇩 ${skala}</span>`;
+    case 'Provinsi':
+      return `<span class="text-[9px] font-black uppercase tracking-wider text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-md border border-emerald-200">🏛️ ${skala}</span>`;
+    case 'Universitas':
+      return `<span class="text-[9px] font-black uppercase tracking-wider text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md border border-amber-200">🎓 ${skala}</span>`;
+    case 'Internal Jurusan':
+      return `<span class="text-[9px] font-black uppercase tracking-wider text-slate-700 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200">👥 ${skala}</span>`;
+    default:
+      return `<span class="text-[9px] font-black uppercase tracking-wider text-slate-600 bg-slate-100 px-2 py-0.5 rounded-md">${skala || 'Umum'}</span>`;
+  }
+}
+
+function setupYearDropdownAutomated() {
+  const filterTahunSelect = document.getElementById('filterTahun');
+  let semuaTahun = [];
+  approvedEvents.forEach(ev => {
+    semuaTahun.push(new Date(ev.start).getFullYear(), new Date(ev.end).getFullYear());
+  });
+
+  let tahunUnik = [...new Set(semuaTahun)].sort((a, b) => a - b);
+  filterTahunSelect.innerHTML = "";
+
+  tahunUnik.forEach(tahun => {
+    let option = document.createElement('option');
+    option.value = tahun;
+    option.innerText = tahun;
+    if(tahun === 2026) option.selected = true; // Auto-select ke tahun 2026
+    filterTahunSelect.appendChild(option);
+  });
+}
+
+function renderCalendarEngine() {
+  const startMonth = parseInt(document.getElementById('filterBulan').value);
+  const startYear = parseInt(document.getElementById('filterTahun').value);
+  const selectedSkala = document.getElementById('filterSkala').value;
+  const gridContainer = document.getElementById('calendarGridContainer');
+
+  gridContainer.innerHTML = "";
+
+  if (selectedActiveMonth === null) {
+    selectedActiveMonth = startMonth;
+    selectedActiveYear = startYear;
+  }
+
+  // Filter Data berdasarkan skala terlebih dahulu
+  let eventsPool = approvedEvents.filter(ev => {
+    return selectedSkala === "ALL" || ev.skala === selectedSkala;
+  });
+
+  for (let i = 0; i < 6; i++) {
+    let currentMonth = (startMonth + i) % 12;
+    let yearOffset = Math.floor((startMonth + i) / 12);
+    let currentYear = startYear + yearOffset;
+
+    let firstDayIndex = new Date(currentYear, currentMonth, 1).getDay(); 
+    let totalDays = new Date(currentYear, currentMonth + 1, 0).getDate(); 
+    let adjustedFirstDay = firstDayIndex === 0 ? 6 : firstDayIndex - 1;
+
+    const isSelectedBox = (currentMonth === selectedActiveMonth && currentYear === selectedActiveYear);
+    const activeBoxClass = isSelectedBox 
+      ? "ring-2 ring-orange-500 border-orange-500 bg-orange-50/5 shadow-sm" 
+      : "border-slate-200 bg-white hover:border-orange-300/70 shadow-sm transition duration-150";
+
+    const monthBox = document.createElement('div');
+    monthBox.className = `border rounded-xl p-3.5 cursor-pointer flex flex-col justify-between ${activeBoxClass}`;
+    monthBox.setAttribute('onclick', `updateDetailPanel(${currentMonth}, ${currentYear})`);
+
+    let htmlContent = `
+      <div>
+        <h3 class="text-center font-bold ${isSelectedBox ? 'text-orange-700 bg-orange-100/60' : 'text-slate-700 bg-slate-50'} text-xs tracking-wide mb-2.5 border-b border-slate-100 pb-1 rounded py-0.5">${namaBulan[currentMonth]} ${currentYear}</h3>
+        <div class="grid grid-cols-7 gap-1 text-center text-[9px] font-bold text-slate-400 mb-1.5">
+          <div>S</div><div>S</div><div>R</div><div>K</div><div>J</div><div>S</div><div>M</div>
+        </div>
+        <div class="grid grid-cols-7 gap-1 text-center text-xs font-semibold">
+    `;
+
+    for (let x = 0; x < adjustedFirstDay; x++) {
+      htmlContent += `<div class="p-1 text-transparent select-none">-</div>`;
     }
 
-    function renderCalendarEngine() {
-      const startMonth = parseInt(document.getElementById('filterBulan').value);
-      const startYear = parseInt(document.getElementById('filterTahun').value);
-      const gridContainer = document.getElementById('calendarGridContainer');
-      
-      gridContainer.innerHTML = "";
+    for (let day = 1; day <= totalDays; day++) {
+      let formatBulan = String(currentMonth + 1).padStart(2, '0');
+      let formatHari = String(day).padStart(2, '0');
+      let currentTanggalStr = `${currentYear}-${formatBulan}-${formatHari}`;
 
-      if (selectedActiveMonth === null) {
-        selectedActiveMonth = startMonth;
-        selectedActiveYear = startYear;
+      let activeEventsCount = eventsPool.filter(ev => {
+        return currentTanggalStr >= ev.start && currentTanggalStr <= ev.end;
+      }).length;
+
+      let dayStyle = "text-slate-600 hover:bg-orange-50 hover:text-orange-600 rounded p-1";
+      let badgeHTML = "";
+
+      if (activeEventsCount === 1) {
+        dayStyle = "bg-orange-500 text-white rounded relative p-1 font-bold shadow-sm";
+      } else if (activeEventsCount > 1) {
+        dayStyle = "bg-orange-700 text-white rounded relative p-1 font-bold shadow-sm";
+        badgeHTML = `<span class="absolute -bottom-0.5 -right-0.5 text-[7px] bg-amber-400 text-slate-950 font-black px-0.5 rounded-sm scale-90 font-mono">${activeEventsCount}</span>`;
       }
 
-      for (let i = 0; i < 6; i++) {
-        let currentMonth = (startMonth + i) % 12;
-        let yearOffset = Math.floor((startMonth + i) / 12);
-        let currentYear = startYear + yearOffset;
+      htmlContent += `
+        <div class="${dayStyle}">
+          ${day}
+          ${badgeHTML}
+        </div>
+      `;
+    }
 
-        let firstDayIndex = new Date(currentYear, currentMonth, 1).getDay(); 
-        let totalDays = new Date(currentYear, currentMonth + 1, 0).getDate(); 
-        let adjustedFirstDay = firstDayIndex === 0 ? 6 : firstDayIndex - 1;
+    htmlContent += `</div></div>`;
+    monthBox.innerHTML = htmlContent;
+    gridContainer.appendChild(monthBox);
+  }
 
-        const isSelectedBox = (currentMonth === selectedActiveMonth && currentYear === selectedActiveYear);
-        const activeBoxClass = isSelectedBox 
-          ? "ring-2 ring-orange-500 border-orange-500 bg-orange-50/5 shadow-sm" 
-          : "border-slate-200 bg-white hover:border-orange-300/70 shadow-sm transition duration-150";
+  executeRenderDetails();
+}
 
-        const monthBox = document.createElement('div');
-        monthBox.className = `border rounded-xl p-3.5 cursor-pointer flex flex-col justify-between ${activeBoxClass}`;
-        monthBox.setAttribute('onclick', `updateDetailPanel(${currentMonth}, ${currentYear})`);
+function updateDetailPanel(mIndex, yValue) {
+  selectedActiveMonth = mIndex;
+  selectedActiveYear = yValue;
+  renderCalendarEngine();
+}
 
-        let htmlContent = `
+function executeRenderDetails() {
+  const selectedSkala = document.getElementById('filterSkala').value;
+  document.getElementById('panelDetailTitle').innerText = `${namaBulan[selectedActiveMonth]} ${selectedActiveYear}`;
+  const listContainer = document.getElementById('panelDetailList');
+  listContainer.innerHTML = "";
+
+  let filtered = approvedEvents.filter(ev => {
+    let evStart = new Date(ev.start);
+    let evEnd = new Date(ev.end);
+    let targetStart = new Date(selectedActiveYear, selectedActiveMonth, 1);
+    let targetEnd = new Date(selectedActiveYear, selectedActiveMonth + 1, 0);
+
+    let matchSkala = (selectedSkala === "ALL" || ev.skala === selectedSkala);
+    let matchDate = (evStart <= targetEnd && evEnd >= targetStart);
+
+    return matchSkala && matchDate;
+  });
+
+  if (filtered.length === 0) {
+    listContainer.innerHTML = `
+      <div class="text-center py-10 px-4 bg-white rounded-xl border border-dashed border-slate-200 text-slate-400">
+        <span class="text-xl block mb-1">🍁</span>
+        <p class="text-[11px] font-medium">Tidak ada pelaksanaan agenda event pada bulan ini.</p>
+      </div>
+    `;
+    return;
+  }
+
+  filtered.forEach(ev => {
+    let dStart = new Date(ev.start).getDate();
+    let dEnd = new Date(ev.end).getDate();
+    let mStart = new Date(ev.start).getMonth();
+    let mEnd = new Date(ev.end).getMonth();
+
+    let displayDateText = "";
+    if (mStart === mEnd) {
+      displayDateText = dStart === dEnd ? `${dStart} ${namaBulan[mStart]}` : `${dStart} - ${dEnd} ${namaBulan[mStart]}`;
+    } else {
+      displayDateText = `${dStart} ${namaBulan[mStart]} - ${dEnd} ${namaBulan[mEnd]}`;
+    }
+
+    let cardHTML = `
+      <div class="bg-white p-3.5 rounded-xl border border-gray-150 shadow-sm hover:shadow-md hover:border-orange-200 transition duration-200 border-l-4 border-l-orange-500">
+        <div class="flex items-center justify-between gap-2 mb-2">
+          <span class="inline-block text-[10px] font-bold text-orange-700 bg-orange-50 px-2 py-0.5 rounded-full">🗓️ ${displayDateText}</span>
+          ${getSkalaBadge(ev.skala)}
+        </div>
+        <h4 class="text-xs font-bold text-slate-900 leading-snug mb-1.5">${ev.judul}</h4>
+        <div class="flex items-center justify-between text-[11px] text-slate-500 pt-1.5 border-t border-slate-100">
           <div>
-            <h3 class="text-center font-bold ${isSelectedBox ? 'text-orange-700 bg-orange-100/60' : 'text-slate-700 bg-slate-50'} text-xs tracking-wide mb-2.5 border-b border-slate-100 pb-1 rounded py-0.5">${namaBulan[currentMonth]} ${currentYear}</h3>
-            <div class="grid grid-cols-7 gap-1 text-center text-[9px] font-bold text-slate-400 mb-1.5">
-              <div>S</div><div>S</div><div>R</div><div>K</div><div>J</div><div>S</div><div>M</div>
-            </div>
-            <div class="grid grid-cols-7 gap-1 text-center text-xs font-semibold">
-        `;
-
-        for (let x = 0; x < adjustedFirstDay; x++) {
-          htmlContent += `<div class="p-1 text-transparent select-none">-</div>`;
-        }
-
-        for (let day = 1; day <= totalDays; day++) {
-          let formatBulan = String(currentMonth + 1).padStart(2, '0');
-          let formatHari = String(day).padStart(2, '0');
-          let currentTanggalStr = `${currentYear}-${formatBulan}-${formatHari}`;
-
-          let activeEventsCount = approvedEvents.filter(ev => {
-            return currentTanggalStr >= ev.start && currentTanggalStr <= ev.end;
-          }).length;
-
-          let dayStyle = "text-slate-600 hover:bg-orange-50 hover:text-orange-600 rounded p-1";
-          let badgeHTML = "";
-
-          if (activeEventsCount === 1) {
-            dayStyle = "bg-orange-500 text-white rounded relative p-1 font-bold shadow-sm";
-          } else if (activeEventsCount > 1) {
-            dayStyle = "bg-orange-700 text-white rounded relative p-1 font-bold shadow-sm";
-            badgeHTML = `<span class="absolute -bottom-0.5 -right-0.5 text-[7px] bg-amber-400 text-slate-950 font-black px-0.5 rounded-sm scale-90 font-mono">${activeEventsCount}</span>`;
-          }
-
-          htmlContent += `
-            <div class="${dayStyle}">
-              ${day}
-              ${badgeHTML}
-            </div>
-          `;
-        }
-
-        htmlContent += `</div></div>`;
-        monthBox.innerHTML = htmlContent;
-        gridContainer.appendChild(monthBox);
-      }
-
-      executeRenderDetails();
-    }
-
-    function updateDetailPanel(mIndex, yValue) {
-      selectedActiveMonth = mIndex;
-      selectedActiveYear = yValue;
-      renderCalendarEngine();
-    }
-
-    function executeRenderDetails() {
-      document.getElementById('panelDetailTitle').innerText = `${namaBulan[selectedActiveMonth]} ${selectedActiveYear}`;
-      const listContainer = document.getElementById('panelDetailList');
-      listContainer.innerHTML = "";
-
-      let filtered = approvedEvents.filter(ev => {
-        let evStart = new Date(ev.start);
-        let evEnd = new Date(ev.end);
-        let targetStart = new Date(selectedActiveYear, selectedActiveMonth, 1);
-        let targetEnd = new Date(selectedActiveYear, selectedActiveMonth + 1, 0);
-        return (evStart <= targetEnd && evEnd >= targetStart);
-      });
-
-      if (filtered.length === 0) {
-        listContainer.innerHTML = `
-          <div class="text-center py-10 px-4 bg-white rounded-xl border border-dashed border-slate-200 text-slate-400">
-            <span class="text-xl block mb-1">🍁</span>
-            <p class="text-[11px] font-medium">Tidak ada pelaksanaan agenda event pada bulan ini.</p>
+            <span class="text-slate-400">By:</span>
+            <span class="font-semibold text-slate-700">${ev.organizer}</span>
           </div>
-        `;
-        return;
-      }
+          ${ev.kategori ? `<span class="text-[10px] font-medium text-slate-400 italic">${ev.kategori}</span>` : ''}
+        </div>
+      </div>
+    `;
+    listContainer.innerHTML += cardHTML;
+  });
+}
 
-      filtered.forEach(ev => {
-        let dStart = new Date(ev.start).getDate();
-        let dEnd = new Date(ev.end).getDate();
-        let displayDateText = dStart === dEnd ? `${dStart} ${namaBulan[selectedActiveMonth]}` : `${dStart} - ${dEnd} ${namaBulan[selectedActiveMonth]}`;
-
-        let cardHTML = `
-          <div class="bg-white p-3.5 rounded-xl border border-gray-150 shadow-sm hover:shadow-md hover:border-orange-200 transition duration-200 border-l-4 border-l-orange-500">
-            <span class="inline-block text-[10px] font-bold text-orange-700 bg-orange-50 px-2 py-0.5 rounded-full mb-1.5">🗓️ ${displayDateText}</span>
-            <h4 class="text-xs font-bold text-slate-900 leading-snug mb-1.5">${ev.judul}</h4>
-            <div class="flex items-center gap-1 text-[11px] text-slate-500 pt-1.5 border-t border-slate-100">
-              <span class="text-slate-400">By:</span>
-              <span class="font-semibold text-slate-700">${ev.organizer}</span>
-            </div>
-          </div>
-        `;
-        listContainer.innerHTML += cardHTML;
-      });
-    }
-
-    window.onload = function() {
-      setupYearDropdownAutomated();
-      renderCalendarEngine();
-    };
-  </script>
+window.onload = function() {
+  setupYearDropdownAutomated();
+  renderCalendarEngine();
+};
+</script>
 </body>
 </html>
