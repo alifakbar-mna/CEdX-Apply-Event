@@ -18,7 +18,7 @@
   border-radius: 10px;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #b4ef00;
+  background: #f97316;
 }
 /* Efek transisi halus saat ganti bulan kalender */
 .fade-in-panel {
@@ -266,11 +266,12 @@ function renderCalendarEngine() {
       let dayStyle = "text-slate-600 hover:bg-orange-50 hover:text-orange-600 rounded p-1";
       let badgeHTML = "";
 
+      // Mengubah warna >1 event dari orange-700 menjadi emerald-600 (hijau)
       if (activeEventsCount === 1) {
         dayStyle = "bg-orange-500 text-white rounded relative p-1 font-bold shadow-sm";
       } else if (activeEventsCount > 1) {
-        dayStyle = "bg-orange-700 text-white rounded relative p-1 font-bold shadow-sm";
-        badgeHTML = `<span class="absolute -bottom-0.5 -right-0.5 text-[7px] bg-amber-400 text-slate-950 font-black px-0.5 rounded-sm scale-90 font-mono">${activeEventsCount}</span>`;
+        dayStyle = "bg-emerald-600 text-white rounded relative p-1 font-bold shadow-sm";
+        badgeHTML = `<span class="absolute -bottom-0.5 -right-0.5 text-[7px] bg-amber-300 text-slate-950 font-black px-0.5 rounded-sm scale-90 font-mono">${activeEventsCount}</span>`;
       }
 
       htmlContent += `
